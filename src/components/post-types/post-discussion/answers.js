@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import useUser from "../../../hooks/use-user";
-import { getUserByUserId, toggleVote } from "../../../services/firebase";
 import AddAnswer from "./add-answer";
 
 export default function Answers({ object, currentUserId }) {
@@ -44,7 +43,7 @@ export default function Answers({ object, currentUserId }) {
           },
         ]);
         setDownVotes(downVotes.filter((item) => item.id !== user.userId));
-        toggleVote(object, item);
+        // toggleVote(object, item);
       } else {
         setUpVotes(upVotes.filter((item) => item.id !== user.userId));
       }
