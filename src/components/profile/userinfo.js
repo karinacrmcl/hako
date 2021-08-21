@@ -4,10 +4,8 @@ import Skeleton from "react-loading-skeleton";
 import propTypes from "prop-types";
 import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
-import FollowerList from "./followers-list";
-import FollowingList from "./following-list";
-import { useModal } from "../../hooks/use-modal";
-import Loader from "react-loader-spinner";
+import FollowerList from "./follows/followers-list";
+import FollowingList from "./follows/following-list";
 
 export default function UserInfo({
   photosCount,
