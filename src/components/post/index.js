@@ -10,21 +10,19 @@ export default function Post({ content }) {
   const commentInput = useRef(null);
   const handleFocus = () => commentInput.current.focus();
   return (
-    <div className="rounded-lg col-span-4 border bg-white border-gray-primary mb-12">
-      <Header username={content.username} />
+    <div
+      className="font-fontbasic relative bg-white w-post lptpXS:mb-8 lptpXL:w-postMd lptpXS:w-postSm rounded-lg shadow-xl mb-14 mobileXL:shadow-none mobileXL:w-full "
+      key={object.key}
+    >
+      <Header object={object} />
+      {isHot ? <Hot /> : null}
+
       <Image src={content.imageSrc} caption={content.caption} />
       <Actions
-        docId={content.docId}
-        totalLikes={content.likes.length}
-        likedPhoto={content.userLikedPhoto}
-        handleFocus={handleFocus}
-      />
-      <Footer caption={content.caption} username={content.username}></Footer>
-      <Comments
-        docId={content.docId}
-        comments={content.comments}
-        posted={content.posted}
-        commentInput={commentInput}
+        object={object}
+        publicationDocId={object.docId}
+        likedPublication={object.userLikedPublication}
+        pinnedPublication={object.userPinnedPublication}
       />
     </div>
   );
