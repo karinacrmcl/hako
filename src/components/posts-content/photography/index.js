@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../post/header";
 import Actions from "../../post/actions";
-import Hot from "../is-hot";
+import Hot from "../../post/is-hot";
 
 export default function PostPhotography({ object, isHot }) {
   return (
