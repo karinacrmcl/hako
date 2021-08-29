@@ -1,14 +1,13 @@
 import Skeleton from "react-loading-skeleton";
 import usePhotos from "../hooks/use-photos";
 
-import PostArticle from "./post-types/post-article";
-import PostBook from "./post-types/post-book";
-import PostNews from "./post-types/post-news";
-import PostDiscussion from "./post-types/post-discussion";
-import PostPhotography from "./post-types/post-photography";
-
 import { useCategories } from "../hooks/use-categorysorting";
-import Hot from "./post-types/is-hot";
+import ArticleContent from "./posts-content/article";
+import PostLayout from "./post";
+import BookContent from "./posts-content/book";
+import PhotographyContent from "./posts-content/photography";
+import NewsContent from "./posts-content/news";
+import DiscussionContent from "./posts-content/discussion";
 
 export default function Timeline() {
   const { publications } = usePhotos();
@@ -34,52 +33,41 @@ export default function Timeline() {
             case "article":
               return (
                 activeCategories.article && (
-                  <PostArticle
-                    object={content}
-                    isHot={content.isHot}
-                    key={content.id}
-                  />
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <ArticleContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
-
             case "book":
               return (
                 activeCategories.book && (
-                  <PostBook
-                    key={content.id}
-                    object={content}
-                    isHot={content.isHot}
-                  />
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <BookContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
             case "news":
               return (
                 activeCategories.news && (
-                  <PostNews
-                    key={content.id}
-                    object={content}
-                    isHot={content.isHot}
-                  />
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <NewsContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
             case "discussion":
               return (
                 activeCategories.discussion && (
-                  <PostDiscussion
-                    key={content.id}
-                    object={content}
-                    isHot={content.isHot}
-                  />
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <DiscussionContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
             case "photography":
               return (
                 activeCategories.photography && (
-                  <PostPhotography
-                    key={content.id}
-                    object={content}
-                    isHot={content.isHot}
-                  />
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <PhotographyContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
 
