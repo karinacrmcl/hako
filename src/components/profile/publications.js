@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { useProfileCategories } from "../../hooks/use-profile-categories";
-import PostArticle from "../post-types/post-article";
-import PostBook from "../post-types/post-book";
-import PostDiscussion from "../post-types/post-discussion";
-import PostNews from "../post-types/post-news";
-import PostPhotography from "../post-types/post-photography";
+import PostLayout from "../post";
+import ArticleContent from "../posts-content/article";
+import BookContent from "../posts-content/book";
+import DiscussionContent from "../posts-content/discussion";
+import NewsContent from "../posts-content/news";
+import PhotographyContent from "../posts-content/photography";
 
 export default function Publications({ publications }) {
   const { profileActiveCategories } = useProfileCategories();
@@ -21,32 +22,44 @@ export default function Publications({ publications }) {
             case "article":
               return (
                 profileActiveCategories.profileActiveCategories ===
-                  "article" && <PostArticle key={content.id} object={content} />
+                  "article" && (
+                  <PostLayout object={content}>
+                    <ArticleContent object={content} key={content.id} />
+                  </PostLayout>
+                )
               );
             case "book":
               return (
                 profileActiveCategories.profileActiveCategories === "book" && (
-                  <PostBook key={content.id} object={content} />
+                  <PostLayout object={content}>
+                    <BookContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
             case "news":
               return (
                 profileActiveCategories.profileActiveCategories === "news" && (
-                  <PostNews key={content.id} object={content} />
+                  <PostLayout object={content}>
+                    <NewsContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
             case "discussion":
               return (
                 profileActiveCategories.profileActiveCategories ===
                   "discussion" && (
-                  <PostDiscussion key={content.id} object={content} />
+                  <PostLayout object={content}>
+                    <DiscussionContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
             case "photography":
               return (
                 profileActiveCategories.profileActiveCategories ===
                   "photography" && (
-                  <PostPhotography key={content.id} object={content} />
+                  <PostLayout object={content}>
+                    <PhotographyContent object={content} key={content.id} />
+                  </PostLayout>
                 )
               );
 
@@ -66,15 +79,35 @@ export default function Publications({ publications }) {
         ? publications.map((content) => {
             switch (content.type) {
               case "article":
-                return <PostArticle key={content.id} object={content} />;
+                return (
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <ArticleContent object={content} key={content.id} />
+                  </PostLayout>
+                );
               case "book":
-                return <PostBook key={content.id} object={content} />;
+                return (
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <BookContent object={content} key={content.id} />
+                  </PostLayout>
+                );
               case "news":
-                return <PostNews key={content.id} object={content} />;
+                return (
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <NewsContent object={content} key={content.id} />
+                  </PostLayout>
+                );
               case "discussion":
-                return <PostDiscussion key={content.id} object={content} />;
+                return (
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <DiscussionContent object={content} key={content.id} />
+                  </PostLayout>
+                );
               case "photography":
-                return <PostPhotography key={content.id} object={content} />;
+                return (
+                  <PostLayout object={content} isHot={content.isHot}>
+                    <PhotographyContent object={content} key={content.id} />
+                  </PostLayout>
+                );
 
               default:
                 return (
