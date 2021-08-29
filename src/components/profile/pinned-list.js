@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { getPinnedPublications } from "../../services/firebase";
-import Hot from "../post-types/is-hot";
-import PostArticle from "../post-types/post-article";
-import PostBook from "../post-types/post-book";
-import PostDiscussion from "../post-types/post-discussion";
-import PostNews from "../post-types/post-news";
-import PostPhotography from "../post-types/post-photography";
+import PostLayout from "../post";
+import ArticleContent from "../posts-content/article";
+import BookContent from "../posts-content/book";
+import DiscussionContent from "../posts-content/discussion";
+import NewsContent from "../posts-content/news";
+import PhotographyContent from "../posts-content/photography";
 
 export default function PinnedList({ profile, userId }) {
   const [publications, setPublications] = useState(null);
@@ -52,37 +52,42 @@ export default function PinnedList({ profile, userId }) {
                 case "article":
                   return (
                     <div className="relative" key={content.id}>
-                      <PostArticle object={content} />
-                      {content.isHot && <Hot />}
+                      <PostLayout object={content} isHot={content.isHot}>
+                        <ArticleContent object={content} key={content.id} />
+                      </PostLayout>
                     </div>
                   );
 
                 case "book":
                   return (
                     <div className="relative" key={content.id}>
-                      <PostBook key={content.id} object={content} />
-                      {content.isHot && <Hot />}
+                      <PostLayout object={content} isHot={content.isHot}>
+                        <BookContent object={content} key={content.id} />
+                      </PostLayout>
                     </div>
                   );
                 case "news":
                   return (
                     <div className="relative" key={content.id}>
-                      <PostNews key={content.id} object={content} />
-                      {content.isHot && <Hot />}
+                      <PostLayout object={content} isHot={content.isHot}>
+                        <NewsContent object={content} key={content.id} />
+                      </PostLayout>
                     </div>
                   );
                 case "discussion":
                   return (
                     <div className="relative" key={content.id}>
-                      <PostDiscussion key={content.id} object={content} />
-                      {content.isHot && <Hot />}
+                      <PostLayout object={content} isHot={content.isHot}>
+                        <DiscussionContent object={content} key={content.id} />
+                      </PostLayout>
                     </div>
                   );
                 case "photography":
                   return (
                     <div className="relative" key={content.id}>
-                      <PostPhotography key={content.id} object={content} />
-                      {content.isHot && <Hot />}
+                      <PostLayout object={content} isHot={content.isHot}>
+                        <PhotographyContent object={content} key={content.id} />
+                      </PostLayout>
                     </div>
                   );
 
