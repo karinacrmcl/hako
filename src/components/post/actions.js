@@ -2,9 +2,9 @@ import { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import FirebaseContext from "../../context/firebase";
 import UserContext from "../../context/user";
-import Comments from "./comments";
 import { addPublicationToPinned } from "../../services/firebase";
 import useUser from "../../hooks/use-user";
+import Comments from "./comments/comments";
 
 export default function Actions({
   object,
