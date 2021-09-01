@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import { useReducer, useEffect, useState } from "react";
 import { getUserPublicationsByUsername } from "../../services/firebase";
 import UserInfo from "./userinfo";
-import Publications from "./publications";
-import Sorting from "./sorting";
-import Pinned from "./pinned-bar";
-import PinnedList from "./pinned-list";
 import useUser from "../../hooks/use-user";
 import { useMediaQuery } from "react-responsive";
+import Sorting from "./posts/sorting";
+import PinnedList from "./pinned/pinned-list";
+import Publications from "./posts/publications";
+import Pinned from "./pinned/pinned-bar";
 
 export default function UserProfile({ profileUser }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
