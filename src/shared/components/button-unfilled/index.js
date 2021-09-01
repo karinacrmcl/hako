@@ -7,7 +7,7 @@ export default function ButtonUnfilled({ func }) {
   return (
     <button
       onClick={func}
-      className=" p-1 px-4 text-xl font-semibold text-gradient-from rounded-lg border-btn border-default-first mr-4 transition-all hover:bg-default-first hover:text-white duration-500 lptpXL:text-base lptpXL:mr-0  tabletXL:border-transparent tabletXL:w-auto tabletXL:p-0 "
+      className=" p-1 px-4 text-base font-semibold text-gradient-from rounded-lg border-btn border-default-first mr-4 transition-all hover:bg-default-first hover:text-white duration-500 lptpXL:text-base lptpXL:mr-0  tabletXL:border-transparent tabletXL:w-auto tabletXL:p-0 "
     >
       {isMobile ? (
         <img src="/images/icons/categories-mobile/cancel.png" />
