@@ -1,12 +1,9 @@
-import { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import FirebaseContext from "../context/firebase";
-import UserContext from "../context/user";
-import * as ROUTES from "../constants/routes";
-import { getUserByUserId } from "../services/firebase";
-import useUser from "../hooks/use-user";
-import { useCategories } from "..//hooks/use-categorysorting";
-import SearchBar from "./search-bar";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "../../context/user";
+import * as ROUTES from "../../constants/routes";
+import useUser from "../../hooks/use-user";
+import SearchBar from "../search-bar";
 import { useMediaQuery } from "react-responsive";
 
 export default function Header() {

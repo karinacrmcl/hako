@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react/cjs/react.development";
-import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import Timeline from "../components/timeline";
 import Sorting from "../components/category-sorting";
 import Menu from "../components/menu";
 import { useMediaQuery } from "react-responsive";
+import Header from "../components/header";
 
 export default function Dashboard() {
   useEffect(() => {
