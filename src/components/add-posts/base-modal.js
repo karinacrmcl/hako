@@ -1,8 +1,7 @@
 import React from "react";
-import ButtonFirst from "../../shared/button-1";
-import ButtonSecond from "../../shared/button-2";
 import { useModal } from "../../hooks/use-modal";
 import { useMediaQuery } from "react-responsive";
+import ButtonUnfilled from "../../shared/components/button-unfilled";
 
 export default function Base({ category, content, categoryKey }) {
   const { openModal, setOpenModal } = useModal();
@@ -19,7 +18,7 @@ export default function Base({ category, content, categoryKey }) {
               setOpenModal({ ...openModal, [categoryKey]: false });
             }}
           >
-            <ButtonFirst />
+            <ButtonUnfilled />
           </div>
 
           <h1 className="text-2xl font-semibold select-none lptpXL:text-xl text-lg mobileXL:text-base">
@@ -61,7 +60,7 @@ export default function Base({ category, content, categoryKey }) {
               setOpenModal({ ...openModal, [categoryKey]: false });
             }}
           >
-            <ButtonFirst />
+            <ButtonUnfilled />
           </div>
         </div>
       </div>
