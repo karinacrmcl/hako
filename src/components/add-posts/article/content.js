@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
-import { addPublication, getUserByUsername } from "../../../services/firebase";
+import React, { useState } from "react";
+import { addPublication } from "../../../services/firebase";
+import ButtonFilled from "../../../shared/components/button-filled";
 import PublicationSuccess from "../publication-success/";
-import ButtonSecond from "../../../shared/button-2";
 
 export default function Content({ user }) {
   const [title, setTitle] = useState("");
@@ -107,7 +107,7 @@ export default function Content({ user }) {
         className="absolute right-0 -bottom-10 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9 "
         onClick={(e) => savePostData(e)}
       >
-        <ButtonSecond />
+        <ButtonFilled />
       </div>
 
       <PublicationSuccess isPublished={isPublished} />
