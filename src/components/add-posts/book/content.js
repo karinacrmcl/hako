@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { MediaFieldEmpty } from "../news/addmedia-cont";
 import { addPublication } from "../../../services/firebase";
 import PublicationSuccess from "../publication-success";
-import ButtonSecond from "../../../shared/button-2";
 import Loader from "react-loader-spinner";
 
 import { useMediaQuery } from "react-responsive";
@@ -11,11 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import Skeleton from "react-loading-skeleton";
-
-// import "swiper/css/swiper.min.css";
-
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/swiper.scss";
+import ButtonFilled from "../../../shared/components/button-filled";
 
 export default function Content({ user }) {
   const bookGenres = [
@@ -735,7 +729,7 @@ export default function Content({ user }) {
         className="absolute right-0 -bottom-10 z-50 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9"
         onClick={(e) => savePostData(e)}
       >
-        <ButtonSecond />
+        <ButtonFilled />
       </div>
       <PublicationSuccess isPublished={isPublished} />
     </div>
