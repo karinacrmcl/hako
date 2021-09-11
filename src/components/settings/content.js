@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react/cjs/react.development";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import useUser from "../../hooks/use-user";
 import { updateProfiledata } from "../../services/firebase";
@@ -14,8 +14,6 @@ import Skeleton from "react-loading-skeleton";
 import { doesUsernameExist } from "../../services/firebase";
 import { useModal } from "../../hooks/use-modal";
 import { useMediaQuery } from "react-responsive";
-
-import { savePicturedata } from "../../shared/Utils";
 
 export default function Content({ category }) {
   const { user } = useUser();
@@ -77,8 +75,6 @@ export default function Content({ category }) {
     const usernameUpd = document.querySelector("#username");
     const fullNameUpd = document.querySelector("#fullName");
     const emailAdressUpd = document.querySelector("#emailAdress");
-
-    const usernameExists = await doesUsernameExist(username);
 
     if (
       usernameUpd.value != "" &&
