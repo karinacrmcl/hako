@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Loader from "react-loader-spinner";
-import ButtonSecond from "../../../shared/button-2";
 import PublicationSuccess from "../publication-success/";
 import { addPublication } from "../../../services/firebase";
 import { useMediaQuery } from "react-responsive";
+import ButtonFilled from "../../../shared/components/button-filled";
 
 export default function Content({ user }) {
   const [isPublished, setIsPublished] = useState(false);
@@ -193,7 +193,7 @@ export default function Content({ user }) {
         className="absolute right-0 -bottom-10 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9"
         onClick={() => savePostData()}
       >
-        <ButtonSecond />
+        <ButtonFilled />
       </div>
       <PublicationSuccess isPublished={isPublished} />
     </div>
