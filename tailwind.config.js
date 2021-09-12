@@ -83,7 +83,7 @@ module.exports = {
         border: "#DCDCDC",
         sugtop: "#3E3E3E",
         addtext: "#A5A5A5",
-        link: "#D8D8D8",
+        link: "#b6b6b6",
         bordernav: "#f2f2f2",
         settingsLabel: "#686868",
         inputsBook: "#A0A0A0",
