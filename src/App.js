@@ -11,8 +11,8 @@ import NotFound from "./pages/not-found.js";
 import * as ROUTES from "./constants/routes";
 import UserContext from "./context/user";
 
-import ProtectedRoute from "./helpers/protected-route";
-import IsUserLoggedIn from "./helpers/is-user-logged-in";
+import ProtectedRoute from "./utils/protected-route";
+import IsUserLoggedIn from "./utils/is-user-logged-in";
 
 import Settings from "../src/components/settings";
 import AddPhotoModal from "../src/components/add-posts/photography";
@@ -24,9 +24,9 @@ import { useModal } from "./hooks/use-modal";
 
 import CategoriesProvider from "./provider/categories-provider";
 import ProfileCategoriesProvider from "./provider/profile-categories-provider";
-import CategoriesMobile from "./components/menu/categories-mobile";
 import UserProfileSettingsMobile from "./components/settings/settings-mobile-modals/user-profile";
 import CustomizationSettingsMobile from "./components/settings/settings-mobile-modals/customization";
+import CategoriesMobile from "./components/menu/categories-mobile";
 
 export default function App() {
   const { user } = useAuthListener();
