@@ -2,8 +2,9 @@ import React from "react";
 import { useModal } from "../../hooks/use-modal";
 import { useMediaQuery } from "react-responsive";
 import ButtonUnfilled from "../../shared/components/button-unfilled";
+import ButtonFilled from "../../shared/components/button-filled";
 
-export default function Base({ category, content, categoryKey }) {
+export default function Base({ children, category, categoryKey, func }) {
   const { openModal, setOpenModal } = useModal();
 
   const isMobile = useMediaQuery({ maxWidth: "971px" });
@@ -36,7 +37,7 @@ export default function Base({ category, content, categoryKey }) {
           </h2>
         </div>
 
-        <div className="h-5/6 flex flex-col justify-center ">{content}</div>
+        <div className="h-5/6 flex flex-col justify-center ">{children}</div>
         <div className="flex self-end"></div>
       </div>
     </div>
@@ -52,7 +53,8 @@ export default function Base({ category, content, categoryKey }) {
             {category}
           </span>
         </h2>
-        <div className="h-5/6 flex flex-col justify-center ">{content}</div>
+        <div className="h-5/6 flex flex-col justify-center ">{children}</div>
+
         <div className="flex self-end">
           <div
             className="mr-20"
@@ -62,6 +64,7 @@ export default function Base({ category, content, categoryKey }) {
           >
             <ButtonUnfilled />
           </div>
+          <ButtonFilled func={func} />
         </div>
       </div>
     </div>
