@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { addPublication } from "../../../services/firebase";
 import ButtonFilled from "../../../shared/components/button-filled";
 import PublicationSuccess from "../publication-success/";
+import SymbolsLimit from "../symbols-limit";
 
 export default function Content({ user }) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [isPublished, setIsPublished] = useState(false);
-
-  // const [user, setUser] = useState(null);
 
   function savePostData() {
     const options = {
@@ -19,7 +18,6 @@ export default function Content({ user }) {
     };
 
     if (title && text && text.length <= symbolsLimit) {
-      //post article proto
       const post = {
         category: "Posts & Articles",
         dateCreate: new Date().toLocaleDateString("en-US", options),
@@ -31,12 +29,10 @@ export default function Content({ user }) {
         comments: [],
       };
 
-      //add to db and clean fields
       addPublication(post);
       setTitle("");
       setText("");
 
-      //remove optional styles
       document.querySelectorAll(".input-add").forEach((item) => {
         item.classList.remove("input-error");
       });
@@ -44,7 +40,6 @@ export default function Content({ user }) {
         item.classList.remove("textarea-error");
       });
 
-      //show modal with success
       setIsPublished(true);
       setTimeout(() => {
         setIsPublished(false);
@@ -94,21 +89,7 @@ export default function Content({ user }) {
           setText(e.target.value);
         }}
       ></textarea>
-      <p
-        className={`flex justify-end mt-1 lptpXL:text-sm ${
-          text.length <= symbolsLimit
-            ? `text-gray-extralight`
-            : `text-red-primary`
-        }`}
-      >
-        {text.length}/{symbolsLimit}
-      </p>
-      <div
-        className="absolute right-0 -bottom-10 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9 "
-        onClick={(e) => savePostData(e)}
-      >
-        <ButtonFilled />
-      </div>
+      <SymbolsLimit length={text.length} limit={symbolsLimit} />
 
       <PublicationSuccess isPublished={isPublished} />
     </form>
