@@ -4,10 +4,8 @@ import Content from "../book/content";
 
 export default function AddBook({ user }) {
   return (
-    <Base
-      category="Books"
-      content={<Content user={user} />}
-      categoryKey="modalAddBook"
-    ></Base>
+    <Base category="Books" categoryKey="modalAddBook">
+      <Content user={user} />
+    </Base>
   );
 }
