@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addPublication } from "../../../services/firebase";
 import ButtonFilled from "../../../shared/components/button-filled";
 import PublicationSuccess from "../publication-success/";
+import SymbolsLimit from "../symbols-limit";
 
 export default function Content({ user }) {
   const [question, setQuestion] = useState("");
@@ -17,7 +18,6 @@ export default function Content({ user }) {
     };
 
     if (question && opinion && opinion.length <= symbolsLimit) {
-      //post article proto
       const post = {
         category: "Discussions ",
         dateCreate: new Date().toLocaleDateString("en-US", options),
@@ -31,10 +31,8 @@ export default function Content({ user }) {
 
       addPublication(post);
 
-      //add to db and clean fields
       setQuestion("");
       setOpinion("");
-      //remove optional styles
       document.querySelectorAll(".input-add").forEach((item) => {
         item.classList.remove("input-error");
       });
@@ -42,7 +40,6 @@ export default function Content({ user }) {
         item.classList.remove("textarea-error");
       });
 
-      //show modal with success
       setIsPublished(true);
       setTimeout(() => {
         setIsPublished(false);
@@ -80,21 +77,8 @@ export default function Content({ user }) {
           setOpinion(target.value);
         }}
       ></textarea>
-      <p
-        className={`flex justify-end mt-1 lptpXL:text-sm ${
-          opinion.length <= symbolsLimit
-            ? `text-gray-extralight`
-            : `text-red-primary`
-        }`}
-      >
-        {opinion.length}/{symbolsLimit}
-      </p>
-      <div
-        className="absolute right-0 -bottom-10 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9"
-        onClick={(e) => savePostData(e)}
-      >
-        <ButtonFilled />
-      </div>
+      <SymbolsLimit length={opinion.length} limit={symbolsLimit} />
+
       <PublicationSuccess isPublished={isPublished} />
     </div>
   );
