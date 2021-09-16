@@ -4,10 +4,8 @@ import Content from "../discussion/content";
 
 export default function AddDiscussion({ user }) {
   return (
-    <Base
-      category="Discussion"
-      content={<Content user={user} />}
-      categoryKey="modalAddDiscussion"
-    ></Base>
+    <Base category="Discussion" categoryKey="modalAddDiscussion">
+      <Content user={user} />
+    </Base>
   );
 }
