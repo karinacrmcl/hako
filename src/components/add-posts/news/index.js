@@ -4,10 +4,8 @@ import Content from "../news/content";
 
 export default function AddNews({ user }) {
   return (
-    <Base
-      category="News"
-      content={<Content user={user} />}
-      categoryKey="modalAddNews"
-    ></Base>
+    <Base category="News" categoryKey="modalAddNews">
+      <Content user={user} />
+    </Base>
   );
 }
