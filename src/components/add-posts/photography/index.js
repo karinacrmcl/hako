@@ -4,10 +4,8 @@ import Content from "./content";
 
 export default function AddPhotoModal({ user }) {
   return (
-    <Base
-      category="Photography"
-      content={<Content user={user} />}
-      categoryKey="modalAddPhoto"
-    ></Base>
+    <Base category="Photography" categoryKey="modalAddPhoto">
+      <Content user={user} />
+    </Base>
   );
 }
