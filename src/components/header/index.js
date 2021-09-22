@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useMediaQuery } from "react-responsive";
+import useUser from "../../hooks/use-user";
+
+import * as ROUTES from "../../constants/routes";
+
 import { Link } from "react-router-dom";
 import UserContext from "../../context/user";
-import * as ROUTES from "../../constants/routes";
-import useUser from "../../hooks/use-user";
 import SearchBar from "../search-bar";
-import { useMediaQuery } from "react-responsive";
 
 export default function Header() {
   const { user } = useContext(UserContext);
@@ -62,7 +64,7 @@ export default function Header() {
                 <Link to={ROUTES.LOGIN}>
                   <button
                     type="button"
-                    className="bg-default-first font-bold text-sm rounded text-white w-20 h-8"
+                    className="bg-default-first font-bold text-sm rounded text-white w-20 h-8 mr-6"
                   >
                     Log In
                   </button>
