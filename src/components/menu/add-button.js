@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useModal } from "../../hooks/use-modal";
-import CategoriesMobile from "./categories-mobile";
-import Categories from "./category";
+
+import Categories from "./categories";
+import SvgSelector from "./svg-selector";
 
 export default function AddButton() {
   const { openModal, setOpenModal } = useModal();
@@ -21,74 +22,12 @@ export default function AddButton() {
       >
         {btnHovered ? (
           isMobile ? (
-            <svg
-              className="transition-all duration-200"
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect x="6" width="2" height="14" rx="1" fill="white" />
-              <rect
-                x="14"
-                y="6"
-                width="2"
-                height="14"
-                rx="1"
-                transform="rotate(90 14 6)"
-                fill="white"
-              />
-            </svg>
+            <SvgSelector id="plus" />
           ) : (
-            <svg
-              className="transition-all duration-200"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="12.1868"
-                y="2.30151"
-                width="2"
-                height="14"
-                rx="1"
-                transform="rotate(44.4351 12.1868 2.30151)"
-                fill="white"
-              />
-              <rect
-                x="13.6985"
-                y="12.1868"
-                width="2"
-                height="14"
-                rx="1"
-                transform="rotate(134.435 13.6985 12.1868)"
-                fill="white"
-              />
-            </svg>
+            <SvgSelector id="close" />
           )
         ) : (
-          <svg
-            className="transition-all duration-200"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect x="6" width="2" height="14" rx="1" fill="white" />
-            <rect
-              x="14"
-              y="6"
-              width="2"
-              height="14"
-              rx="1"
-              transform="rotate(90 14 6)"
-              fill="white"
-            />
-          </svg>
+          <SvgSelector id="plus" />
         )}
       </div>
       <Categories btnActive={btnHovered} />
