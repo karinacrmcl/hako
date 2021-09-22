@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Transition } from "react-transition-group";
 import { useCategories } from "../../hooks/use-categorysorting";
+import SvgSelector from "./svg-selector";
 
 export default function Item({ item, categoriesHovered }) {
   const duration = 250;
@@ -35,11 +36,10 @@ export default function Item({ item, categoriesHovered }) {
       }}
       style={active ? { opacity: 1 } : { opacity: 0.5 }}
     >
-      <img
-        src={`/images/icons/categories/${item.icon}`}
+      <SvgSelector
+        id={item.icon}
         className="transition-all lptpXS:w-8 mobileXL:w-12"
       />
-
       <Transition in={categoriesHovered} timeout={duration}>
         {(state) =>
           isMobile ? null : (
