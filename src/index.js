@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import FirebaseContext from "./context/firebase";
-import { firebase, FieldValue } from "./lib/firebase";
+import { Firebase, FieldValue } from "./lib/firebase";
 import "./styles/app.css";
 import ModalProvider from "./provider/modal-provider";
 
 ReactDOM.render(
-  <FirebaseContext.Provider value={{ firebase, FieldValue }}>
+  <FirebaseContext.Provider value={{ Firebase, FieldValue }}>
     <ModalProvider>
       <App />
     </ModalProvider>
