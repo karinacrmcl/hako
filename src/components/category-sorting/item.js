@@ -23,23 +23,25 @@ export default function Item({ item, categoriesHovered }) {
   const { activeCategories, setActiveCategories } = useCategories();
   const isMobile = useMediaQuery({ maxWidth: "650px" });
 
+  function handleActive() {
+    setActive(!active);
+    if (!active) {
+      setActiveCategories({ ...activeCategories, [item.type]: true });
+    } else {
+      setActiveCategories({ ...activeCategories, [item.type]: false });
+    }
+  }
+
   return (
     <div
       className="flex items-center transition-all mb-3 cursor-pointer select-none lptpXS:mb-2 mobileXL:ml-1.5 mobileXL:mr-1.5 mobileXL:mb-0  "
       onClick={() => {
-        setActive(!active);
-        if (!active) {
-          setActiveCategories({ ...activeCategories, [item.type]: true });
-        } else {
-          setActiveCategories({ ...activeCategories, [item.type]: false });
-        }
+        handleActive();
       }}
       style={active ? { opacity: 1 } : { opacity: 0.5 }}
     >
-      <SvgSelector
-        id={item.icon}
-        className="transition-all lptpXS:w-8 mobileXL:w-12"
-      />
+      <SvgSelector id={item.icon} s />
+
       <Transition in={categoriesHovered} timeout={duration}>
         {(state) =>
           isMobile ? null : (

@@ -11,12 +11,12 @@ export default function Sorting({ isOnTop }) {
 
   return (
     <div
-      className={`flex flex-col items-center font-fontbasic z-60 relative ${
+      className={`flex flex-col items-center font-fontbasic z-60 relative mobileXL:w-80 ${
         isOnTop ? "slide-in-top " : "slide-out-top  "
       } `}
     >
       <div
-        className={`flex flex-col overflow-hidden transition-all duration-400 ease-in-out bg-white items-center shadow-xl rounded-lg p-3 lptpXS:p-2 mobileXL:shadow-none mobileXL:w-3/4 mobileXL:p-1 mobileXL:h-10 mobileXL:flex-row mobileXL:items-center   ${
+        className={`flex flex-col mobileXL:justify-center overflow-hidden transition-all duration-400 ease-in-out bg-white items-center shadow-xl rounded-lg p-3 lptpXS:p-2 mobileXL:shadow-none mobileXL:w-3/4 mobileXL:p-1 mobileXL:h-10 mobileXL:flex-row mobileXL:items-center   ${
           categoriesHovered ? "w-56" : "w-16 lptpXS:w-12 "
         } `}
         onMouseEnter={() => {
