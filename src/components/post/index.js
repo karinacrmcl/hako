@@ -11,7 +11,7 @@ export default function PostLayout({ children, isHot, object }) {
       key={object.key}
     >
       <Header object={object} />
-      {isHot ? <Hot /> : null}
+      {isHot && <Hot />}
       {children}
       <Actions
         object={object}
