@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import FirebaseContext from "../../../context/firebase";
 import UserContext from "../../../context/user";
 import useUser from "../../../hooks/use-user";
-import SvgSelector from "../../../shared/assets/svg-selector";
+import { getRandomId } from "../../../utils/get-random-id";
+import SvgSelector from "../svg-selector";
 
 export default function AddComment({
   docId,
@@ -12,12 +13,12 @@ export default function AddComment({
   commentInput,
 }) {
   const [comment, setComment] = useState("");
-  const { firebase, FieldValue } = useContext(FirebaseContext);
+  const [sendBtnHovered, setSendBtnHovered] = useState(false);
+  const { Firebase, FieldValue } = useContext(FirebaseContext);
 
   const {
     user: { userId, avatarUrl },
   } = useUser();
-  const [sendBtnHovered, setSendBtnHovered] = useState(false);
 
   const handleSubmitComment = (event) => {
     event.preventDefault();
@@ -25,8 +26,7 @@ export default function AddComment({
     setComments([{ userId, comment, dateCreated, id }, ...comments]);
     setComment("");
 
-    return firebase
-      .firestore()
+    return Firebase.firestore()
       .collection("publications")
       .doc(docId)
       .update({
@@ -44,8 +44,7 @@ export default function AddComment({
     hour: "numeric",
   };
   const dateCreated = new Date().toLocaleDateString("en-US", options);
-
-  const id = new Date().getTime().toString() + Math.round(Math.random() * 100);
+  const id = getRandomId();
 
   return (
     <div className="px-4 py-2">
