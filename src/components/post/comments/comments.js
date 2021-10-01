@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+
 import AddComment from "./add-comment";
-import { getUserByUserId } from "../../../services/firebase";
+import SvgSelector from "../svg-selector";
+import { UserComment } from "./comment";
 
 export default function Comments({
   docId,
@@ -11,52 +12,10 @@ export default function Comments({
   commentInput,
 }) {
   const [comments, setComments] = useState(allComments);
-
   const [commentsSlice, setCommentsSlice] = useState(3);
 
   const showNextComments = () => {
     setCommentsSlice(commentsSlice + 6);
-  };
-
-  const UserComment = ({ item }) => {
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-      async function getUserObjByUserId() {
-        const [user] = await getUserByUserId(item.userId);
-        setUser(user);
-      }
-      if (item?.userId) {
-        getUserObjByUserId();
-      }
-    }, []);
-
-    return (
-      <div
-        key={`${item.comment} - ${user?.username}`}
-        className="mb-1 flex lptpXS:mb-0.5 lptpXS:items-center"
-      >
-        <img
-          className="w-10 h-10 mr-2 rounded-full lptpXS:w-8 lptpXS:h-8 "
-          src={user?.avatarUrl.min}
-        />
-        <div className="flex justify-between w-full items-center">
-          <div className="flex flex-col justify-start ml-2 lptpXS:p-0">
-            <Link to={`/p/${user?.username}`} className="lptpXS:-mt-0.5">
-              <span className=" font-bold text-sm lptpXS:text-xs lptpXS:mb-0">
-                {user?.username}
-              </span>
-            </Link>
-            <span className=" text-sm text-contentbreaks lptpXS:text-xs lptpXS:-mt-1">
-              {item.comment}
-            </span>
-          </div>
-          <p className="text-xs w-28 w-datecreate flex justify-end text-gray-light lptpXS:text-xxs">
-            {item.dateCreated}
-          </p>
-        </div>
-      </div>
-      // <div>bruh</div>
-    );
   };
 
   return (
@@ -79,17 +38,7 @@ export default function Comments({
               }
             }}
           >
-            <svg
-              width="15"
-              height="3"
-              viewBox="0 0 15 3"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="1.5" cy="1.5" r="1.5" fill="#9A86B5" />
-              <circle cx="7.5" cy="1.5" r="1.5" fill="#9A86B5" />
-              <circle cx="13.5" cy="1.5" r="1.5" fill="#9A86B5" />
-            </svg>
+            <SvgSelector id="dots" />
           </button>
         )}
         <p className="text-gray-base uppercase text-xs mt-2">{posted}</p>
