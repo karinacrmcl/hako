@@ -7,8 +7,7 @@ export default function SearchList({ users }) {
     <div className="h-auto flex flex-col bg-white shadow-xl w-96 absolute z-100 top-12 rounded-lg -left-8 searchlist lptpXS:w-80 lptpXS:-left-4 mobileSM:60 mobileSM:-left-10 mobileSM:mt-1 ">
       {users.length === 0 ? (
         <p className="text-black-light font-medium p-2 lptpXS:text-sm">
-          {" "}
-          Nothing found{" "}
+          Nothing found
         </p>
       ) : users ? (
         users.map((user) => {
