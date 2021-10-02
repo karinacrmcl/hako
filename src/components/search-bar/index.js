@@ -2,22 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { getAllUsers } from "../../services/firebase";
 import SearchList from "./searchlist";
+import SvgSelector from "./svg-selector";
 
 export default function SearchBar() {
   const [hoveredBtn, setHoveredBtn] = useState(false);
-
   const [searchValue, setSearchValue] = useState("");
   const [listVisible, setListVisible] = useState(false);
   const [foundUsers, setfoundUsers] = useState([]);
+  const [usersArray, setUsersArray] = useState([]);
 
   const isMobile = useMediaQuery({ maxWidth: "650px" });
 
   function searchUsersByUsername(target) {
     let searchValue = target.value.toLowerCase();
-    let newarr = usersArray.filter((user) => {
+    let newArr = usersArray.filter((user) => {
       return user.username.toLowerCase().includes(searchValue);
     });
-    setfoundUsers(newarr);
+    setfoundUsers(newArr);
   }
 
   function showSuggestionsList(target) {
@@ -28,7 +29,11 @@ export default function SearchBar() {
     }
   }
 
-  const [usersArray, setUsersArray] = useState([]);
+  function handleSearch(target) {
+    setSearchValue(target.value);
+    showSuggestionsList(target);
+    searchUsersByUsername(target);
+  }
 
   useEffect(() => {
     async function formAllUsersArray() {
@@ -49,9 +54,7 @@ export default function SearchBar() {
           } `}
           value={searchValue}
           onChange={({ target }) => {
-            setSearchValue(target.value);
-            showSuggestionsList(target);
-            searchUsersByUsername(target);
+            handleSearch(target);
           }}
         />
         <button
@@ -64,76 +67,9 @@ export default function SearchBar() {
           className="bg-none z-100 w-6 h-2/3 -ml-8"
         >
           {hoveredBtn ? (
-            <svg
-              width="19"
-              height="21"
-              viewBox="0 0 19 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="flex items-center justify-center ml-1 mobileXL:h-14 mobileXL:w-4.5"
-            >
-              <path
-                d="M13 14L18 20"
-                stroke="url(#paint0_linear)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <circle
-                cx="8"
-                cy="8"
-                r="7"
-                stroke="url(#paint1_linear)"
-                strokeWidth="2"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear"
-                  x1="15.5"
-                  y1="14"
-                  x2="15.5"
-                  y2="20"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#B7BBCE" />
-                  <stop offset="1" stopColor="#9A86B5" />
-                </linearGradient>
-                <linearGradient
-                  id="paint1_linear"
-                  x1="8"
-                  y1="0"
-                  x2="8"
-                  y2="16"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#D3EEE6" />
-                  <stop offset="1" stopColor="#B7BBCE" />
-                </linearGradient>
-              </defs>
-            </svg>
+            <SvgSelector id="search-hovered" />
           ) : (
-            <svg
-              width="19"
-              height="21"
-              viewBox="0 0 19 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="flex items-center justify-center ml-1 mobileXL:h-14 mobileXL:w-4.5"
-            >
-              <circle
-                cx="8"
-                cy="8"
-                r="7"
-                stroke={`${isMobile ? "#CFCFCF" : "#E1E1E1"} `}
-                strokeWidth="2"
-              />
-              <path
-                d="M13 14L18 20"
-                stroke={`${isMobile ? "#CFCFCF" : "#E1E1E1"} `}
-                strokeWidth="2"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </svg>
+            <SvgSelector id="search-hovered" />
           )}
         </button>
       </div>
