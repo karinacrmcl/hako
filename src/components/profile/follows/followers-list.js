@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
-import Skeleton from "react-loading-skeleton";
-import { Link } from "react-router-dom";
 import { getUserByUserId } from "../../../services/firebase";
+import { SingleUserInfo } from "./list-item";
 
 export default function FollowerList({ list }) {
   const [users, setUsers] = useState([]);
@@ -18,33 +17,6 @@ export default function FollowerList({ list }) {
       getUserObjByUserId();
     }
   }, []);
-
-  const SingleUserInfo = ({ user }) => {
-    return (
-      <>
-        {user ? (
-          <div className="flex justify-between mt-2 hover:bg-gray-background cursor-pointer px-4 py-1">
-            <Link
-              to={`/p/${user ? user.username : null}`}
-              className="flex items-center"
-            >
-              <div className="flex items-center">
-                <img
-                  src={
-                    user
-                      ? user.avatarUrl.min
-                      : "https://i.ibb.co/ZY5mytK/user-deleted.png"
-                  }
-                  className="avatar-list rounded-full object-cover"
-                />
-                <p className="text-sm font-medium ml-2">{user.username}</p>
-              </div>
-            </Link>
-          </div>
-        ) : null}
-      </>
-    );
-  };
 
   return (
     <div className="userinfo-modal absolute mt-4 ml-60 z-100 overflow-auto flex flex-col">
