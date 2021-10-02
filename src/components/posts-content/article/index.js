@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 
 export default function ArticleContent({ object }) {
   const [readMore, setReadMore] = useState(false);
+
   function checkContentLength(objectContent) {
     if (objectContent.length < 700 || readMore) {
       return objectContent;
