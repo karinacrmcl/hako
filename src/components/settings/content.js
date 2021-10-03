@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import useUser from "../../hooks/use-user";
 import { updateProfiledata } from "../../services/firebase";
-import { firebase } from "../../lib/firebase";
+import { Firebase } from "../../lib/firebase";
 
 import Field from "./field";
 import StateUpdating from "./state-updating";
@@ -82,7 +82,7 @@ export default function Content({ category }) {
       emailAdressUpd.value != ""
     ) {
       if (usernameUpd.value.length <= 30) {
-        let userNow = firebase.auth().currentUser;
+        let userNow = Firebase.auth().currentUser;
         userNow
           .updateProfile({
             displayName: usernameUpd.value,
