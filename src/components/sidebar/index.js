@@ -12,7 +12,6 @@ export default function Sidebar() {
 
   return (
     <div className="font-fontbasic z-0">
-      {/* <User username={username} fullName={fullName} /> */}
       {isMobile ? null : (
         <Suggestions
           userId={userId}
