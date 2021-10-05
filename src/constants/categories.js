@@ -68,7 +68,7 @@ export const addCategories = [
   {
     title: "book",
     svgUrl: "book",
-    position: "-right-3 -top-7",
+    position: "-right-5 -top-7",
     id: 4,
     animDuration: 400,
     expl: "Book",
@@ -77,7 +77,7 @@ export const addCategories = [
   {
     title: "discussion",
     svgUrl: "discussion",
-    position: "-right-8 top-0",
+    position: "-right-10 top-0",
     id: 5,
     animDuration: 500,
     expl: "Discussion",
