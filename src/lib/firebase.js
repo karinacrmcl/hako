@@ -37,9 +37,9 @@
 // console.log(firebase.firestore.collection);
 
 // export { firebase, FieldValue, arrayUnion, arrayRemove };
-import Firebase from "firebase";
-import "firebase/firestore";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const config = {
   apiKey: "AIzaSyDGdTMS57Y-3zW2-4ciQy8RFwsR-7zjVXo",
@@ -51,7 +51,7 @@ const config = {
   measurementId: "G-WZWBYJQ5JL",
 };
 
-const firebase = Firebase.initializeApp(config);
-const { FieldValue, arrayUnion, arrayRemove } = Firebase.firestore;
+const Firebase = firebase.initializeApp(config);
+const { FieldValue, arrayUnion, arrayRemove } = firebase.firestore;
 
-export { firebase, FieldValue, arrayUnion, arrayRemove };
+export { Firebase, FieldValue, arrayUnion, arrayRemove };
