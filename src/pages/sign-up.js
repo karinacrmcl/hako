@@ -6,8 +6,7 @@ import * as ROUTES from "../constants/routes";
 import { doesUsernameExist } from "../services/firebase";
 
 export default function SignUp() {
-  const history = useHistory();
-  const { firebase } = useContext(FirebaseContext);
+  const { Firebase } = useContext(FirebaseContext);
 
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -25,19 +24,17 @@ export default function SignUp() {
       if (username.length < 30) {
         if (fullName.length < 50) {
           try {
-            const createdUserResult = await firebase
-              .auth()
-              .createUserWithEmailAndPassword(emailAdress, password);
+            const createdUserResult =
+              await Firebase.auth().createUserWithEmailAndPassword(
+                emailAdress,
+                password
+              );
 
-            // authentication
-            // -> emailAddress & password & username (displayName)
             await createdUserResult.user.updateProfile({
               displayName: username,
             });
 
-            // firebase user collection (create a document)
-            await firebase
-              .firestore()
+            await Firebase.firestore()
               .collection("users")
               .add({
                 userId: createdUserResult.user.uid,
@@ -59,9 +56,9 @@ export default function SignUp() {
 
             // history.push(ROUTES.DASHBOARD);
           } catch (error) {
-            setFullName("");
-            setEmailAdress("");
-            setPassword("");
+            // setFullName("");
+            // setEmailAdress("");
+            // setPassword("");
             setError(error.message);
           }
         } else {
