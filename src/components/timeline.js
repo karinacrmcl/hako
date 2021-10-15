@@ -18,41 +18,31 @@ export default function Timeline() {
       case "article":
         return (
           activeCategories.article && (
-            <PostLayout object={content} isHot={content.isHot}>
-              <ArticleContent object={content} key={content.id} />
-            </PostLayout>
+            <ArticleContent object={content} key={content.id} />
           )
         );
       case "book":
         return (
           activeCategories.book && (
-            <PostLayout object={content} isHot={content.isHot}>
-              <BookContent object={content} key={content.id} />
-            </PostLayout>
+            <BookContent object={content} key={content.id} />
           )
         );
       case "news":
         return (
           activeCategories.news && (
-            <PostLayout object={content} isHot={content.isHot}>
-              <NewsContent object={content} key={content.id} />
-            </PostLayout>
+            <NewsContent object={content} key={content.id} />
           )
         );
       case "discussion":
         return (
           activeCategories.discussion && (
-            <PostLayout object={content} isHot={content.isHot}>
-              <DiscussionContent object={content} key={content.id} />
-            </PostLayout>
+            <DiscussionContent object={content} key={content.id} />
           )
         );
       case "photography":
         return (
           activeCategories.photography && (
-            <PostLayout object={content} isHot={content.isHot}>
-              <PhotographyContent object={content} key={content.id} />
-            </PostLayout>
+            <PhotographyContent object={content} key={content.id} />
           )
         );
 
@@ -62,6 +52,7 @@ export default function Timeline() {
         break;
     }
   }
+  console.log(publications);
 
   return (
     <div
@@ -79,7 +70,13 @@ export default function Timeline() {
         </>
       ) : publications?.length > 0 ? (
         publications.map((content) => {
-          return <div key={content.id}>{getContent(content)}</div>;
+          return (
+            <div key={content.id}>
+              <PostLayout object={content} isHot={content.isHot}>
+                {getContent(content)}
+              </PostLayout>
+            </div>
+          );
         })
       ) : (
         <p className="text-center text-2xl">Follow more people to see posts</p>
