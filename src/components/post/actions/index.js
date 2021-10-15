@@ -1,8 +1,6 @@
 import { useState, useContext, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
 import FirebaseContext from "../../../context/firebase";
 import UserContext from "../../../context/user";
-import { addPublicationToPinned } from "../../../services/firebase";
 import useUser from "../../../hooks/use-user";
 import Comments from "../comments/comments";
 import {
@@ -89,10 +87,3 @@ export default function Actions({
     </div>
   );
 }
-
-// Actions.propTypes = {
-//   docId: PropTypes.string.isRequired,
-//   totalLikes: PropTypes.number.isRequired,
-//   likedPhoto: PropTypes.bool.isRequired,
-//   handleFocus: PropTypes.func.isRequired,
-// };
