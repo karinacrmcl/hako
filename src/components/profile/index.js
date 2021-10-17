@@ -47,7 +47,7 @@ export default function UserProfile({ profileUser }) {
   useEffect(() => {
     if (isMobile) {
       document.querySelectorAll("#publications")?.forEach((item) => {
-        item.addEventListener("scroll", (e) => {
+        item.addEventListener("scroll", () => {
           if (document.getElementById("publications").scrollTop == 0) {
             setIsOnTop(true);
           } else {
@@ -61,13 +61,13 @@ export default function UserProfile({ profileUser }) {
   }, [isPinnedOpened]);
 
   return (
-    <div className="flex justify-between container w-full tabletXL:flex-col tabletXL:items-center">
+    <div className="flex justify-between container w-full h-screen tabletXL:flex-col tabletXL:items-center">
       <div
         className={`flex flex-col items-start tabletXL:items-center transition-all duration-200 mobileXL:w-full ${
           isOnTop ? "mt-0" : "-mt-48 "
         } `}
       >
-        {isPinnedOpened ? null : <Sorting isOnTop={isOnTop} />}
+        {!isPinnedOpened && <Sorting isOnTop={isOnTop} />}
         {isPinnedOpened ? (
           <PinnedList
             profile={profile}
