@@ -1,36 +1,10 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
+import { categoriesList } from "../../../constants/profileCategories";
 import { useProfileCategories } from "../../../hooks/use-profile-categories";
+import SvgSelector from "../svg-selector";
 
 export default function Sorting({ isOnTop }) {
-  const categoriesList = [
-    {
-      title: "photography",
-      icon: "/images/icons/user/photo.svg",
-      id: 1,
-    },
-    {
-      title: "news",
-      icon: "/images/icons/user/news.svg",
-      id: 2,
-    },
-    {
-      title: "article",
-      icon: "/images/icons/user/article.svg",
-      id: 3,
-    },
-    {
-      title: "book",
-      icon: "/images/icons/user/book.svg",
-      id: 4,
-    },
-    {
-      title: "discussion",
-      icon: "/images/icons/user/discussion.svg",
-      id: 5,
-    },
-  ];
-
   const isMobileSM = useMediaQuery({ maxWidth: "450px" });
 
   const { profileActiveCategories, setProfileActiveCategories } =
@@ -60,16 +34,16 @@ export default function Sorting({ isOnTop }) {
             {categoriesList.map((category) => {
               return (
                 <div
-                  className="w-7 flex justify-center cursor-pointer h-full category-underline"
+                  className="w-7 flex justify-center items-center cursor-pointer h-full category-underline"
                   key={category.id}
                   onClick={() => {
                     setProfileActiveCategories({
                       ...profileActiveCategories,
-                      profileActiveCategories: category.title,
+                      profileActiveCategories: category.label,
                     });
                   }}
                 >
-                  <img src={category.icon} className="" alt={category.title} />
+                  <SvgSelector id={category.label} />
                 </div>
               );
             })}
