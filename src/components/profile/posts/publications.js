@@ -1,12 +1,8 @@
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { useProfileCategories } from "../../../hooks/use-profile-categories";
+import { getContent } from "../../../utils/getContent";
 import PostLayout from "../../post";
-import ArticleContent from "../../posts-content/article";
-import BookContent from "../../posts-content/book";
-import DiscussionContent from "../../posts-content/discussion";
-import NewsContent from "../../posts-content/news";
-import PhotographyContent from "../../posts-content/photography";
 
 export default function Publications({ publications }) {
   const { profileActiveCategories } = useProfileCategories();
@@ -18,56 +14,12 @@ export default function Publications({ publications }) {
     >
       {publications?.length > 0 ? (
         publications.map((content) => {
-          switch (content.type) {
-            case "article":
-              return (
-                profileActiveCategories.profileActiveCategories ===
-                  "article" && (
-                  <PostLayout object={content}>
-                    <ArticleContent object={content} key={content.id} />
-                  </PostLayout>
-                )
-              );
-            case "book":
-              return (
-                profileActiveCategories.profileActiveCategories === "book" && (
-                  <PostLayout object={content}>
-                    <BookContent object={content} key={content.id} />
-                  </PostLayout>
-                )
-              );
-            case "news":
-              return (
-                profileActiveCategories.profileActiveCategories === "news" && (
-                  <PostLayout object={content}>
-                    <NewsContent object={content} key={content.id} />
-                  </PostLayout>
-                )
-              );
-            case "discussion":
-              return (
-                profileActiveCategories.profileActiveCategories ===
-                  "discussion" && (
-                  <PostLayout object={content}>
-                    <DiscussionContent object={content} key={content.id} />
-                  </PostLayout>
-                )
-              );
-            case "photography":
-              return (
-                profileActiveCategories.profileActiveCategories ===
-                  "photography" && (
-                  <PostLayout object={content}>
-                    <PhotographyContent object={content} key={content.id} />
-                  </PostLayout>
-                )
-              );
-
-            default:
-              return (
-                <p className="text-center text-2xl"> No publications yet </p>
-              );
-          }
+          return (
+            profileActiveCategories.profileActiveCategories ===
+              content.type && (
+              <PostLayout object={content}>{getContent(content)}</PostLayout>
+            )
+          );
         })
       ) : !publications ? (
         <Skeleton count={1} width={640} height={500} className="mb-5 " />
@@ -77,44 +29,9 @@ export default function Publications({ publications }) {
 
       {profileActiveCategories.profileActiveCategories === "all"
         ? publications.map((content) => {
-            switch (content.type) {
-              case "article":
-                return (
-                  <PostLayout object={content} isHot={content.isHot}>
-                    <ArticleContent object={content} key={content.id} />
-                  </PostLayout>
-                );
-              case "book":
-                return (
-                  <PostLayout object={content} isHot={content.isHot}>
-                    <BookContent object={content} key={content.id} />
-                  </PostLayout>
-                );
-              case "news":
-                return (
-                  <PostLayout object={content} isHot={content.isHot}>
-                    <NewsContent object={content} key={content.id} />
-                  </PostLayout>
-                );
-              case "discussion":
-                return (
-                  <PostLayout object={content} isHot={content.isHot}>
-                    <DiscussionContent object={content} key={content.id} />
-                  </PostLayout>
-                );
-              case "photography":
-                return (
-                  <PostLayout object={content} isHot={content.isHot}>
-                    <PhotographyContent object={content} key={content.id} />
-                  </PostLayout>
-                );
-
-              default:
-                return (
-                  <p className="text-center text-2xl"> No publications yet </p>
-                );
-                break;
-            }
+            return (
+              <PostLayout object={content}>{getContent(content)}</PostLayout>
+            );
           })
         : null}
     </div>
