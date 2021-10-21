@@ -157,45 +157,6 @@ export async function getUserPublicationsByUsername(username, userId) {
   return publicationsWithUserDetails;
 }
 
-// //get all the publications with the user details (profile, id, full name)
-// export async function getPublications(userId, following) {
-//   const visibleFor = [...following, userId];
-
-//   const result = await Firebase.firestore()
-//     .collection("publications")
-//     .where("userId", "in", visibleFor)
-//     .get();
-
-//   const userFollowedPublications = result.docs.map((publication) => ({
-//     ...publication.data(),
-//     docId: publication.id,
-//   }));
-
-//   const publicationsWithUserDetails = await Promise.all(
-//     userFollowedPublications.map(async (publication) => {
-//       let currentUser = await getUserByUserId(userId);
-//       let userLikedPublication = false;
-//       if (currentUser[0].likedPublications.includes(publication.docId)) {
-//         userLikedPublication = true;
-//       }
-//       let userPinnedPublication = false;
-//       if (currentUser[0].pinnedPublications.includes(publication.id)) {
-//         userPinnedPublication = true;
-//       }
-//       const user = await getUserByUserId(publication.userId);
-//       const { username } = user[0];
-//       return {
-//         username,
-//         ...publication,
-//         userLikedPublication,
-//         userPinnedPublication,
-//       };
-//     })
-//   );
-
-//   return publicationsWithUserDetails;
-// }
-
 export async function getPublications(userId, following) {
   const ids = [...following, userId];
   if (!ids || !ids.length) return [];
