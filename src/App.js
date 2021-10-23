@@ -10,51 +10,15 @@ import Dashboard from "./pages/dashboard";
 import NotFound from "./pages/not-found.js";
 import * as ROUTES from "./constants/routes";
 import UserContext from "./context/user";
-
 import ProtectedRoute from "./utils/protected-route";
 import IsUserLoggedIn from "./utils/is-user-logged-in";
 
-import Settings from "../src/components/settings";
-import AddPhotoModal from "../src/components/add-posts/photography";
-import AddArticleModal from "../src/components/add-posts/article";
-import AddNewsModal from "../src/components/add-posts/news";
-import AddBookModal from "../src/components/add-posts/book";
-import AddDiscussionModal from "../src/components/add-posts/discussion";
-import { useModal } from "./hooks/use-modal";
-
 import CategoriesProvider from "./provider/categories-provider";
 import ProfileCategoriesProvider from "./provider/profile-categories-provider";
-import UserProfileSettingsMobile from "./components/settings/settings-mobile-modals/user-profile";
-import CustomizationSettingsMobile from "./components/settings/settings-mobile-modals/customization";
-import CategoriesMobile from "./components/menu/categories-mobile";
+import Modals from "./components/modals";
 
 export default function App() {
   const { user } = useAuthListener();
-  const { openModal } = useModal();
-
-  const modalList = [
-    { key: "modalSettings", component: <Settings user={user} /> },
-    { key: "modalAddArticle", component: <AddArticleModal user={user} /> },
-    { key: "modalAddNews", component: <AddNewsModal user={user} /> },
-    { key: "modalAddBook", component: <AddBookModal user={user} /> },
-    { key: "modalAddPhoto", component: <AddPhotoModal user={user} /> },
-    {
-      key: "modalAddDiscussion",
-      component: <AddDiscussionModal user={user} />,
-    },
-    {
-      key: "categoriesMobile",
-      component: <CategoriesMobile isOpen={true} />,
-    },
-    {
-      key: "settingsUserProfileMobile",
-      component: <UserProfileSettingsMobile />,
-    },
-    {
-      key: "settingsCustomizationMobile",
-      component: <CustomizationSettingsMobile />,
-    },
-  ];
 
   return (
     <div className="overflow-hidden max-w-screen max-h-screen">
@@ -89,13 +53,7 @@ export default function App() {
             <Route component={NotFound} />
           </Switch>
         </Router>
-
-        {modalList.map(
-          (item) =>
-            openModal[item.key] && (
-              <Fragment key={item.key}>{item.component}</Fragment>
-            )
-        )}
+        <Modals />
       </UserContext.Provider>
     </div>
   );
