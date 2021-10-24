@@ -1,7 +1,7 @@
 import Skeleton from "react-loading-skeleton";
 import usePhotos from "../hooks/use-photos";
 
-import { useCategories } from "../hooks/use-categorysorting";
+import { useCategories } from "../context/categories-selected";
 import ArticleContent from "./posts-content/article";
 import PostLayout from "./post";
 import BookContent from "./posts-content/book";
@@ -46,13 +46,12 @@ export default function Timeline() {
           )
         );
 
-        break;
-
       default:
         break;
     }
   }
-  console.log(publications);
+
+  console.log(activeCategories);
 
   return (
     <div
@@ -71,11 +70,15 @@ export default function Timeline() {
       ) : publications?.length > 0 ? (
         publications.map((content) => {
           return (
-            <div key={content.id}>
-              <PostLayout object={content} isHot={content.isHot}>
+            activeCategories[content.type] && (
+              <PostLayout
+                object={content}
+                isHot={content.isHot}
+                key={content.id}
+              >
                 {getContent(content)}
               </PostLayout>
-            </div>
+            )
           );
         })
       ) : (
