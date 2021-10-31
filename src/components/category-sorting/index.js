@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
+import { categoriesSorting } from "../../constants/categories";
 import Item from "./item";
 import Hint from "./hint";
-import { categoriesSorting } from "../../constants/categories";
 
 export default function Sorting({ isOnTop }) {
   const [categoriesHovered, setCategoriesHovered] = useState(false);
@@ -35,7 +35,7 @@ export default function Sorting({ isOnTop }) {
         }}
       >
         <h3 className="text-sm font-semibold mb-2 lptpXS:text-xs">
-          {isMobile ? null : "SORT"}
+          {!isMobile && "SORT"}
         </h3>
         <div className="flex self-start flex-col mobileXL:flex-row  mobileXL:items-center mobileXL:h-full  ">
           {categoriesSorting.map((item, i) => (
@@ -48,7 +48,7 @@ export default function Sorting({ isOnTop }) {
           ))}
         </div>
       </div>
-      {isMobile ? null : <Hint />}
+      {!isMobile && <Hint />}
     </div>
   );
 }
