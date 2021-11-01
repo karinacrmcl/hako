@@ -7,6 +7,7 @@ import * as ROUTES from "../../constants/routes";
 import { Link } from "react-router-dom";
 import UserContext from "../../context/user";
 import SearchBar from "../search-bar";
+import SvgSelector from "../../shared/assets/svg-selector";
 
 export default function Header() {
   const { user } = useContext(UserContext);
@@ -22,11 +23,7 @@ export default function Header() {
           <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
             <h1 className="flex justify-center w-full">
               <Link to={ROUTES.DASHBOARD} aria-label="Instagram logo">
-                <img
-                  src="/images/logo.png"
-                  alt="Hako-logo"
-                  className="w-10 mobileXL:w-8"
-                />
+                <SvgSelector id="logo" />
               </Link>
             </h1>
           </div>
