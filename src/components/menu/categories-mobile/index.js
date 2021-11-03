@@ -1,7 +1,7 @@
 import React from "react";
 import { Transition } from "react-transition-group";
 import { addCategoriesMobile } from "../../../constants/categories";
-import { useModal } from "../../../hooks/use-modal";
+import { useModal } from "../../../context/modal-context";
 import SvgSelector from "../svg-selector";
 import { CategoryItem } from "./item";
 
