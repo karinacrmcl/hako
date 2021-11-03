@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useMediaQuery } from "react-responsive";
-import { useModal } from "../../../hooks/use-modal";
+import { useModal } from "../../../context/modal-context";
 
 import SvgSelector from "../svg-selector";
 import Categories from "../categories";
