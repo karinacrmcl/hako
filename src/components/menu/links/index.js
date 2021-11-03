@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import useUser from "../../../hooks/use-user";
-import { useModal } from "../../../hooks/use-modal";
+import { useModal } from "../../../context/modal-context";
 
 import * as ROUTES from "../../../constants/routes";
 
