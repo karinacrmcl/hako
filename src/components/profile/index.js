@@ -1,7 +1,6 @@
-import PropTypes from "prop-types";
 import { useReducer, useEffect, useState } from "react";
 import { getUserPublicationsByUsername } from "../../services/firebase";
-import UserInfo from "./userinfo";
+import UserInfo from "./user-info";
 import useUser from "../../hooks/use-user";
 import { useMediaQuery } from "react-responsive";
 import Sorting from "./posts/sorting";
@@ -102,15 +101,3 @@ export default function UserProfile({ profileUser }) {
     </div>
   );
 }
-
-UserProfile.propTypes = {
-  user: PropTypes.shape({
-    dateCreated: PropTypes.number,
-    emailAdress: PropTypes.string,
-    followers: PropTypes.array,
-    following: PropTypes.array,
-    fullName: PropTypes.string,
-    userId: PropTypes.string,
-    username: PropTypes.string,
-  }),
-};
