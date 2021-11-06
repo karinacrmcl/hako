@@ -4,7 +4,6 @@ import useUser from "../../../hooks/use-user";
 import { addAnswerToDiscussion } from "../../../services/firebase";
 
 export default function AddAnswer({ object, setAnswers, answers }) {
-  // const { user } = useContext(UserContext);
   const {
     user: { userId, avatarUrl },
   } = useUser();
