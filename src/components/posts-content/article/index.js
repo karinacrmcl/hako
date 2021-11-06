@@ -13,7 +13,9 @@ export default function ArticleContent({ object }) {
 
   return (
     <div className="w-full flex flex-col items-start px-4 mt-3">
-      <h2 className="font-semibold text-xl lptpXS:text-base">{object.title}</h2>
+      <h2 className="font-semibold text-xl text-contentbreaks lptpXS:text-base">
+        {object.title}
+      </h2>
 
       <p className="text-sm mt-3 text-contentbreaks lptpXS:text-xs">
         {checkContentLength(object.text)}
