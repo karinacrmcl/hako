@@ -1,7 +1,7 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { categoriesList } from "../../../constants/profileCategories";
-import { useProfileCategories } from "../../../hooks/use-profile-categories";
+import { useProfileCategories } from "../../../context/profile-categories";
 import SvgSelector from "../svg-selector";
 
 export default function Sorting({ isOnTop }) {
