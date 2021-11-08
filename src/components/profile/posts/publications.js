@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
-import { useProfileCategories } from "../../../hooks/use-profile-categories";
-import { getContent } from "../../../utils/getContent";
+import { useProfileCategories } from "../../../context/profile-categories";
+import { getContent } from "../../../utils/get-content";
 import PostLayout from "../../post";
 
 export default function Publications({ publications }) {
