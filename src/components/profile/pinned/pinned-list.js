@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { getPinnedPublications } from "../../../services/firebase";
-import { getContent } from "../../../utils/getContent";
+import { getContent } from "../../../utils/get-content";
 import PostLayout from "../../post";
 
 export default function PinnedList({ profile, userId }) {
