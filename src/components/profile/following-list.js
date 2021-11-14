@@ -23,7 +23,7 @@ export default function FollowingList({ list }) {
     return (
       <div>
         {user ? (
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-2 hover:bg-gray-background cursor-pointer px-4 py-1">
             <Link
               to={`/p/${user ? user.username : null}`}
               className="flex items-center"
@@ -43,7 +43,7 @@ export default function FollowingList({ list }) {
   };
 
   return (
-    <div className="userinfo-modal absolute -right-28 top-48 z-100 overflow-auto px-4 py-2 flex flex-col">
+    <div className="userinfo-modal absolute -right-28 top-48 z-100 overflow-auto  flex flex-col">
       {users.length > 0 ? (
         users.sort().map((item) => {
           return <SingleUserInfo user={item} key={item.userId} />;

@@ -109,7 +109,7 @@ export default function Categories({ btnActive }) {
               ...categoryStyle(itemAnimDuration),
               ...transitionStyles[state],
             }}
-            className="absolute bg-white rounded-lg p-2 category-width"
+            className="absolute bg-white rounded-lg px-2 py-1   font-medium category-width"
           >
             {itemHovered}
           </div>

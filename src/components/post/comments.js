@@ -41,7 +41,7 @@ export default function Comments({
             <Link to={`/p/${user?.username}`}>
               <span className=" font-bold text-sm">{user?.username}</span>
             </Link>
-            <span className=" text-sm">{item.comment}</span>
+            <span className=" text-sm text-contentbreaks">{item.comment}</span>
           </div>
           <p className="text-xs w-28 w-datecreate flex justify-end text-gray-light">
             {item.dateCreated}

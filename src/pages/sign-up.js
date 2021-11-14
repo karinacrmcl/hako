@@ -22,43 +22,57 @@ export default function SignUp() {
 
     const usernameExists = await doesUsernameExist(username);
     if (!usernameExists) {
-      try {
-        const createdUserResult = await firebase
-          .auth()
-          .createUserWithEmailAndPassword(emailAdress, password);
+      if (username.length < 30) {
+        if (fullName.length < 50) {
+          try {
+            const createdUserResult = await firebase
+              .auth()
+              .createUserWithEmailAndPassword(emailAdress, password);
 
-        // authentication
-        // -> emailAddress & password & username (displayName)
-        await createdUserResult.user.updateProfile({
-          displayName: username,
-        });
+            // authentication
+            // -> emailAddress & password & username (displayName)
+            await createdUserResult.user.updateProfile({
+              displayName: username,
+            });
 
-        // firebase user collection (create a document)
-        await firebase
-          .firestore()
-          .collection("users")
-          .add({
-            userId: createdUserResult.user.uid,
-            username: username.toLowerCase(),
-            fullName,
-            emailAdress: emailAdress.toLowerCase(),
-            following: [],
-            followers: [],
-            avatarUrl: {
-              basic: "https://i.ibb.co/4M613tB/avatar-default.png",
-              min: "https://i.ibb.co/7CtDXPD/Group-109.png",
-            },
-            dateCreated: Date.now(),
-            pinnedPublications: [],
-            likedPublications: [],
-          });
+            // firebase user collection (create a document)
+            await firebase
+              .firestore()
+              .collection("users")
+              .add({
+                userId: createdUserResult.user.uid,
+                username: username.toLowerCase(),
+                fullName,
+                emailAdress: emailAdress.toLowerCase(),
+                following: [],
+                followers: [],
+                avatarUrl: {
+                  basic: "https://i.ibb.co/4M613tB/avatar-default.png",
+                  min: "https://i.ibb.co/7CtDXPD/Group-109.png",
+                },
+                dateCreated: Date.now(),
+                pinnedPublications: [],
+                likedPublications: [],
+              });
 
-        history.push(ROUTES.DASHBOARD);
-      } catch (error) {
-        setFullName("");
-        setEmailAdress("");
-        setPassword("");
-        setError(error.message);
+            history.push(ROUTES.DASHBOARD);
+          } catch (error) {
+            setFullName("");
+            setEmailAdress("");
+            setPassword("");
+            setError(error.message);
+          }
+        } else {
+          setFullName("");
+          setError(
+            "Is your full name actually that long? The maximum number of characters is 50"
+          );
+        }
+      } else {
+        setUsername("");
+        setError(
+          "That username is too long, the maximum number of characters is 30"
+        );
       }
     } else {
       setUsername("");
@@ -80,11 +94,13 @@ export default function SignUp() {
           <h1 className="flex justify-center w-full">
             <img src="/images/logo.svg" className="mt-2 w-6/12 mb-2" />
           </h1>
-          {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
+          {error && (
+            <p className="mt-1 text-xs font-medium text-red-primary">{error}</p>
+          )}
           <form
             onSubmit={handleSignUp}
             method="POST"
-            className="flex flex-col items-center mt-8 mb-6"
+            className="flex flex-col items-center mt-4 mb-6"
           >
             <input
               aria-label="Enter your username"

@@ -19,7 +19,7 @@ export default function Content({ user }) {
       day: "numeric",
     };
 
-    if (title && text) {
+    if (title && text && text.length <= symbolsLimit) {
       //post article proto
       const post = {
         category: "Posts & Articles",
@@ -64,15 +64,16 @@ export default function Content({ user }) {
     }
   }
 
-  const handleLogin = async (event) => {
+  const handlePrevent = async (event) => {
     event.preventDefault();
   };
+  const symbolsLimit = 1500;
 
   return (
     <form
       key={"form"}
       className="flex-col flex h-full py-10 relative"
-      onSubmit={handleLogin}
+      onSubmit={handlePrevent}
       method="POST"
     >
       <input
@@ -94,6 +95,15 @@ export default function Content({ user }) {
           setText(e.target.value);
         }}
       ></textarea>
+      <p
+        className={`flex justify-end mt-1 ${
+          text.length <= symbolsLimit
+            ? `text-gray-extralight`
+            : `text-red-primary`
+        }`}
+      >
+        {text.length}/{symbolsLimit}
+      </p>
       <div
         className="absolute right-0 -bottom-10"
         onClick={(e) => savePostData(e)}

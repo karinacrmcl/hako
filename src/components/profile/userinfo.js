@@ -113,7 +113,7 @@ export default function UserInfo({
                 profileUsername
               )}
             </p>
-            <div className="">
+            <div className="text-contentbreaks">
               {!fullName ? <Skeleton width={150} height={24} /> : fullName}
             </div>
           </div>

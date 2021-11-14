@@ -20,7 +20,7 @@ export default function PostArticle({ object }) {
       <div className="w-full flex flex-col items-start px-4 mt-3">
         <h2 className="font-semibold text-xl">{object.title}</h2>
 
-        <p className="text-sm mt-3">
+        <p className="text-sm mt-3 text-contentbreaks">
           {checkContentLength(object.text)}
           {object.text.length > 700 && (
             <a

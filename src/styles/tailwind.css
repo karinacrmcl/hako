@@ -334,7 +334,7 @@
     z-index: 100000000000000000000;
   }
   .category-width {
-    max-width: 100px;
+    max-width: 130px;
     white-space: nowrap;
   }
 }
@@ -407,4 +407,8 @@
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+}
+
+.text-contentbreaks {
+  overflow-wrap: anywhere;
 }

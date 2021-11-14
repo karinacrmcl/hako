@@ -16,7 +16,7 @@ export default function Content({ user }) {
       day: "numeric",
     };
 
-    if (question && opinion) {
+    if (question && opinion && opinion.length <= symbolsLimit) {
       //post article proto
       const post = {
         category: "Discussions ",
@@ -60,6 +60,7 @@ export default function Content({ user }) {
       });
     }
   }
+  const symbolsLimit = 800;
 
   return (
     <div className="flex-col flex h-full py-10 relative">
@@ -79,6 +80,15 @@ export default function Content({ user }) {
           setOpinion(target.value);
         }}
       ></textarea>
+      <p
+        className={`flex justify-end mt-1 ${
+          opinion.length <= symbolsLimit
+            ? `text-gray-extralight`
+            : `text-red-primary`
+        }`}
+      >
+        {opinion.length}/{symbolsLimit}
+      </p>
       <div
         className="absolute right-0 -bottom-10"
         onClick={(e) => savePostData(e)}

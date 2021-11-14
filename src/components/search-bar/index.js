@@ -36,7 +36,7 @@ export default function SearchBar() {
   }, []);
 
   return (
-    <div className="flex flex-colrelative">
+    <div className="flex flex-col relative">
       <div className="flex items-center">
         <input
           type="text"

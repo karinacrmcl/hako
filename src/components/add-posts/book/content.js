@@ -96,7 +96,14 @@ export default function Content({ user }) {
       day: "numeric",
     };
 
-    if (booksTitle && author && selectedYear && selectedGenres && description) {
+    if (
+      booksTitle &&
+      author &&
+      selectedYear &&
+      selectedGenres &&
+      description &&
+      description.length <= symbolsLimit
+    ) {
       //post article proto
       const post = {
         category: "Books recomendations",
@@ -266,6 +273,8 @@ export default function Content({ user }) {
       </div>
     );
   };
+
+  const symbolsLimit = 1000;
 
   return (
     <div className="flex-col flex h-full py-10 relative">
@@ -441,6 +450,15 @@ export default function Content({ user }) {
           setDescription(target.value);
         }}
       ></textarea>
+      <p
+        className={`flex justify-end mt-1 ${
+          description.length <= symbolsLimit
+            ? `text-gray-extralight`
+            : `text-red-primary`
+        }`}
+      >
+        {description.length}/{symbolsLimit}
+      </p>
 
       <p className="text-gray-addtext mt-6">Book’s cover’s picture:</p>
 

@@ -24515,7 +24515,7 @@ video {
 }
 
 .category-width {
-  max-width: 100px;
+  max-width: 130px;
   white-space: nowrap;
 }
 
@@ -24555,6 +24555,10 @@ video {
   100% {
     transform: scale(1);
   }
+}
+
+.text-contentbreaks {
+  overflow-wrap: anywhere;
 }
 
 @media (min-width: 640px) {

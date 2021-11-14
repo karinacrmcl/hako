@@ -90,10 +90,6 @@ export default function Answers({ object, currentUserId }) {
       }
     }, []);
 
-    // console.log("up", upVotes);
-    // console.log("down", item.upVotes);
-
-    // const [downVote, setDownVote] = useState(false);
     return (
       <div className="flex justify-between items-start mt-4 px-4">
         <img
@@ -102,7 +98,7 @@ export default function Answers({ object, currentUserId }) {
         />
         <div className="flex flex-col items-start w-full">
           <h3 className="text-sm font-semibold"> {user?.username}</h3>
-          <p className="text-sm break-all">{item.content}</p>
+          <p className="text-sm text-contentbreaks">{item.content}</p>
           <div className="flex items-center mt-1 w-16 justify-between">
             <div className="flex items-center">
               <button

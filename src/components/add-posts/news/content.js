@@ -169,7 +169,7 @@ export default function Content({ user }) {
       year: "numeric",
     };
 
-    if (newsTitle && author && text && srcLink) {
+    if (newsTitle && author && text && srcLink && text.length <= symbolsLimit) {
       //post article proto
       const post = {
         category: "Latest News",
@@ -221,6 +221,8 @@ export default function Content({ user }) {
     }
   }
 
+  const symbolsLimit = 700;
+
   return (
     <div className="flex-col flex h-full py-10  relative">
       <input
@@ -247,6 +249,15 @@ export default function Content({ user }) {
           setText(target.value);
         }}
       ></textarea>
+      <p
+        className={`flex justify-end mt-1 ${
+          text.length <= symbolsLimit
+            ? `text-gray-extralight`
+            : `text-red-primary`
+        }`}
+      >
+        {text.length}/{symbolsLimit}
+      </p>
       <p className="text-gray-addtext mt-6">Upload media files:</p>
       <div className="flex items-center justify-between w-full">
         {currentUploaded === maximumUploaded ? null : <MediaFieldEmpty />}
