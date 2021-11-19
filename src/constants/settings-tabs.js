@@ -1,0 +1,41 @@
+export const settingsTabs = [
+  {
+    identifier: "user-profile",
+    title: "User profile",
+    iconDesktop: "/images/icons/settings/desktop/user-profile.svg",
+    iconMobile: "/images/icons/settings/mobile/user-profile.svg",
+    hiddenMobile: true,
+  },
+  {
+    identifier: "customization",
+    title: "Customization",
+    iconDesktop: "/images/icons/settings/desktop/customization.svg",
+    iconMobile: "/images/icons/settings/mobile/customization.svg",
+    hiddenMobile: false,
+    modalTag: "settingsCustomizationMobile",
+  },
+  {
+    identifier: "privacy",
+    title: "Privacy",
+    iconDesktop: "/images/icons/settings/desktop/privacy.svg",
+    iconMobile: "/images/icons/settings/mobile/privacy.svg",
+    hiddenMobile: false,
+    modalTag: "settingsPrivacyMobile",
+  },
+  {
+    identifier: "help",
+    title: "Help",
+    iconDesktop: "/images/icons/settings/desktop/help.svg",
+    iconMobile: "/images/icons/settings/mobile/help.svg",
+    hiddenMobile: false,
+    modalTag: "settingsHelpMobile",
+  },
+  {
+    identifier: "about",
+    title: "About",
+    iconDesktop: "/images/icons/settings/desktop/info.svg",
+    iconMobile: "/images/icons/settings/mobile/info.svg",
+    hiddenMobile: false,
+    modalTag: "settingsAboutMobile",
+  },
+];
