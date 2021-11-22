@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const CategoriesContext = createContext({
   setActiveCategories: () => null,
@@ -11,3 +11,5 @@ export const CategoriesContext = createContext({
     hot: true,
   },
 });
+
+export const useCategories = () => useContext(CategoriesContext);
