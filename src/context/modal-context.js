@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const ModalContext = createContext({
   setOpenModal: () => null,
@@ -18,3 +18,5 @@ export const ModalContext = createContext({
     categoriesMobile: false,
   },
 });
+
+export const useModal = () => useContext(ModalContext);
