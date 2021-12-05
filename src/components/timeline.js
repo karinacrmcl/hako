@@ -15,10 +15,18 @@ export default function Timeline() {
   const { activeCategories } = useCategories();
 
   return (
-    <div className="container col-span-2">
+    <div
+      className="overflow-y-scroll max-h-screen py-20 px-2 -mt-20 mobileXL:-mt-18 mobileXL:w-full mobileXL:px-2 mobileXL:overflow-x-hidden"
+      id="publications"
+    >
       {!publications ? (
         <>
-          <Skeleton count={4} width={640} height={500} className="mb-5" />
+          <Skeleton
+            count={4}
+            width={640}
+            height={500}
+            className="mb-5 ml-36 lptpXL:ml-32 lptpXS:ml-10 tabletXL:ml-4 mobileXL:ml-0"
+          />
         </>
       ) : publications?.length > 0 ? (
         publications.map((content) => {
@@ -26,47 +34,52 @@ export default function Timeline() {
             case "article":
               return (
                 activeCategories.article && (
-                  <div className="relative" key={content.id}>
-                    <PostArticle object={content} />
-                    {content.isHot && <Hot />}
-                  </div>
+                  <PostArticle
+                    object={content}
+                    isHot={content.isHot}
+                    key={content.id}
+                  />
                 )
               );
 
             case "book":
               return (
                 activeCategories.book && (
-                  <div className="relative" key={content.id}>
-                    <PostBook key={content.id} object={content} />
-                    {content.isHot && <Hot />}
-                  </div>
+                  <PostBook
+                    key={content.id}
+                    object={content}
+                    isHot={content.isHot}
+                  />
                 )
               );
             case "news":
               return (
                 activeCategories.news && (
-                  <div className="relative" key={content.id}>
-                    <PostNews key={content.id} object={content} />
-                    {content.isHot && <Hot />}
-                  </div>
+                  <PostNews
+                    key={content.id}
+                    object={content}
+                    isHot={content.isHot}
+                  />
                 )
               );
             case "discussion":
               return (
                 activeCategories.discussion && (
-                  <div className="relative" key={content.id}>
-                    <PostDiscussion key={content.id} object={content} />
-                    {content.isHot && <Hot />}
-                  </div>
+                  <PostDiscussion
+                    key={content.id}
+                    object={content}
+                    isHot={content.isHot}
+                  />
                 )
               );
             case "photography":
               return (
                 activeCategories.photography && (
-                  <div className="relative" key={content.id}>
-                    <PostPhotography key={content.id} object={content} />
-                    {content.isHot && <Hot />}
-                  </div>
+                  <PostPhotography
+                    key={content.id}
+                    object={content}
+                    isHot={content.isHot}
+                  />
                 )
               );
 

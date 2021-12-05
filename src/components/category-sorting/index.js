@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Item from "./item";
 import Hint from "./hint";
+import { useMediaQuery } from "react-responsive";
 
-export default function Sorting() {
+export default function Sorting({ isOnTop }) {
   const categories = [
     {
       title: "Hot / Trending",
@@ -43,22 +44,56 @@ export default function Sorting() {
   ];
 
   const [categoriesHovered, setCategoriesHovered] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: "650px" });
+
+  const [offset, setOffset] = useState(null);
+
+  // window.onwheel = (e) => {
+  //   if (onTimeline) {
+  //     if (e.deltaY < 0) {
+  //       setOffset("up");
+  //       console.log(offset);
+  //     } else if (e.deltaY > 0) {
+  //       setOffset("down");
+  //       console.log(offset);
+  //     }
+  //   } else {
+  //     return;
+  //   }
+  // };
+
+  // console.log(onTimeline);
+  // console.log(offset);
 
   return (
-    <div className="flex flex-col items-center font-fontbasic fixed left-64 top-32 z-50">
+    <div
+      className={`flex flex-col items-center font-fontbasic z-60 relative ${
+        isOnTop ? "slide-in-top " : "slide-out-top  "
+      } `}
+    >
       <div
-        className={`flex flex-col  overflow-hidden transition-all duration-400 ease-in-out bg-white items-center shadow-xl rounded-lg p-3 ${
-          categoriesHovered ? "w-56" : "w-16"
-        }`}
+        className={`flex flex-col overflow-hidden transition-all duration-400 ease-in-out bg-white items-center shadow-xl rounded-lg p-3 lptpXS:p-2 mobileXL:shadow-none mobileXL:w-3/4 mobileXL:p-1 mobileXL:h-10 mobileXL:flex-row mobileXL:items-center   ${
+          categoriesHovered ? "w-56" : "w-16 lptpXS:w-12 "
+        } ${offset == "up" ? "h-10" : "opacitty-0"}`}
         onMouseEnter={() => {
-          setCategoriesHovered(true);
+          if (isMobile) {
+            return;
+          } else {
+            setCategoriesHovered(true);
+          }
         }}
         onMouseLeave={() => {
-          setCategoriesHovered(false);
+          if (isMobile) {
+            return;
+          } else {
+            setCategoriesHovered(false);
+          }
         }}
       >
-        <h3 className="text-sm font-semibold mb-2">SORT</h3>
-        <div className="flex self-start flex-col">
+        <h3 className="text-sm font-semibold mb-2 lptpXS:text-xs">
+          {isMobile ? null : "SORT"}
+        </h3>
+        <div className="flex self-start flex-col mobileXL:flex-row  mobileXL:items-center mobileXL:h-full  ">
           {categories.map((item, i) => (
             <Item
               item={item}
@@ -69,7 +104,7 @@ export default function Sorting() {
           ))}
         </div>
       </div>
-      <Hint />
+      {isMobile ? null : <Hint />}
     </div>
   );
 }

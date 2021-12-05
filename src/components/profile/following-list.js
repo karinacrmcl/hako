@@ -17,20 +17,24 @@ export default function FollowingList({ list }) {
     if (list) {
       getUserObjByUserId();
     }
-  }, []);
+  }, [list]);
 
   const SingleUserInfo = ({ user }) => {
     return (
       <div>
         {user ? (
-          <div className="flex justify-between mt-2 hover:bg-gray-background cursor-pointer px-4 py-1">
+          <div className="flex justify-between mt-2  hover:bg-gray-background cursor-pointer px-4 py-1">
             <Link
               to={`/p/${user ? user.username : null}`}
               className="flex items-center"
             >
               <div className="flex items-center">
                 <img
-                  src={user ? user.avatarUrl.min : null}
+                  src={
+                    user
+                      ? user.avatarUrl.min
+                      : "https://i.ibb.co/ZY5mytK/user-deleted.png"
+                  }
                   className="avatar-list rounded-full object-cover"
                 />
                 <p className="text-sm font-medium ml-2">{user.username}</p>
@@ -43,7 +47,7 @@ export default function FollowingList({ list }) {
   };
 
   return (
-    <div className="userinfo-modal absolute -right-28 top-48 z-100 overflow-auto  flex flex-col">
+    <div className="userinfo-modal absolute mt-4 ml-60 z-100 overflow-auto  flex flex-col">
       {users.length > 0 ? (
         users.sort().map((item) => {
           return <SingleUserInfo user={item} key={item.userId} />;

@@ -11,19 +11,45 @@ import StateUpdating from "./state-updating";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Skeleton from "react-loading-skeleton";
+import { doesUsernameExist } from "../../services/firebase";
+import { useModal } from "../../hooks/use-modal";
+import { useMediaQuery } from "react-responsive";
 
 export default function Content({ category }) {
   const { user } = useUser();
 
-  // ----------------------- Save button ----------------------------------
+  // ----------------------- responsive -------------------------------
+  const { openModal, setOpenModal } = useModal();
+  const isMobile = useMediaQuery({ maxWidth: "700px" });
+
+  // ----------------------- buttons ----------------------------------
 
   const SaveButton = ({ func }) => {
     return (
       <button
         onClick={func}
-        className="bg-gradient-to-r p-1 px-4 demoGradient text-xl font-semibold text-white rounded-lg transition-all "
+        className="bg-gradient-to-r p-1 px-4 demoGradient text-xl font-semibold text-white rounded-lg transition-all lptpXS:px-3 lptpXL:text-base lptpXS:text-sm"
       >
         Save
+      </button>
+    );
+  };
+
+  const CloseButton = ({ func }) => {
+    return (
+      <button onClick={func} className=" transition-all p-1">
+        <svg
+          width="12"
+          height="18"
+          viewBox="0 0 12 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2.03711 8.44237L8.53926 2.05666C8.85275 1.74877 9.36127 1.74877 9.67476 2.05666L10.4332 2.80156C10.7463 3.10911 10.7467 3.60725 10.4345 3.91546L5.28133 8.99998L10.4342 14.0848C10.7467 14.393 10.746 14.8912 10.4329 15.1987L9.67442 15.9436C9.36094 16.2515 8.85241 16.2515 8.53893 15.9436L2.03711 9.55759C1.72363 9.2497 1.72363 8.75025 2.03711 8.44237Z"
+            fill="black"
+          />
+        </svg>
       </button>
     );
   };
@@ -35,6 +61,7 @@ export default function Content({ category }) {
   const [userDocId, setUserDocId] = useState(null);
 
   const [isUploading, setIsUploading] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   useEffect(() => {
     setUsername(user.username);
@@ -44,49 +71,72 @@ export default function Content({ category }) {
   });
 
   // function for updating user's data in firebase
-  function _updateUserData() {
+  async function _updateUserData() {
     const usernameUpd = document.querySelector("#username");
     const fullNameUpd = document.querySelector("#fullName");
     const emailAdressUpd = document.querySelector("#emailAdress");
 
-    let userNow = firebase.auth().currentUser;
-    userNow
-      .updateProfile({
-        displayName: usernameUpd.value,
-        email: emailAdressUpd,
-      })
-      .then(() => {
-        // console.log("user updated", userNow);
-      })
-      .catch((error) => {
-        console.log("error", error);
+    const usernameExists = await doesUsernameExist(username);
+
+    // console.log(document.querySelectorAll("input"));
+
+    if (
+      usernameUpd.value != "" &&
+      fullNameUpd.value != "" &&
+      emailAdressUpd.value != ""
+    ) {
+      if (usernameUpd.value.length <= 30) {
+        let userNow = firebase.auth().currentUser;
+        userNow
+          .updateProfile({
+            displayName: usernameUpd.value,
+            email: emailAdressUpd,
+          })
+          .then(() => {
+            // console.log("user updated", userNow);
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+
+        updateProfiledata(userDocId, {
+          username: usernameUpd.value,
+          fullName: fullNameUpd.value,
+          emailAdress: emailAdressUpd.value,
+          ...(fileData.data
+            ? {
+                avatarUrl: {
+                  basic: fileData.data.url,
+                  min: fileData.data.thumb.url,
+                },
+              }
+            : {
+                avatarUrl: {
+                  basic: user.avatarUrl.basic,
+                  min: user.avatarUrl.min,
+                },
+              }),
+        });
+
+        setIsUploading(true);
+
+        setTimeout(() => {
+          window.location.reload();
+          setIsUploading(false);
+        }, 700);
+      } else {
+        setErrorText(
+          "That username is too long, the maximum number of characters is 30"
+        );
+      }
+    } else {
+      setErrorText("");
+      document.querySelectorAll(".changable-input").forEach((item) => {
+        if (item.value == "") {
+          item.classList.add("settings-filter");
+        }
       });
-
-    updateProfiledata(userDocId, {
-      username: usernameUpd.value,
-      fullName: fullNameUpd.value,
-      emailAdress: emailAdressUpd.value,
-      ...(fileData.data
-        ? {
-            avatarUrl: {
-              basic: fileData.data.url,
-              min: fileData.data.thumb.url,
-            },
-          }
-        : {
-            avatarUrl: {
-              basic: user.avatarUrl.basic,
-              min: user.avatarUrl.min,
-            },
-          }),
-    });
-
-    setIsUploading(true);
-
-    setTimeout(() => {
-      window.location.reload();
-      setIsUploading(false);
-    }, 700);
+    }
   }
 
   // ----- All for image uploading -----
@@ -136,20 +186,25 @@ export default function Content({ category }) {
     switch (category) {
       case "user-profile":
         return (
-          <div className="flex flex-col ml-4 w-contentSettings h-full">
+          <div className="flex flex-col ml-4 w-contentSettings h-full lptpXL:w-full settingsBP:items-center settingsBP:ml-0">
             {isUploading ? <StateUpdating /> : null}
 
-            <h2 className="text-xl font-medium">Main info</h2>
-            <div className="flex mt-6 items-center">
-              <form className="flex flex-col form-userinfo">
+            <h2 className="text-xl font-medium lptpXS:text-lg settingsBP:mt-4">
+              Main info
+            </h2>
+            <div className="flex mt-6 items-center lptpXL:mt-2 settingsBP:flex-col">
+              <form className="flex flex-col form-userinfo settingsBP:items-center settingsBP:mt-6">
                 <Field id="username" title="Username" value={username} />
+                <p className="text-xs text-red-primary font-medium w-72">
+                  {errorText}
+                </p>
                 <Field id="fullName" title="Full name" value={fullName} />
                 <Field id="emailAdress" title="Email Adress" value={email} />
                 {/* <Field title="Username" value={username} /> */}
               </form>
-              <div className="rounded-full relative ml-20">
+              <div className="rounded-full relative ml-20 lptpXS:ml-0 settingsBP:order-first ">
                 <div
-                  className="absolute rounded-full bg-modal w-full h-full flex justify-center items-center"
+                  className="absolute rounded-full bg-modal w-full h-full flex justify-center items-center "
                   onClick={() => {
                     // setStrokeWidth(0);
                     setUploadProgress(0);
@@ -189,7 +244,7 @@ export default function Content({ category }) {
                     src={
                       fileData.data ? fileData.data.url : user.avatarUrl?.basic
                     }
-                    className="w-36 h-36 object-cover rounded-full"
+                    className="w-36 h-36 object-cover rounded-full lptpXL:w-32 lptpXL:h-32 lptpXS:w-28 lptpXS:h-28 settingsBP:w-24 settingsBP:h-24"
                     id="avatarProfie"
                   />
                 ) : (
@@ -197,13 +252,25 @@ export default function Content({ category }) {
                 )}
               </div>
             </div>
-            <div className="flex self-end mt-auto -mb-12">
+            <div className="flex self-end mt-auto -mb-12 lptpXL:-mr-20 lptpXS:mr-0 settingsBP:absolute right-4 top-4">
               <SaveButton
                 func={() => {
                   _updateUserData();
                 }}
               />
             </div>
+            {isMobile ? (
+              <div className="flex self-end mt-auto -mb-12 lptpXL:-mr-20 lptpXS:mr-0 settingsBP:absolute left-4 top-4">
+                <CloseButton
+                  func={() => {
+                    setOpenModal({
+                      ...openModal,
+                      ["settingsUserProfileMobile"]: false,
+                    });
+                  }}
+                />
+              </div>
+            ) : null}
           </div>
         );
         break;
@@ -212,15 +279,18 @@ export default function Content({ category }) {
 
       case "customization":
         return (
-          <div className="flex flex-col ml-4 w-contentSettings h-full">
-            <h2 className="text-xl font-medium">Theme:</h2>
+          <div className="flex flex-col ml-4 w-contentSettings h-full settingsBP:items-center  settingsBP:w-full settingsBP:mt-4 settingsBP:ml-0  ">
+            <h2 className="text-xl font-medium lptpXS:text-lg">Theme:</h2>
 
             {/* Choosing the theme */}
 
-            <div className="flex flex-col" id="fields-theme">
+            <div
+              className="flex flex-col settingsBP:w-full settingsBP:px-4 settingsBP:mt-2"
+              id="fields-theme"
+            >
               <div
                 id="lightTheme"
-                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer"
+                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer lptpXS:w-45 lptpXS:h-10 settingsBP:w-full"
                 onClick={(e) => {
                   setThemeActive(e.currentTarget.id);
                 }}
@@ -231,13 +301,13 @@ export default function Content({ category }) {
                   }transition-all top-2 transform bg-gradient-to-r from-gradient-from to-gradient-to w-full h-full`}
                 ></i>
 
-                <div className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4">
+                <div className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4 lptpXS:w-44 lptpXS:h-9 settingsBP:w-99">
                   <div className="flex ">
                     <img
                       src="\images\icons\settings\sun.svg"
                       className="mr-1"
                     />
-                    <p className="font-semibold">Light</p>
+                    <p className="font-semibold lptpXS:text-sm">Light</p>
                   </div>
                   <div className="flex w-10 justify-between">
                     <span className="w-3 h-3 bg-themeSettingsExs-lightFirst rounded "></span>
@@ -249,7 +319,7 @@ export default function Content({ category }) {
 
               <div
                 id="darkTheme"
-                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer"
+                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer lptpXS:w-45 lptpXS:h-10 settingsBP:w-full"
                 onClick={(e) => {
                   setThemeActive(e.currentTarget.id);
                 }}
@@ -257,10 +327,10 @@ export default function Content({ category }) {
                 <i
                   className={`absolute z-index-negative rounded-lg left-0 ${
                     "darkTheme" === themeActive ? " opacity-1 " : " opacity-0 "
-                  }transition-all top-2 transform bg-gradient-to-r from-gradient-from to-gradient-to w-full h-full`}
+                  }transition-all top-2 transform bg-gradient-to-r from-gradient-from to-gradient-to w-full h-full `}
                 ></i>
                 <div
-                  className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4"
+                  className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4 lptpXS:w-44 lptpXS:h-9 settingsBP:w-99"
                   // onClick={(e) => chooseActiveTheme(e, "darkTheme")}
                 >
                   <div className="flex ">
@@ -268,7 +338,7 @@ export default function Content({ category }) {
                       src="\images\icons\settings\moon.svg"
                       className="mr-1"
                     />
-                    <p className="font-semibold"> Dark</p>
+                    <p className="font-semibold lptpXS:text-sm"> Dark</p>
                   </div>
                   <div className="flex w-10 justify-between">
                     <span className="w-3 h-3 bg-themeSettingsExs-darkFirst rounded "></span>
@@ -281,12 +351,15 @@ export default function Content({ category }) {
 
             {/* Choosing the font size */}
 
-            <h2 className="text-xl font-medium">Font size:</h2>
+            <h2 className="text-xl font-medium lptpXS:text-lg">Font size:</h2>
 
-            <div className="grid grid-cols-2 w-2/3" id="fields-fonts">
+            <div
+              className="grid grid-cols-2 w-2/3 settingsBP:w-full settingsBP:flex settingsBP:flex-col settingsBP:grid-cols-none settingsBP:px-4"
+              id="fields-fonts"
+            >
               <div
                 id="fontNormal"
-                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer"
+                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer lptpXS:w-45 lptpXS:h-10 settingsBP:w-full"
                 onClick={(e) => {
                   setFontActive(e.currentTarget.id);
                 }}
@@ -297,11 +370,11 @@ export default function Content({ category }) {
                   }transition-all top-2 transform bg-gradient-to-r from-gradient-from to-gradient-to w-full h-full`}
                 ></i>
 
-                <div className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4">
+                <div className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4 lptpXS:w-44 lptpXS:h-9 settingsBP:w-99">
                   <div className="flex ">
-                    <p className="font-semibold">Normal</p>
+                    <p className="font-semibold lptpXS:text-sm">Normal</p>
                   </div>
-                  <div className="flex w-10 justify-between font-medium text-base">
+                  <div className="flex w-10 justify-between font-medium text-base lptpXS:text-sm">
                     AaBb
                   </div>
                 </div>
@@ -309,7 +382,7 @@ export default function Content({ category }) {
 
               <div
                 id="fontSmall"
-                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer"
+                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer lptpXS:w-45 lptpXS:h-10 settingsBP:w-full"
                 onClick={(e) => {
                   setFontActive(e.currentTarget.id);
                 }}
@@ -320,13 +393,13 @@ export default function Content({ category }) {
                   }transition-all top-2 transform bg-gradient-to-r from-gradient-from to-gradient-to w-full h-full`}
                 ></i>
                 <div
-                  className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4"
+                  className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4 lptpXS:w-44 lptpXS:h-9 settingsBP:w-99"
                   // onClick={(e) => chooseActiveTheme(e, "darkTheme")}
                 >
                   <div className="flex ">
-                    <p className="font-semibold"> Small</p>
+                    <p className="font-semibold lptpXS:text-sm"> Small</p>
                   </div>
-                  <div className="flex w-10 justify-between font-medium text-xs">
+                  <div className="flex w-10 justify-between font-medium text-sm lptpXS:text-xs">
                     AaBb
                   </div>
                 </div>
@@ -334,7 +407,7 @@ export default function Content({ category }) {
 
               <div
                 id="fontLarge"
-                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer"
+                className="relative flex items-center justify-center w-settingsCardHover h-settingsCardHover mb-4 cursor-pointer lptpXS:w-45 lptpXS:h-10 settingsBP:w-full"
                 onClick={(e) => {
                   setFontActive(e.currentTarget.id);
                 }}
@@ -345,40 +418,63 @@ export default function Content({ category }) {
                   }transition-all top-2 transform bg-gradient-to-r from-gradient-from to-gradient-to w-full h-full`}
                 ></i>
                 <div
-                  className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4"
+                  className="shadow-xl bg-white z-10 flex w-settingsCard h-settingsCard rounded-lg items-center justify-between px-4 mt-4 lptpXS:w-44 lptpXS:h-9 settingsBP:w-99"
                   // onClick={(e) => chooseActiveTheme(e, "darkTheme")}
                 >
                   <div className="flex ">
-                    <p className="font-semibold"> Large</p>
+                    <p className="font-semibold lptpXS:text-sm"> Large</p>
                   </div>
-                  <div className="flex w-10 justify-between font-medium text-lg">
+                  <div className="flex w-10 justify-between font-medium text-lg lptpXS:text-base">
                     AaBb
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex self-end mt-20 ">
-              <SaveButton />
+            <div className="flex self-end mt-auto -mb-12 lptpXL:-mr-20 lptpXS:mr-0 settingsBP:absolute right-4 top-4">
+              <SaveButton
+                func={() => {
+                  _updateUserData();
+                }}
+              />
             </div>
+
+            {isMobile ? (
+              <div className="flex self-end mt-auto -mb-12 lptpXL:-mr-20 lptpXS:mr-0 settingsBP:absolute left-4 top-4">
+                <CloseButton
+                  func={() => {
+                    setOpenModal({
+                      ...openModal,
+                      ["settingsCustomizationMobile"]: false,
+                    });
+                  }}
+                />
+              </div>
+            ) : null}
           </div>
         );
       case "privacy":
         return (
           <div className="flex flex-col ml-4 w-contentSettings h-full">
-            <h2 className="text-xl font-medium">Coming soon..</h2>
+            <h2 className="text-xl font-medium lptpXS:text-lg">
+              Coming soon..
+            </h2>
           </div>
         );
       case "help":
         return (
           <div className="flex flex-col ml-4 w-contentSettings h-full">
-            <h2 className="text-xl font-medium">Coming soon..</h2>
+            <h2 className="text-xl font-medium lptpXS:text-lg">
+              Coming soon..
+            </h2>
           </div>
         );
       case "about":
         return (
           <div className="flex flex-col ml-4 w-contentSettings h-full">
-            <h2 className="text-xl font-medium">Coming soon..</h2>
+            <h2 className="text-xl font-medium lptpXS:text-lg">
+              Coming soon..
+            </h2>
           </div>
         );
       default:

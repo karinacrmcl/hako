@@ -22,15 +22,15 @@ export default function Answers({ object, currentUserId }) {
 
   const UserAnswer = ({ item }) => {
     const [user, setUser] = useState(null);
-    useEffect(() => {
-      async function getUserObjByUserId() {
-        const [user] = await getUserByUserId(item.userAuthor);
-        setUser(user);
-      }
-      if (item?.userAuthor) {
-        getUserObjByUserId();
-      }
-    }, []);
+    // useEffect(() => {
+    //   async function getUserObjByUserId() {
+    //     const [user] = await getUserByUserId(item.userAuthor);
+    //     setUser(user);
+    //   }
+    //   if (item?.userAuthor) {
+    //     getUserObjByUserId();
+    //   }
+    // }, []);
 
     function handleVote(value, answerId) {
       if (vote == value) {
@@ -161,7 +161,7 @@ export default function Answers({ object, currentUserId }) {
   return (
     <div>
       {answers?.length === 0 ? (
-        <p className="p-4 text-sm text-gray-extralight font-medium">
+        <p className="p-4 text-sm text-gray-extralight font-medium lptpXS:text-xs">
           No answers
         </p>
       ) : (

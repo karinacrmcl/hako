@@ -5,6 +5,18 @@ import PublicationSuccess from "../publication-success";
 import ButtonSecond from "../../../shared/button-2";
 import Loader from "react-loader-spinner";
 
+import { useMediaQuery } from "react-responsive";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+import Skeleton from "react-loading-skeleton";
+
+// import "swiper/css/swiper.min.css";
+
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/swiper.scss";
+
 export default function Content({ user }) {
   const bookGenres = [
     { id: 1, genreTitle: "Action and adventure", isSelected: false },
@@ -55,6 +67,8 @@ export default function Content({ user }) {
     { id: 42, genreTitle: "Travel", isSelected: false },
   ];
 
+  // for years managment
+
   let yearStart = 1950;
   let yearEnd = new Date().getFullYear();
 
@@ -64,29 +78,41 @@ export default function Content({ user }) {
     yearsArr.push(yearStart++);
   }
 
+  // _______________________ POST DATA _______________________________
+
+  // for genres lists
+
   const [openSelectGenre, setOpenSelectGenre] = useState(false);
   const [openSelectYear, setOpenSelectYear] = useState(false);
 
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
 
-  const [isPublished, setIsPublished] = useState(false);
-
   const removeItem = (id) => {
     let newArray = selectedGenres.filter((genre) => genre.id !== id);
     setSelectedGenres(newArray);
   };
 
+  // content
   const [booksTitle, setBooksTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
 
+  // for checking states
+
+  const [isPublished, setIsPublished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isFilePicked, setIsFilePicked] = useState(false);
 
-  //media states
+  //for media states
+
   const [selectedFile, setSelectedFile] = useState();
   const [fileData, setFileData] = useState({});
+
+  // for responsive design
+
+  const isMobile = useMediaQuery({ maxWidth: "1024px" });
+  const isMobileSM = useMediaQuery({ maxWidth: "450px" });
 
   function savePostData() {
     const options = {
@@ -192,94 +218,166 @@ export default function Content({ user }) {
     };
   }
 
-  const MediaFieldFilled = ({ type, title, size }) => {
+  const MediaFieldFilled = ({ type, title, size, link }) => {
     return (
-      <div className="border border-default-first w-uploadSmall h-uploadSmall flex items-center rounded-lg p-3 mt-2 mr-4 select-none relative">
-        <button
-          className="bg-white p-1 absolute -right-2 -top-2 rounded-full border border-default-first"
-          onClick={() => {
-            setFileData({});
-            setIsFilePicked(false);
-            setSelectedFile(null);
-          }}
-        >
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L9 9"
-              stroke="#9A86B5"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <path
-              d="M1 9L9 1"
-              stroke="#9A86B5"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-        </button>
-        <div className="relative">
-          <svg
-            width="25"
-            height="33"
-            viewBox="0 0 25 33"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M24.1923 7.12272L24.1925 7.1229C24.3646 7.2933 24.4698 7.51583 24.4944 7.75H17.1667V0.504767C17.4152 0.527904 17.645 0.634447 17.8188 0.806497L24.1923 7.12272ZM1.5625 0.5H14.0833V8.76562C14.0833 9.89727 15.0151 10.8125 16.1458 10.8125H24.5V31.4531C24.5 32.0295 24.032 32.5 23.4375 32.5H1.5625C0.968008 32.5 0.5 32.0295 0.5 31.4531V1.54687C0.5 0.970517 0.968007 0.5 1.5625 0.5Z"
-              stroke="#9A86B5"
-            />
-          </svg>
-          <p className="absolute text-xxs font-bold text-default-first bottom-0.5 left-1/2 transform -translate-x-1/2">
-            {type}
-          </p>
-        </div>
-        <div className="flex flex-col ml-2">
-          <p className="text-xs text-primary font-medium">{title}</p>
-          <span className="text-xxs text-default-first"> {size}</span>
-        </div>
-      </div>
+      <>
+        {isMobileSM ? (
+          <div className="w-20 h-20 ml-2 relative mt-2">
+            <button
+              className="bg-white p-1 absolute -right-2 -top-2 rounded-full border border-default-first"
+              onClick={() => {
+                setFileData({});
+                setIsFilePicked(false);
+                setSelectedFile(null);
+              }}
+            >
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 1L9 9"
+                  stroke="#9A86B5"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M1 9L9 1"
+                  stroke="#9A86B5"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+            {link ? (
+              <img src={link} className="w-20 h-20 rounded-lg object-cover" />
+            ) : (
+              <Skeleton width={80} height={80} />
+            )}
+          </div>
+        ) : (
+          <div className="border border-default-first w-uploadSmall h-uploadSmall flex items-center rounded-lg p-3 mt-2 mr-4 select-none relative lptpXL:h-16 lptpXL:w-40 ">
+            <button
+              className="bg-white p-1 absolute -right-2 -top-2 rounded-full border border-default-first"
+              onClick={() => {
+                setFileData({});
+                setIsFilePicked(false);
+                setSelectedFile(null);
+              }}
+            >
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 1L9 9"
+                  stroke="#9A86B5"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M1 9L9 1"
+                  stroke="#9A86B5"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+            <div className="relative">
+              <svg
+                width="25"
+                height="33"
+                viewBox="0 0 25 33"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M24.1923 7.12272L24.1925 7.1229C24.3646 7.2933 24.4698 7.51583 24.4944 7.75H17.1667V0.504767C17.4152 0.527904 17.645 0.634447 17.8188 0.806497L24.1923 7.12272ZM1.5625 0.5H14.0833V8.76562C14.0833 9.89727 15.0151 10.8125 16.1458 10.8125H24.5V31.4531C24.5 32.0295 24.032 32.5 23.4375 32.5H1.5625C0.968008 32.5 0.5 32.0295 0.5 31.4531V1.54687C0.5 0.970517 0.968007 0.5 1.5625 0.5Z"
+                  stroke="#9A86B5"
+                />
+              </svg>
+              <p className="absolute text-xxs font-bold text-default-first bottom-0.5 left-1/2 transform -translate-x-1/2 ">
+                {type}
+              </p>
+            </div>
+            <div className="flex flex-col ml-2 ">
+              <p className="text-xs text-primary font-medium">{title}</p>
+              <span className="text-xxs text-default-first ">{size}</span>
+            </div>
+          </div>
+        )}
+      </>
     );
   };
 
   const MediaFieldEmpty = () => {
     return (
-      <div className="relative w-uploadSmall">
-        <input
-          className="cursor-pointer border border-dashed border-default-first w-uploadSmall h-uploadSmall flex items-center rounded-lg p-0.5 mt-2 mr-4 cursor-pointer justify-center transition-all opacity-80 hover:opacity-100 file-select"
-          type="file"
-          onChange={(e) => changeHandler(e)}
-        />
-        <svg
-          width="16"
-          height="21"
-          viewBox="0 0 16 21"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-1/2 left-1/2 transform -translate-y-1/4 -translate-x-2/3"
-        >
-          <path
-            d="M9.33333 5.57812V0H1C0.445833 0 0 0.438867 0 0.984375V20.0156C0 20.5611 0.445833 21 1 21H15C15.5542 21 16 20.5611 16 20.0156V6.5625H10.3333C9.78333 6.5625 9.33333 6.11953 9.33333 5.57812ZM12.0492 14.4379H9.33333V17.7192C9.33333 18.0817 9.035 18.3754 8.66667 18.3754H7.33333C6.965 18.3754 6.66667 18.0817 6.66667 17.7192V14.4379H3.95083C3.35583 14.4379 3.05875 13.7287 3.48125 13.3157L7.49875 9.39053C7.77583 9.11941 8.22333 9.11941 8.50042 9.39053L12.5179 13.3157C12.9408 13.7287 12.6442 14.4379 12.0492 14.4379ZM15.7083 4.30664L11.6292 0.287109C11.4417 0.102539 11.1875 0 10.9208 0H10.6667V5.25H16V4.9998C16 4.74141 15.8958 4.49121 15.7083 4.30664Z"
-            fill="#9A86B5"
-          />
-        </svg>
-      </div>
+      <>
+        {isMobileSM ? (
+          <div className="relative cursor-pointer mt-2">
+            <input
+              className="cursor-pointer w-20 h-20 bg-gray-addContainer flex items-center rounded-lg cursor-pointer justify-center transition-all file-select mt-1 "
+              type="file"
+              onChange={(e) => changeHandler(e)}
+            />
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 "
+            >
+              <rect x="6" width="2" height="14" rx="1" fill="#B4B4B4" />
+              <rect
+                x="14"
+                y="6"
+                width="2"
+                height="14"
+                rx="1"
+                transform="rotate(90 14 6)"
+                fill="#B4B4B4"
+              />
+            </svg>
+          </div>
+        ) : (
+          <div className="relative w-uploadSmall">
+            <input
+              className="cursor-pointer border border-dashed border-default-first w-uploadSmall h-uploadSmall flex items-center rounded-lg p-0.5 mt-2 mr-4 cursor-pointer justify-center transition-all opacity-80 hover:opacity-100 file-select lptpXL:h-16 lptpXL:w-40"
+              type="file"
+              onChange={(e) => changeHandler(e)}
+            />
+            <svg
+              width="16"
+              height="21"
+              viewBox="0 0 16 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute top-1/2 left-1/2 transform -translate-y-1/4 -translate-x-2/3 lptpXL:left-20"
+            >
+              <path
+                d="M9.33333 5.57812V0H1C0.445833 0 0 0.438867 0 0.984375V20.0156C0 20.5611 0.445833 21 1 21H15C15.5542 21 16 20.5611 16 20.0156V6.5625H10.3333C9.78333 6.5625 9.33333 6.11953 9.33333 5.57812ZM12.0492 14.4379H9.33333V17.7192C9.33333 18.0817 9.035 18.3754 8.66667 18.3754H7.33333C6.965 18.3754 6.66667 18.0817 6.66667 17.7192V14.4379H3.95083C3.35583 14.4379 3.05875 13.7287 3.48125 13.3157L7.49875 9.39053C7.77583 9.11941 8.22333 9.11941 8.50042 9.39053L12.5179 13.3157C12.9408 13.7287 12.6442 14.4379 12.0492 14.4379ZM15.7083 4.30664L11.6292 0.287109C11.4417 0.102539 11.1875 0 10.9208 0H10.6667V5.25H16V4.9998C16 4.74141 15.8958 4.49121 15.7083 4.30664Z"
+                fill="#9A86B5"
+              />
+            </svg>
+          </div>
+        )}
+      </>
     );
   };
 
   const symbolsLimit = 1000;
 
   return (
-    <div className="flex-col flex h-full py-10 relative">
+    <div className="flex-col flex h-full py-10 relative lptpXL:py-5">
       <input
-        className="input-add mt-6"
+        className="input-add mt-6 lptpXL:mt-0"
         placeholder="Book’s title.."
         value={booksTitle}
         onChange={({ target }) => {
@@ -294,156 +392,353 @@ export default function Content({ user }) {
           setAuthor(target.value);
         }}
       ></input>
-      <div className="w-full flex justify-between">
-        <div className="flex flex-col">
-          <p className="text-gray-addtext mt-6">Year of issue:</p>
-          <span className="flex border border-gray-genres rounded-lg px-2 h-8 flex items-center justify-between mt-4 select-none cursor-pointer">
-            <p>{selectedYear}</p>
-            <button
-              onClick={() => {
-                setOpenSelectYear(!openSelectYear);
-              }}
-              className="relative"
-            >
-              <svg
-                width="18"
-                height="14"
-                viewBox="0 0 13 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+      <div className="w-full flex justify-between lptpXS:flex-col">
+        {isMobile ? (
+          <input
+            className="input-add mt-6"
+            placeholder="Year.."
+            value={selectedYear}
+            onChange={({ target }) => {
+              setSelectedYear(target.value);
+            }}
+          ></input>
+        ) : (
+          <div className="flex flex-col">
+            <p className="text-gray-addtext mt-6 lptpXL:mt-4 lptpXL:text-sm">
+              Year of issue:
+            </p>
+            <span className="flex border border-gray-genres rounded-lg px-2 py-2 flex items-center justify-between mt-1.5 select-none cursor-pointer h-11 lptpXL:h-9 lptpXL:py-1 lptpXL:px-1">
+              <p>{selectedYear}</p>
+              <button
+                onClick={() => {
+                  setOpenSelectYear(!openSelectYear);
+                }}
+                className="relative"
               >
-                <path
-                  d="M1 1H12"
-                  stroke="#B8B8B8"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M1 5H12"
-                  stroke="#B8B8B8"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M1 9H12"
-                  stroke="#B8B8B8"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-              {openSelectYear ? (
-                <div className="absolute rounded-lg w-40 h-40 flex flex-col shadow-xl overflow-auto  bg-white">
-                  {yearsArr.map((item) => {
-                    return (
-                      <div
-                        className="flex items-center text-sm px-2 py-2 select text-left relative cursor-pointer "
-                        key={item}
-                        onClick={() => {
-                          setSelectedYear([item]);
-                        }}
-                      >
-                        {item}
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : null}
-            </button>
-          </span>
-        </div>
-
-        <div className="flex flex-col w-2/3 ">
-          <p className="text-gray-addtext mt-6">Select genres:</p>
-          <span className="flex border justify-between border-gray-genres rounded-lg p-1 h-auto flex items-center mt-2 ">
-            <div className="flex genres-container items-center overflow-auto overflow-y-hidden h-8">
-              {selectedGenres.map((genre) => {
-                if (!genre.isSelected) {
-                  return (
-                    <div
-                      className="bg-gray-genresBg text-sm text-gray-addtext items-center h-6 px-3 mr-2 flex rounded-full select-none whitespace-nowrap mb-1 "
-                      key={genre.id}
-                    >
-                      <p className="mr-3"> {genre.genreTitle} </p>
-                      <button
-                        onClick={() => {
-                          removeItem(genre.id);
-                        }}
-                      >
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 8 8"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                <svg
+                  width="18"
+                  height="14"
+                  viewBox="0 0 13 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1H12"
+                    stroke="#B8B8B8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M1 5H12"
+                    stroke="#B8B8B8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M1 9H12"
+                    stroke="#B8B8B8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                {openSelectYear ? (
+                  <div className="absolute rounded-lg w-40 h-40 flex flex-col shadow-xl overflow-auto bg-white z-100">
+                    {yearsArr.map((item) => {
+                      return (
+                        <div
+                          className="flex items-center text-sm px-2 py-2 select text-left relative cursor-pointer "
+                          key={item}
+                          onClick={() => {
+                            setSelectedYear([item]);
+                          }}
                         >
-                          <path
-                            d="M1 1L4 4M7 7L4 4M4 4L7 1M4 4L1 7"
-                            stroke="#777777"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-            <button
-              onClick={() => {
-                setOpenSelectGenre(!openSelectGenre);
-              }}
-              className="relative"
-            >
-              <svg
-                width="18"
-                height="14"
-                viewBox="0 0 13 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+                          {item}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : null}
+              </button>
+            </span>
+          </div>
+        )}
+
+        <div className="flex flex-col w-2/3  lptpXS:w-full">
+          <p className="text-gray-addtext mt-6 lptpXL:mt-4 lptpXL:text-sm lptpXS:text-xs lptpXS:ml-2">
+            Select genres:
+          </p>
+
+          {isMobile ? (
+            <span className="mt-1.5 flex items-center w-full">
+              <button
+                className="bg-default-first rounded-full p-1 w-5 h-5"
+                onClick={() => {
+                  setOpenSelectGenre(!openSelectGenre);
+                }}
               >
-                <path
-                  d="M1 1H12"
-                  stroke="#B8B8B8"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M1 5H12"
-                  stroke="#B8B8B8"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M1 9H12"
-                  stroke="#B8B8B8"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-              {openSelectGenre ? (
-                <div className="absolute rounded-lg w-96 flex flex-col shadow-xl sorting-genres bg-white">
-                  {bookGenres.map((item) => {
+                {openSelectGenre ? (
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 8 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="6.42383"
+                      width="1.14286"
+                      height="8"
+                      rx="0.571429"
+                      transform="rotate(45 6.42383 0)"
+                      fill="white"
+                    />
+                    <rect
+                      x="7.46484"
+                      y="5.65686"
+                      width="1.14286"
+                      height="8"
+                      rx="0.571429"
+                      transform="rotate(135 7.46484 5.65686)"
+                      fill="white"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="6"
+                      y="1"
+                      width="2"
+                      height="12"
+                      rx="1"
+                      fill="#ffff"
+                    />
+                    <rect
+                      x="14"
+                      y="7"
+                      width="2"
+                      height="12"
+                      rx="1"
+                      transform="rotate(90 14 6)"
+                      fill="#ffff"
+                    />
+                  </svg>
+                )}
+              </button>
+              <Swiper
+                spaceBetween={5}
+                centeredSlides
+                className="flex w-full p-1 ml-2 "
+              >
+                {selectedGenres.map((genre) => {
+                  if (!genre.isSelected) {
                     return (
-                      <div
-                        className={`flex items-center text-sm px-2 py-2 select text-left relative cursor-pointer `}
-                        key={item.id}
-                        onClick={() => {
-                          setSelectedGenres([...selectedGenres, item]);
-                        }}
-                      >
-                        {item.genreTitle}
-                      </div>
+                      <SwiperSlide>
+                        <div
+                          className="bg-white shadow-genre-mobile text-sm text-gray-addtext items-center h-6 px-3 mr-2 flex rounded-full select-none whitespace-nowrap h-full"
+                          key={genre.id}
+                        >
+                          <p className="mr-1.5 text-gray-genreMobile font-medium text-xs">
+                            {genre.genreTitle}
+                          </p>
+                          <button
+                            onClick={() => {
+                              removeItem(genre.id);
+                            }}
+                          >
+                            <svg
+                              width="10"
+                              height="10"
+                              viewBox="0 0 8 8"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M1 1L4 4M7 7L4 4M4 4L7 1M4 4L1 7"
+                                stroke="#4D4C4C"
+                                strokeWidth="1.3"
+                                strokeLinecap="round"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </SwiperSlide>
                     );
+                  }
+                })}
+              </Swiper>
+
+              {openSelectGenre ? (
+                <div className="absolute rounded-lg w-96 flex flex-col shadow-xl sorting-genres bg-white z-100 left-8">
+                  {bookGenres.map((item) => {
+                    if (
+                      selectedGenres.filter((e) => e.id === item.id).length > 0
+                    ) {
+                    } else {
+                      return (
+                        <div
+                          className={`flex items-center text-sm px-2 py-2 select text-left relative cursor-pointer `}
+                          key={item.id}
+                          onClick={() => {
+                            setSelectedGenres([...selectedGenres, item]);
+                          }}
+                        >
+                          {item.genreTitle}
+                        </div>
+                      );
+                    }
                   })}
                 </div>
               ) : null}
-            </button>
-          </span>
+              {/* <Swiper
+                spaceBetween={50}
+                slidesPerView={3}
+                onSlideChange={() => console.log("slide change")}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide>Slide 1</SwiperSlide>
+                <SwiperSlide>Slide 2</SwiperSlide>
+                <SwiperSlide>Slide 3</SwiperSlide>
+                <SwiperSlide>Slide 4</SwiperSlide>
+                ...
+              </Swiper> */}
+              {/* asdas
+              <button>jknkjbk</button>
+              {selectedGenres.map((genre) => {
+                return (
+                  <div
+                    className="bg-gray-genresBg text-sm text-gray-addtext items-center h-6 px-3 mr-2 flex rounded-full select-none whitespace-nowrap mb-1 "
+                    key={genre.id}
+                  >
+                    <p className="mr-3"> {genre.genreTitle} </p>
+                    <button
+                      onClick={() => {
+                        removeItem(genre.id);
+                      }}
+                    >
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 8 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 1L4 4M7 7L4 4M4 4L7 1M4 4L1 7"
+                          stroke="#777777"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                );
+              })} */}
+            </span>
+          ) : (
+            <span className="flex border justify-between border-gray-genres rounded-lg p-1 h-auto flex items-center mt-2 lptpXL:h-9 lptpXL:py-1 lptpXL:px-1">
+              <div className="flex genres-container items-center overflow-auto overflow-y-hidden h-8">
+                {selectedGenres.map((genre) => {
+                  if (!genre.isSelected) {
+                    return (
+                      <div
+                        className="bg-gray-genresBg text-sm text-gray-addtext items-center h-6 px-3 mr-2 flex rounded-full select-none whitespace-nowrap mb-1 "
+                        key={genre.id}
+                      >
+                        <p className="mr-3"> {genre.genreTitle} </p>
+                        <button
+                          onClick={() => {
+                            removeItem(genre.id);
+                          }}
+                        >
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 8 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1 1L4 4M7 7L4 4M4 4L7 1M4 4L1 7"
+                              stroke="#777777"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              <button
+                onClick={() => {
+                  setOpenSelectGenre(!openSelectGenre);
+                }}
+                className="relative mr-1"
+              >
+                <svg
+                  width="18"
+                  height="14"
+                  viewBox="0 0 13 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1H12"
+                    stroke="#B8B8B8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M1 5H12"
+                    stroke="#B8B8B8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M1 9H12"
+                    stroke="#B8B8B8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                {openSelectGenre ? (
+                  <div className="absolute rounded-lg w-96 flex flex-col shadow-xl sorting-genres bg-white z-100 ">
+                    {bookGenres.map((item) => {
+                      if (
+                        selectedGenres.filter((e) => e.id === item.id).length >
+                        0
+                      ) {
+                        console.log(item);
+                      } else {
+                        return (
+                          <div
+                            className={`flex items-center text-sm px-2 py-2 select text-left relative cursor-pointer `}
+                            key={item.id}
+                            onClick={() => {
+                              setSelectedGenres([...selectedGenres, item]);
+                            }}
+                          >
+                            {item.genreTitle}
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                ) : null}
+              </button>
+            </span>
+          )}
         </div>
       </div>
       <textarea
-        className="textarea-add mt-6 h-44"
+        className="textarea-add mt-6 h-44 lptpXL:mt-4 "
         placeholder="Description"
         value={description}
         onChange={({ target }) => {
@@ -451,7 +746,7 @@ export default function Content({ user }) {
         }}
       ></textarea>
       <p
-        className={`flex justify-end mt-1 ${
+        className={`flex justify-end mt-1 lptpXL:text-sm lptpXL:-mb-4 ${
           description.length <= symbolsLimit
             ? `text-gray-extralight`
             : `text-red-primary`
@@ -460,7 +755,9 @@ export default function Content({ user }) {
         {description.length}/{symbolsLimit}
       </p>
 
-      <p className="text-gray-addtext mt-6">Book’s cover’s picture:</p>
+      <p className="text-gray-addtext mt-6 lptpXL:mt-0 lptpXL:mb-0 lptpXL:text-sm lptpXS:text-xs">
+        Book’s cover’s picture:
+      </p>
 
       <div className="flex items-center">
         {isFilePicked ? (
@@ -469,6 +766,7 @@ export default function Content({ user }) {
               type={fileData.data.image.extension}
               title={fileData.data.image.filename}
               size={bytesToSize(fileData.data.size)}
+              link={fileData.data.url}
             />
           ) : (
             <Loader type="ThreeDots" color="#9A86B5" height={20} width={20} />
@@ -478,7 +776,7 @@ export default function Content({ user }) {
         )}
       </div>
       <div
-        className="absolute right-0 -bottom-10"
+        className="absolute right-0 -bottom-10 z-50 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9"
         onClick={(e) => savePostData(e)}
       >
         <ButtonSecond />

@@ -24,20 +24,20 @@ export default function SuggestedProfile({
   }
 
   return !followed ? (
-    <div className="flex items-center align-items font-fontbasic w-72 px-2.5 mt-0 justify-between">
+    <div className="flex items-center align-items font-fontbasic w-72 lptpXL:w-64 px-2.5 mt-0 justify-between lptpXS:px-0 lptpXS:w-48 ">
       <div className="flex items-center justify-between">
         <img
-          className="rounded-full w-10 h-10 flex mr-2 object-cover avatar-list"
+          className="rounded-full w-10 h-10 flex mr-2 object-cover avatar-list lptpXS:w-8 lptpXS:h-8  lptpXS:min-w-min lptpXS:min-h-full "
           src={avatarUrl.min}
-          alt=""
         />
         <Link to={`/p/${username}`}>
-          <p className="font-medium text-primary text-sm">{username}</p>
+          <p className="font-medium text-primary text-sm lptpXS:text-xs lptpXS:font-medium">
+            {username}
+          </p>
         </Link>
       </div>
       <div>
         <button
-          className=""
           onClick={() => {
             handleFollowUser();
           }}
@@ -49,6 +49,7 @@ export default function SuggestedProfile({
             viewBox="0 0 24 21"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="lptpXS:w-5 lptpXS:-mb-1"
           >
             <rect width="24" height="21" fill="white" />
             <path

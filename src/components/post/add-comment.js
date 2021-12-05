@@ -63,12 +63,12 @@ export default function AddComment({
       >
         <img
           src={avatarUrl ? avatarUrl.min : null}
-          className="avatar-addanswer mr-2 rounded-full"
+          className="w-11 h-11 mr-2 rounded-full lptpXS:w-9 lptpXS:h-9"
         />
         <input
           aria-label="Add a comment"
           autoComplete="off"
-          className="text-sm text-gray-base rounded-lg w-full py-2 px-2 mr-2 border border-2 border-gray-inputborder "
+          className="text-sm text-gray-base rounded-lg w-full py-2 px-2 mr-2 border border-2 border-gray-inputborder lptpXS:py-1 lptpXS:px-1 lptpXS:h-8 lptpXS:text-xs "
           type="text"
           name="add-comment"
           placeholder="Add a comment.."

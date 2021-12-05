@@ -30,7 +30,11 @@ export default function FollowerList({ list }) {
             >
               <div className="flex items-center">
                 <img
-                  src={user ? user.avatarUrl.min : null}
+                  src={
+                    user
+                      ? user.avatarUrl.min
+                      : "https://i.ibb.co/ZY5mytK/user-deleted.png"
+                  }
                   className="avatar-list rounded-full object-cover"
                 />
                 <p className="text-sm font-medium ml-2">{user.username}</p>
@@ -43,7 +47,7 @@ export default function FollowerList({ list }) {
   };
 
   return (
-    <div className="userinfo-modal absolute -right-4 top-48 z-100 overflow-auto flex flex-col">
+    <div className="userinfo-modal absolute mt-4 ml-60 z-100 overflow-auto flex flex-col">
       {users.length > 0 ? (
         users.sort().map((item) => {
           if (item) {

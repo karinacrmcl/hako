@@ -24,21 +24,24 @@ export default function PinnedList({ profile, userId }) {
   }, [profile]);
 
   return (
-    <div className="  w-1/2 h-screen h-16 mt-8 ml-20 bg-white flex justify-start items-start left-0">
+    <div
+      className="overflow-y-scroll max-h-screen py-28 -mt-24 bg-white flex justify-start items-start left-0 px-2 mobileXL:bg-transparent"
+      id="publications"
+    >
       <div className="flex flex-col items-center">
         <div className="flex w-full justify-between">
           {profile.pinnedPublications.length != 0 ? (
-            <div className="text-2xl ">
+            <div className="text-2xl lptpXL:text-xl  ">
               {profile.fullName.split(" ").slice(0, 1)}'s pinned publications:
             </div>
           ) : (
-            <p className="text-2xl  w-96">
+            <p className="text-2xl lptpXL:text-xl   w-96">
               {profile.fullName.split(" ").slice(0, 1)} doesn't have any pinned
               publications yet.
             </p>
           )}
         </div>
-        <div className="flex flex-col mt-10">
+        <div className="flex flex-col mt-10 mobileXL:mt-5">
           {!publications ? (
             <>
               <Skeleton count={4} width={640} height={500} className="mb-5" />

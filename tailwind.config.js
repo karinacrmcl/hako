@@ -22,6 +22,16 @@ module.exports = {
       "7xl": "5rem",
       "9xl": "9rem",
     },
+    screens: {
+      desktopXS: { max: "1600px" },
+      lptpXL: { max: "1324px" },
+      lptpXS: { max: "1024px" },
+      tabletXL: { max: "971px" },
+      settingsBP: { max: "700px" },
+      mobileXL: { max: "650px" },
+      mobileSM: { max: "450px" },
+      sm: { max: "576px" },
+    },
     zIndex: {
       0: 0,
       10: 10,
@@ -80,6 +90,10 @@ module.exports = {
         inputsBook: "#A0A0A0",
         genresBg: "#F0F0F0",
         genres: "#DCDCDC",
+        bgMobile: "#F4F4F4",
+        addContainer: "#F8F8F8",
+        genreMobile: "#4D4C4C",
+        menuButton: "#b6b6b6",
       },
       themeSettingsExs: {
         lightFirst: "#9A86B5",
@@ -97,9 +111,12 @@ module.exports = {
     maxWidth: {
       xxs: "14rem",
       xs: "17rem",
+      containerLg: "1286px",
+      screen: "100vw",
     },
     maxHeight: {
       post: "35rem",
+      screen: "100vh",
     },
     fill: {
       red: "#ed4956",
@@ -129,7 +146,11 @@ module.exports = {
       width: {
         searchBar: "20.25rem",
         post: "40rem",
+        postMd: "36rem",
+        postSm: "30rem",
         userinfo: "30rem",
+        userinfoMD: "27rem",
+        userinfoSM: "22rem",
         menu: "19rem",
         navborder: "2px",
         contentSettings: "704px",
@@ -138,6 +159,10 @@ module.exports = {
         postAddBase: "900px",
         uploadLarge: "480px",
         uploadSmall: "200px",
+        settingsMid: "858px",
+        settingsSmall: "658px",
+        45: "11.25rem",
+        99: "99.5%",
       },
       height: {
         searchBar: "2.7rem",
@@ -147,6 +172,7 @@ module.exports = {
         postAddBase: "800px",
         uploadLarge: "500px",
         uploadSmall: "75px",
+        settingsSmall: "370px",
       },
       backgroundSize: {
         "size-200": "200% 200%",
@@ -154,6 +180,9 @@ module.exports = {
       backgroundPosition: {
         "pos-0": "0% 0%",
         "pos-100": "100% 100%",
+      },
+      margin: {
+        "-30": "-6.5rem",
       },
     },
     borderWidth: {

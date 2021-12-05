@@ -2,13 +2,14 @@ import React from "react";
 
 export default function Hot() {
   return (
-    <div className="absolute -right-2 -top-2 w-8">
+    <div className="absolute -right-2 -top-2 w-8 mobileXL:w-6">
       <svg
         width="30"
         height="30"
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="mobileXL:w-6"
       >
         <circle cx="15" cy="15" r="15" fill="url(#paint0_linear_418:2)" />
         <path

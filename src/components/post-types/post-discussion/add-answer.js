@@ -49,15 +49,15 @@ export default function AddAnswer({ object, setAnswers, answers }) {
   }
 
   return (
-    <div className="w-full rounded-b-lg shadow-addanswer px-4 p-4 mt-4">
+    <div className="w-full rounded-b-lg shadow-addanswer px-4 p-4 mt-4 lptpXS:mt-1">
       <div className="flex justify-between items-center w-full">
         <img
           src={avatarUrl?.min}
-          className="avatar-addanswer rounded-full object-cover"
+          className="avatar-addanswer rounded-full object-cover lptpXS:w-6 lptpXS:h-6"
         />
         <input
           placeholder="What do you think?"
-          className="w-full border-b ml-2 border-gray-inputborder text-sm outline-none text-gray-addtext"
+          className="w-full border-b ml-2 border-gray-inputborder text-sm outline-none text-gray-addtext lptpXS:text-xs"
           value={answerContent}
           id={"content"}
           onChange={({ target }) => setAnswerContent(target.value)}

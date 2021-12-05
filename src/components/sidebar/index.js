@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { useMediaQuery } from "react-responsive";
 import useUser from "../../hooks/use-user";
 import Suggestions from "./suggestions";
 
@@ -7,14 +8,18 @@ export default function Sidebar() {
     user: { userId, following, docId },
   } = useUser();
 
+  const isMobile = useMediaQuery({ maxWidth: "934px" });
+
   return (
-    <div className=" font-fontbasic fixed right-64 top-32 z-0">
+    <div className="font-fontbasic z-0">
       {/* <User username={username} fullName={fullName} /> */}
-      <Suggestions
-        userId={userId}
-        following={following}
-        loggedInUserDocId={docId}
-      />
+      {isMobile ? null : (
+        <Suggestions
+          userId={userId}
+          following={following}
+          loggedInUserDocId={docId}
+        />
+      )}
     </div>
   );
 }

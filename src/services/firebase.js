@@ -329,15 +329,13 @@ export async function toggleVote(
     .firestore()
     .collection("publications")
     .doc(object.docId)
-    .collection("answers")
+    // .collection("answers")
+    // .get();
+    .update({
+      answers: FieldValue.arrayRemove(item),
+    })
     .get();
-  //   .update({
-  //     answers: FieldValue.arrayRemove(item),
-  //   });
 
-  // result.update({
-  //   answers: FieldValue.arrayUnion(item),
-  // });
   // .collection("answers")
   // .get();
 

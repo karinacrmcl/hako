@@ -11,7 +11,10 @@ export default function Publications({ publications }) {
   const { profileActiveCategories } = useProfileCategories();
 
   return (
-    <div className="h-16 mt-8 ml-20 ">
+    <div
+      className="overflow-y-scroll max-h-screen py-28 -mt-24 px-2 mobileSM:-mt-30 mobileSM:px-0 mobileSM:w-full overflow-x-hidden"
+      id="publications"
+    >
       {publications?.length > 0 ? (
         publications.map((content) => {
           switch (content.type) {
@@ -51,7 +54,6 @@ export default function Publications({ publications }) {
               return (
                 <p className="text-center text-2xl"> No publications yet </p>
               );
-              break;
           }
         })
       ) : !publications ? (
@@ -82,10 +84,6 @@ export default function Publications({ publications }) {
             }
           })
         : null}
-
-      {/* {!publications && (
-        <p className="text-center text-2xl"> No publications yet </p>
-      )} */}
     </div>
   );
 }

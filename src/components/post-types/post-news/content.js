@@ -23,13 +23,15 @@ export default function Content({ object }) {
 
   return (
     <div className="font-fontbasic text-primary  flex flex-col w-full px-4">
-      <h2 className="font-semibold text-xl mt-4 text-contentbreaks">
+      <h2 className="font-semibold text-xl mt-4 text-contentbreaks lptpXS:text-base">
         {object.newsTitle}
       </h2>
-      <span className="text-sm font-medium ">{object.updated}</span>
+      <span className="text-sm font-medium lptpXS:text-xs">
+        {object.updated}
+      </span>
       <span className="text-xs mt-1 italic">{object.author}</span>
       <hr className="mt-4 bg-gray-light border-transparent h-0.5 bg-gradient-to-r from-gradient-from to-gradient-to " />
-      <p className="text-sm font-regular mt-4 text-contentbreaks ">
+      <p className="text-sm font-regular mt-4 text-contentbreaks lptpXS:text-xs">
         {object.text}
       </p>
       <div className="relative flex justify-center w-full mt-4 mb-4">
@@ -37,7 +39,10 @@ export default function Content({ object }) {
           {object.media.map((img) => {
             return (
               <Zoom transitionDuration={200} key={img.data.id}>
-                <img className="w-full object-cover h-60" src={img.data.url} />
+                <img
+                  className="w-full object-cover h-60 lptpXS:h-52"
+                  src={img.data.url}
+                />
               </Zoom>
             );
           })}
@@ -45,19 +50,21 @@ export default function Content({ object }) {
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex text-sm">
-          <p className="mr-2">From the source: </p>
-          <a className="font-semibold " href={object.srcLink}>
+          <p className="mr-2 lptpXS:text-xs">From the source: </p>
+          <a className="font-semibold lptpXS:text-xs" href={object.srcLink}>
             {srcLinkLine}...
           </a>
         </div>
         <div className="flex w-20 justify-between mb-2 mt-2">
-          <FacebookShareButton
+          <a
             onMouseEnter={() => {
               setfbIsHovered(true);
             }}
             onMouseLeave={() => {
               setfbIsHovered(false);
             }}
+            href={`https://www.facebook.com/sharer/sharer.php?u=${object.srcLink}`}
+            target="_blank"
           >
             {fbIsHovered ? (
               <svg
@@ -156,7 +163,7 @@ export default function Content({ object }) {
                 </defs>
               </svg>
             )}
-          </FacebookShareButton>
+          </a>
           <a
             className="cursor-pointer"
             onMouseEnter={() => {
@@ -165,6 +172,8 @@ export default function Content({ object }) {
             onMouseLeave={() => {
               setmsIsHovered(false);
             }}
+            href={`fb-messenger://share/?link=http://${object.srcLink}&app_id=ok`}
+            target="_blank"
           >
             {msIsHovered ? (
               <svg
@@ -252,6 +261,7 @@ export default function Content({ object }) {
             onMouseLeave={() => {
               settwIsHovered(false);
             }}
+            href={`https://twitter.com/intent/tweet?url=${object.srcLink})?>`}
           >
             {twIsHovered ? (
               <svg

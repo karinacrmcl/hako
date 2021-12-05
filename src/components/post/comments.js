@@ -31,19 +31,26 @@ export default function Comments({
     }, []);
 
     return (
-      <div key={`${item.comment} - ${user?.username}`} className="mb-1 flex ">
+      <div
+        key={`${item.comment} - ${user?.username}`}
+        className="mb-1 flex lptpXS:mb-0.5 lptpXS:items-center"
+      >
         <img
-          className="rounded-full avatar-addanswer"
+          className="w-10 h-10 mr-2 rounded-full lptpXS:w-8 lptpXS:h-8 "
           src={user?.avatarUrl.min}
         />
         <div className="flex justify-between w-full items-center">
-          <div className="flex flex-col justify-start ml-2">
-            <Link to={`/p/${user?.username}`}>
-              <span className=" font-bold text-sm">{user?.username}</span>
+          <div className="flex flex-col justify-start ml-2 lptpXS:p-0">
+            <Link to={`/p/${user?.username}`} className="lptpXS:-mt-0.5">
+              <span className=" font-bold text-sm lptpXS:text-xs lptpXS:mb-0">
+                {user?.username}
+              </span>
             </Link>
-            <span className=" text-sm text-contentbreaks">{item.comment}</span>
+            <span className=" text-sm text-contentbreaks lptpXS:text-xs lptpXS:-mt-1">
+              {item.comment}
+            </span>
           </div>
-          <p className="text-xs w-28 w-datecreate flex justify-end text-gray-light">
+          <p className="text-xs w-28 w-datecreate flex justify-end text-gray-light lptpXS:text-xxs">
             {item.dateCreated}
           </p>
         </div>
@@ -56,7 +63,6 @@ export default function Comments({
     <>
       <div className="px-4 pt-2 border-t border-gray-inactive relative">
         {comments.slice(0, commentsSlice).map((item) => {
-          console.log(item);
           return <UserComment item={item} key={item.id} />;
         })}
         {comments.length >= 3 && commentsSlice < comments.length && (

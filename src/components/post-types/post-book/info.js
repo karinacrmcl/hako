@@ -3,9 +3,11 @@ import React from "react";
 export default function BookInfo({ object }) {
   const InfoLine = function ({ title, content }) {
     return (
-      <div className="flex mb-1">
-        <p className="text-sm font-semibold mr-1.5 ">{title}</p>
-        <span className="text-sm text-contentbreaks">{content}</span>
+      <div className="flex mb-1 lptpXS:w-60">
+        <p className="text-sm font-semibold mr-1.5 lptpXS:text-xs">{title}</p>
+        <span className="text-sm text-contentbreaks lptpXS:text-xs">
+          {content}
+        </span>
       </div>
     );
   };
@@ -20,22 +22,17 @@ export default function BookInfo({ object }) {
         <InfoLine title="Year:" content={object.year} />
         <InfoLine title="Genres:" content={genres.join(", ")} />
       </div>
-      <div className="text-sm">
+      <div className="text-sm lptpXS:text-xs">
         <InfoLine title="Description:" content={null} />
-        <p className="w-3/5 mb-2 text-contentbreaks">
-          {object.description.split(" ").slice(0, 25).join(" ")}
-        </p>
-        <p className="w-3/5 mb-3 text-contentbreaks">
-          {object.description.split(" ").slice(25, 50).join(" ")}
-        </p>
-        <p className="w-full text-contentbreaks">
-          {object.description.split(" ").slice(50).join(" ")}
+        <p className=" mb-2 text-contentbreaks">
+          <img
+            src={object.coverPhoto}
+            align="right"
+            className="w-50 -mt-32 right-10 top-4 h-72 object-cover lptpXS:w-38 lptpXS:h-56 "
+          />
+          {object.description}
         </p>
       </div>
-      <img
-        src={object.coverPhoto}
-        className="absolute w-50 right-10 top-4 h-72 object-cover"
-      />
     </div>
   );
 }

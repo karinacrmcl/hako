@@ -2,8 +2,11 @@ import React from "react";
 import { Transition } from "react-transition-group";
 import { useState } from "react";
 import { useModal } from "../../hooks/use-modal";
+import { useMediaQuery } from "react-responsive";
 
 export default function Categories({ btnActive }) {
+  const isMobile = useMediaQuery({ maxWidth: "1024px" });
+
   const categories = [
     {
       title: "news",
@@ -15,7 +18,7 @@ export default function Categories({ btnActive }) {
       key: "modalAddNews",
     },
     {
-      title: "photografy",
+      title: "photography",
       svgUrl: "/images/icons/menu/category-photo.svg",
       position: "-left-6 -top-7",
       id: 2,
@@ -74,34 +77,44 @@ export default function Categories({ btnActive }) {
 
   return (
     <div className="flex flex-col items-center">
-      {categories.map((item) => {
-        return (
-          <Transition in={btnActive} key={item.id} timeout={item.animDuration}>
-            {(state) => (
-              <div
-                style={{
-                  ...categoryStyle(item.animDuration),
-                  ...transitionStyles[state],
-                }}
-                className={`absolute ${item.position} cursor-pointer transform w-6 hover:scale-125`}
-                onClick={() => {
-                  setOpenModal({ ...openModal, [item.key]: true });
-                }}
-                onMouseEnter={() => {
-                  setIsHovered(true);
-                  setItemHovered(item.expl);
-                }}
-                onMouseLeave={() => {
-                  setIsHovered(false);
-                  setItemHovered("");
-                }}
+      {isMobile
+        ? null
+        : categories.map((item) => {
+            return (
+              <Transition
+                in={btnActive}
+                key={item.id}
+                timeout={item.animDuration}
               >
-                <img className="w-full" src={item.svgUrl} alt={item.title} />
-              </div>
-            )}
-          </Transition>
-        );
-      })}
+                {(state) => (
+                  <div
+                    style={{
+                      ...categoryStyle(item.animDuration),
+                      ...transitionStyles[state],
+                    }}
+                    className={`absolute ${item.position} cursor-pointer transform w-6 hover:scale-125`}
+                    onClick={() => {
+                      setOpenModal({ ...openModal, [item.key]: true });
+                    }}
+                    onMouseEnter={() => {
+                      setIsHovered(true);
+                      setItemHovered(item.expl);
+                    }}
+                    onMouseLeave={() => {
+                      setIsHovered(false);
+                      setItemHovered("");
+                    }}
+                  >
+                    <img
+                      className="w-full "
+                      src={item.svgUrl}
+                      alt={item.title}
+                    />
+                  </div>
+                )}
+              </Transition>
+            );
+          })}
       <Transition in={isHovered} timeout={itemAnimDuration}>
         {(state) => (
           <div
@@ -109,7 +122,7 @@ export default function Categories({ btnActive }) {
               ...categoryStyle(itemAnimDuration),
               ...transitionStyles[state],
             }}
-            className="absolute bg-white rounded-lg px-2 py-1   font-medium category-width"
+            className="absolute bg-white rounded-lg px-2 py-1 font-medium category-width"
           >
             {itemHovered}
           </div>

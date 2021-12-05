@@ -11,7 +11,7 @@ export default function Suggestions({
   loggedInUserDocId,
   avatarUrl,
 }) {
-  const [profiles, setProfiles] = useState(null);
+  const [profiles, setProfiles] = useState([]);
 
   useEffect(() => {
     async function suggestedProfiles() {
@@ -19,7 +19,7 @@ export default function Suggestions({
       setProfiles(response);
     }
 
-    if (userId) {
+    if (userId && profiles.length == 0) {
       suggestedProfiles();
     }
   }, [userId]);
@@ -27,14 +27,14 @@ export default function Suggestions({
   return !profiles ? (
     <Skeleton count={1} height={150} />
   ) : profiles.length > 0 ? (
-    <div className="rounded-lg flex flex-col shadow-xl font- bg-white p-4 ">
+    <div className="rounded-lg flex flex-col shadow-xl bg-white p-4 ">
       <div className="text-sm flex items-center align-items w-full justify-center mb-2">
-        <p className="font-semibold text-primary text-lg">
+        <p className="font-semibold text-primary text-lg lptpXS:text-base ">
           Suggestions for you
         </p>
       </div>
-      <div className="mt-4 grid gap-3">
-        {profiles.map((profile) => (
+      <div className="mt-4 grid gap-3 lptpXS:mt-1">
+        {profiles.slice(0, 4).map((profile) => (
           <SuggestedProfile
             key={profile.docId}
             profileDocId={profile.docId}
@@ -48,7 +48,12 @@ export default function Suggestions({
       </div>
     </div>
   ) : (
-    <p> </p>
+    <div className="rounded-lg flex flex-col shadow-xl bg-white p-4 ">
+      <p className="font-semibold text-primary text-lg lptpXS:text-base ">
+        Suggestions for you
+      </p>
+      <p className="text-sm w-72 text-gray-sugtop"> Nothing found.</p>
+    </div>
   );
 }
 

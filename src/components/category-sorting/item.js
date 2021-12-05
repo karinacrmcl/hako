@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { Transition } from "react-transition-group";
 import { useCategories } from "../../hooks/use-categorysorting";
 
@@ -19,10 +20,11 @@ export default function Item({ item, categoriesHovered }) {
 
   const [active, setActive] = useState(true);
   const { activeCategories, setActiveCategories } = useCategories();
+  const isMobile = useMediaQuery({ maxWidth: "650px" });
 
   return (
     <div
-      className="flex items-center  transition-all mb-3 cursor-pointer select-none"
+      className="flex items-center transition-all mb-3 cursor-pointer select-none lptpXS:mb-2 mobileXL:ml-1.5 mobileXL:mr-1.5 mobileXL:mb-0  "
       onClick={() => {
         setActive(!active);
         if (!active) {
@@ -35,21 +37,23 @@ export default function Item({ item, categoriesHovered }) {
     >
       <img
         src={`/images/icons/categories/${item.icon}`}
-        className="transition-all"
+        className="transition-all lptpXS:w-8 mobileXL:w-12"
       />
 
       <Transition in={categoriesHovered} timeout={duration}>
-        {(state) => (
-          <p
-            className="text-sm w-40 font-medium ml-2 select-none"
-            style={{
-              ...defaultStyle,
-              ...transitionStyles[state],
-            }}
-          >
-            {item.title}
-          </p>
-        )}
+        {(state) =>
+          isMobile ? null : (
+            <p
+              className="text-sm w-40 font-medium ml-2 select-none lptpXS:text-xs"
+              style={{
+                ...defaultStyle,
+                ...transitionStyles[state],
+              }}
+            >
+              {item.title}
+            </p>
+          )
+        }
       </Transition>
     </div>
   );

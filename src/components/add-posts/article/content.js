@@ -72,7 +72,7 @@ export default function Content({ user }) {
   return (
     <form
       key={"form"}
-      className="flex-col flex h-full py-10 relative"
+      className="flex-col flex h-full py-10 relative lptpXL:py-5 lptpXL:w-full"
       onSubmit={handlePrevent}
       method="POST"
     >
@@ -96,7 +96,7 @@ export default function Content({ user }) {
         }}
       ></textarea>
       <p
-        className={`flex justify-end mt-1 ${
+        className={`flex justify-end mt-1 lptpXL:text-sm ${
           text.length <= symbolsLimit
             ? `text-gray-extralight`
             : `text-red-primary`
@@ -105,7 +105,7 @@ export default function Content({ user }) {
         {text.length}/{symbolsLimit}
       </p>
       <div
-        className="absolute right-0 -bottom-10"
+        className="absolute right-0 -bottom-10 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9 "
         onClick={(e) => savePostData(e)}
       >
         <ButtonSecond />

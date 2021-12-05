@@ -63,7 +63,7 @@ export default function Content({ user }) {
   const symbolsLimit = 800;
 
   return (
-    <div className="flex-col flex h-full py-10 relative">
+    <div className="flex-col flex h-full py-10 relative lptpXL:py-5">
       <input
         className="input-add"
         placeholder="Main question/topic.."
@@ -81,7 +81,7 @@ export default function Content({ user }) {
         }}
       ></textarea>
       <p
-        className={`flex justify-end mt-1 ${
+        className={`flex justify-end mt-1 lptpXL:text-sm ${
           opinion.length <= symbolsLimit
             ? `text-gray-extralight`
             : `text-red-primary`
@@ -90,7 +90,7 @@ export default function Content({ user }) {
         {opinion.length}/{symbolsLimit}
       </p>
       <div
-        className="absolute right-0 -bottom-10"
+        className="absolute right-0 -bottom-10 tabletXL:-top-12 tabletXL:bottom-auto mobileXL:-top-9"
         onClick={(e) => savePostData(e)}
       >
         <ButtonSecond />

@@ -7,6 +7,7 @@ import Sorting from "./sorting";
 import Pinned from "./pinned-bar";
 import PinnedList from "./pinned-list";
 import useUser from "../../hooks/use-user";
+import { useMediaQuery } from "react-responsive";
 
 export default function UserProfile({ profileUser }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
@@ -21,6 +22,10 @@ export default function UserProfile({ profileUser }) {
   const {
     user: { userId },
   } = useUser();
+
+  const [isPinnedOpened, setIsPinnedOpened] = useState(false);
+  const [isOnTop, setIsOnTop] = useState(true);
+  const isMobile = useMediaQuery({ maxWidth: "971px" });
 
   useEffect(() => {
     async function getProfileInfoAndPublications() {
@@ -39,12 +44,32 @@ export default function UserProfile({ profileUser }) {
     }
   }, [profileUser.username, userId]);
 
-  const [isPinnedOpened, setIsPinnedOpened] = useState(false);
+  useEffect(() => {
+    if (isMobile) {
+      document.querySelectorAll("#publications")?.forEach((item) => {
+        item.addEventListener("scroll", (e) => {
+          if (document.getElementById("publications").scrollTop == 0) {
+            setIsOnTop(true);
+          } else {
+            setIsOnTop(false);
+          }
+        });
+      });
+    } else {
+      return;
+    }
+  }, [isPinnedOpened]);
+
+  console.log(isOnTop);
 
   return (
-    <div className="flex justify-between container">
-      <div className="flex flex-col items-start">
-        {isPinnedOpened ? null : <Sorting />}
+    <div className="flex justify-between container w-full tabletXL:flex-col tabletXL:items-center">
+      <div
+        className={`flex flex-col items-start tabletXL:items-center transition-all duration-200 mobileXL:w-full ${
+          isOnTop ? "mt-0" : "-mt-48 "
+        } `}
+      >
+        {isPinnedOpened ? null : <Sorting isOnTop={isOnTop} />}
         {isPinnedOpened ? (
           <PinnedList
             profile={profile}
@@ -56,7 +81,11 @@ export default function UserProfile({ profileUser }) {
         )}
       </div>
 
-      <div className="fixed top-24 right-40 flex flex-col items-end mr-20">
+      <div
+        className={`flex flex-col items-end tabletXL:order-first mobileXL:w-full ${
+          isOnTop ? "slide-in-top " : "slide-out-top "
+        }`}
+      >
         <UserInfo
           photosCount={
             publicationsCollection ? publicationsCollection.length : 0

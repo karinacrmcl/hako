@@ -24,6 +24,9 @@ import { useModal } from "./hooks/use-modal";
 
 import CategoriesProvider from "./provider/categories-provider";
 import ProfileCategoriesProvider from "./provider/profile-categories-provider";
+import CategoriesMobile from "./components/menu/categories-mobile";
+import UserProfileSettingsMobile from "./components/settings/settings-mobile-modals/user-profile";
+import CustomizationSettingsMobile from "./components/settings/settings-mobile-modals/customization";
 
 export default function App() {
   const { user } = useAuthListener();
@@ -39,47 +42,61 @@ export default function App() {
       .querySelector("body")
       .classList.remove("w-screen", "h-screen", "overflow-hidden");
   }
+
   return (
-    <UserContext.Provider value={{ user }}>
-      <Router>
-        <Suspense fallback={<p>Loading..</p>} />
-        <Switch>
-          <IsUserLoggedIn
-            user={user}
-            loggedInPath={ROUTES.DASHBOARD}
-            path={ROUTES.LOGIN}
-          >
-            <Login />
-          </IsUserLoggedIn>
-          <IsUserLoggedIn
-            user={user}
-            loggedInPath={ROUTES.DASHBOARD}
-            path={ROUTES.SIGN_UP}
-          >
-            <SignUp />
-          </IsUserLoggedIn>
-          <Route path={ROUTES.PROFILE}>
-            <ProfileCategoriesProvider>
-              <Profile />
-            </ProfileCategoriesProvider>
-          </Route>
+    <div className="overflow-hidden max-w-screen max-h-screen">
+      <UserContext.Provider value={{ user }}>
+        <Router>
+          <Suspense fallback={<p>Loading..</p>} />
+          <Switch>
+            <IsUserLoggedIn
+              user={user}
+              loggedInPath={ROUTES.DASHBOARD}
+              path={ROUTES.LOGIN}
+            >
+              <Login />
+            </IsUserLoggedIn>
+            <IsUserLoggedIn
+              user={user}
+              loggedInPath={ROUTES.DASHBOARD}
+              path={ROUTES.SIGN_UP}
+            >
+              <SignUp />
+            </IsUserLoggedIn>
+            <Route path={ROUTES.PROFILE}>
+              <ProfileCategoriesProvider>
+                <Profile />
+              </ProfileCategoriesProvider>
+            </Route>
 
-          <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
-            <CategoriesProvider>
-              <Dashboard />
-            </CategoriesProvider>
-          </ProtectedRoute>
+            <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
+              <CategoriesProvider>
+                <Dashboard />
+              </CategoriesProvider>
+            </ProtectedRoute>
 
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
 
-      {openModal.modalSettings && <Settings user={user} />}
-      {openModal.modalAddArticle && <AddArticleModal user={user} />}
-      {openModal.modalAddNews && <AddNewsModal user={user} />}
-      {openModal.modalAddBook && <AddBookModal user={user} />}
-      {openModal.modalAddPhoto && <AddPhotoModal user={user} />}
-      {openModal.modalAddDiscussion && <AddDiscussionModal user={user} />}
-    </UserContext.Provider>
+        {openModal.modalSettings && <Settings user={user} />}
+        {openModal.modalAddArticle && <AddArticleModal user={user} />}
+        {openModal.modalAddNews && <AddNewsModal user={user} />}
+        {openModal.modalAddBook && <AddBookModal user={user} />}
+        {openModal.modalAddPhoto && <AddPhotoModal user={user} />}
+        {openModal.modalAddDiscussion && <AddDiscussionModal user={user} />}
+        {openModal.categoriesMobile && <CategoriesMobile isOpen={true} />}
+        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />}
+        {openModal.settingsCustomizationMobile && (
+          <CustomizationSettingsMobile />
+        )}
+        {/* 
+        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />}
+
+        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />}
+
+        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />} */}
+      </UserContext.Provider>
+    </div>
   );
 }

@@ -26,12 +26,15 @@ export default function PublicationSuccess({ isPublished }) {
           }}
           className="select-none absolute bg-gradient-to-r from-gradient-from to-gradient-to success-container rounded-lg flex items-center p-6 top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
         >
-          <img src="\images\icons\add-posts\success.svg" />
+          <img
+            src="\images\icons\add-posts\success.svg"
+            className="lptpXL:w-20"
+          />
           <div className="flex flex-col ml-3">
-            <h2 className="text-white font-bold text-xl uppercase leading-none	">
+            <h2 className="text-white font-bold text-xl uppercase leading-none lptpXS:text-lg	mobileXL:text-base mobileXS:text-sm">
               Your publication was successfully added.
             </h2>
-            <p className="text-white font-medium text-lg leading-none mt-2">
+            <p className="text-white font-medium text-lg leading-none mt-2 lptpXS:text-base mobileXL:text-sm mobileXS:text-xs">
               To see the new post, check out your profile
             </p>
           </div>
