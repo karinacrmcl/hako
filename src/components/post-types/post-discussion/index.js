@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./header";
+import Header from "../../post/header";
 import Question from "./question";
 import Answers from "./answers";
 import AddAnswer from "./add-answer";

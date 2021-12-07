@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { Fragment, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./pages/login";
 import SignUp from "./pages/sign-up";
@@ -31,17 +31,30 @@ import CustomizationSettingsMobile from "./components/settings/settings-mobile-m
 export default function App() {
   const { user } = useAuthListener();
   const { openModal } = useModal();
-  const isModalOpened = Object.values(openModal).some((x) => x == true);
 
-  if (isModalOpened) {
-    document
-      .querySelector("body")
-      .classList.add("w-screen", "h-screen", "overflow-hidden");
-  } else {
-    document
-      .querySelector("body")
-      .classList.remove("w-screen", "h-screen", "overflow-hidden");
-  }
+  const modalList = [
+    { key: "modalSettings", component: <Settings user={user} /> },
+    { key: "modalAddArticle", component: <AddArticleModal user={user} /> },
+    { key: "modalAddNews", component: <AddNewsModal user={user} /> },
+    { key: "modalAddBook", component: <AddBookModal user={user} /> },
+    { key: "modalAddPhoto", component: <AddPhotoModal user={user} /> },
+    {
+      key: "modalAddDiscussion",
+      component: <AddDiscussionModal user={user} />,
+    },
+    {
+      key: "categoriesMobile",
+      component: <CategoriesMobile isOpen={true} />,
+    },
+    {
+      key: "settingsUserProfileMobile",
+      component: <UserProfileSettingsMobile />,
+    },
+    {
+      key: "settingsCustomizationMobile",
+      component: <CustomizationSettingsMobile />,
+    },
+  ];
 
   return (
     <div className="overflow-hidden max-w-screen max-h-screen">
@@ -68,34 +81,21 @@ export default function App() {
                 <Profile />
               </ProfileCategoriesProvider>
             </Route>
-
             <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
               <CategoriesProvider>
                 <Dashboard />
               </CategoriesProvider>
             </ProtectedRoute>
-
             <Route component={NotFound} />
           </Switch>
         </Router>
 
-        {openModal.modalSettings && <Settings user={user} />}
-        {openModal.modalAddArticle && <AddArticleModal user={user} />}
-        {openModal.modalAddNews && <AddNewsModal user={user} />}
-        {openModal.modalAddBook && <AddBookModal user={user} />}
-        {openModal.modalAddPhoto && <AddPhotoModal user={user} />}
-        {openModal.modalAddDiscussion && <AddDiscussionModal user={user} />}
-        {openModal.categoriesMobile && <CategoriesMobile isOpen={true} />}
-        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />}
-        {openModal.settingsCustomizationMobile && (
-          <CustomizationSettingsMobile />
+        {modalList.map(
+          (item) =>
+            openModal[item.key] && (
+              <Fragment key={item.key}>{item.component}</Fragment>
+            )
         )}
-        {/* 
-        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />}
-
-        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />}
-
-        {openModal.settingsUserProfileMobile && <UserProfileSettingsMobile />} */}
       </UserContext.Provider>
     </div>
   );

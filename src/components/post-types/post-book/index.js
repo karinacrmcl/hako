@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./header";
+import Header from "../../post/header";
 import Actions from "../../post/actions";
 import BookInfo from "./info";
 import Footer from "./footer";

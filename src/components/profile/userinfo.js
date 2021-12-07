@@ -96,7 +96,7 @@ export default function UserInfo({
       <div className="flex items-center">
         {user.username && avatarUrl ? (
           <img
-            className="rounded-full avatar-userinfo object-cover flex lptpXS:w-10"
+            className="rounded-full avatar-userinfo object-cover flex lptpXS:w-10 mobileXL:w-8"
             alt={user.username}
             src={avatarUrl?.basic}
           />

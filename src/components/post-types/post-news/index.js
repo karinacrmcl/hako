@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./header";
+import Header from "../../post/header";
 import Actions from "../../post/actions";
 import Content from "./content";
 import Hot from "../is-hot";

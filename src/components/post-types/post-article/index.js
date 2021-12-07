@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Header from "./header";
+import Header from "../../post/header";
 import Actions from "../../post/actions";
 import { getUserByUserId } from "../../../services/firebase";
 import Comments from "../../post/comments";

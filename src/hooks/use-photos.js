@@ -9,13 +9,15 @@ export default function usePhotos() {
 
   useEffect(() => {
     async function getTimelinePublications() {
-      const [{ following }] = await getUserByUserId(userId);
-      let followedUserPublications = [];
+      if (userId) {
+        const [{ following }] = await getUserByUserId(userId);
+        let followedUserPublications = [];
 
-      followedUserPublications = await getPublications(userId, following);
+        followedUserPublications = await getPublications(userId, following);
 
-      followedUserPublications.sort((a, b) => b.dateCreated - a.dateCreated);
-      setPublications(followedUserPublications);
+        followedUserPublications.sort((a, b) => b.dateCreated - a.dateCreated);
+        setPublications(followedUserPublications);
+      }
     }
     getTimelinePublications();
   }, [userId]);

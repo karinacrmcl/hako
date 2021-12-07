@@ -12,7 +12,7 @@ export default function Publications({ publications }) {
 
   return (
     <div
-      className="overflow-y-scroll max-h-screen py-28 -mt-24 px-2 mobileSM:-mt-30 mobileSM:px-0 mobileSM:w-full overflow-x-hidden"
+      className="overflow-y-scroll max-h-screen py-28 -mt-24 px-2 mobileSM:-mt-30 mobileSM:px-0 mobileXL:w-full mobileXL:overflow-x-hidden"
       id="publications"
     >
       {publications?.length > 0 ? (

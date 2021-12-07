@@ -10,7 +10,7 @@ export default function Base({ category, content, categoryKey }) {
   const isMobile = useMediaQuery({ maxWidth: "971px" });
 
   return isMobile ? (
-    <div className="font-fontbasic z-100 fixed w-screen h-screen top-0 flex justify-center items-center tabletXL:bg-bgMobile ">
+    <div className="font-fontbasic z-100 fixed w-screen h-screen top-0 flex justify-center items-center tabletXL:bg-bgMobile slide-in-bottom ">
       <div className="bg-white shadow-xl p-8 rounded-lg relative flex flex-col desktopXS:w-1/2 desktopXS:h-5/6 lptpXS:w-full lptpXS:p-3 lptpXS:h-full mt-36 overflow-y-scroll overflow-x-hidden">
         <div className="flex justify-between ">
           <div

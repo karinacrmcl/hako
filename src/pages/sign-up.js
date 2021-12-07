@@ -55,7 +55,9 @@ export default function SignUp() {
                 likedPublications: [],
               });
 
-            history.push(ROUTES.DASHBOARD);
+            window.location.reload();
+
+            // history.push(ROUTES.DASHBOARD);
           } catch (error) {
             setFullName("");
             setEmailAdress("");
@@ -140,7 +142,6 @@ export default function SignUp() {
               type="password"
               placeholder="Password"
               className="text-sm placeholder-gray-extralight text-gray-light w-80 lptpXL:w-full h-2  py-5 px-4 lptpXL:py-4.5  border border-gray-inputborder rounded-lg mb-4 lptpXL:mb-3 mobileXL:mb-6"
-              o
               onChange={({ target }) => {
                 setPassword(target.value);
               }}
