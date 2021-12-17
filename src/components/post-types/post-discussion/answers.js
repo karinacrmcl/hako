@@ -22,15 +22,6 @@ export default function Answers({ object, currentUserId }) {
 
   const UserAnswer = ({ item }) => {
     const [user, setUser] = useState(null);
-    // useEffect(() => {
-    //   async function getUserObjByUserId() {
-    //     const [user] = await getUserByUserId(item.userAuthor);
-    //     setUser(user);
-    //   }
-    //   if (item?.userAuthor) {
-    //     getUserObjByUserId();
-    //   }
-    // }, []);
 
     function handleVote(value, answerId) {
       if (vote == value) {
@@ -44,10 +35,6 @@ export default function Answers({ object, currentUserId }) {
     const [downVotes, setDownVotes] = useState([]);
     const [upVotes, setUpVotes] = useState([]);
 
-    // console.log("vote", vote);
-    // console.log("up", upVotes);
-    // console.log("down", downVotes);
-
     useEffect(() => {
       if (vote == "up") {
         setUpVotes((upVotes) => [
@@ -56,14 +43,10 @@ export default function Answers({ object, currentUserId }) {
             id: user.userId,
           },
         ]);
-
-        // console.log(item);
         setDownVotes(downVotes.filter((item) => item.id !== user.userId));
-        console.log(item);
         toggleVote(object, item);
       } else {
         setUpVotes(upVotes.filter((item) => item.id !== user.userId));
-        // console.log("false");
       }
 
       if (vote == "down") {
@@ -76,7 +59,6 @@ export default function Answers({ object, currentUserId }) {
         setUpVotes(upVotes.filter((item) => item.id !== user.userId));
       } else {
         setDownVotes(downVotes.filter((item) => item.id !== user.userId));
-        // console.log("false");
       }
     }, [vote]);
 

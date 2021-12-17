@@ -27,8 +27,6 @@ export default function Header({ object }) {
 
   const isMobile = useMediaQuery({ maxWidth: "450px" });
 
-  console.log(object);
-
   return (
     <div className="font-fontbasic flex justify-between w-full border-b border-gray-border p-4 lptpXS:p-3 items-center">
       <div className="flex justify-between items-center">

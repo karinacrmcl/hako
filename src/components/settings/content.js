@@ -15,6 +15,8 @@ import { doesUsernameExist } from "../../services/firebase";
 import { useModal } from "../../hooks/use-modal";
 import { useMediaQuery } from "react-responsive";
 
+import { savePicturedata } from "../../shared/Utils";
+
 export default function Content({ category }) {
   const { user } = useUser();
 
@@ -78,8 +80,6 @@ export default function Content({ category }) {
 
     const usernameExists = await doesUsernameExist(username);
 
-    // console.log(document.querySelectorAll("input"));
-
     if (
       usernameUpd.value != "" &&
       fullNameUpd.value != "" &&
@@ -92,9 +92,7 @@ export default function Content({ category }) {
             displayName: usernameUpd.value,
             email: emailAdressUpd,
           })
-          .then(() => {
-            // console.log("user updated", userNow);
-          })
+          .then(() => {})
           .catch((error) => {
             console.log("error", error);
           });
@@ -153,9 +151,6 @@ export default function Content({ category }) {
     setSelectedFile(event.target.files[0]);
   };
 
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [strokeWidth, setStrokeWidth] = useState(0);
-
   function savePicturedata() {
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
@@ -176,6 +171,9 @@ export default function Content({ category }) {
       // .then(setUploadProgress(0));
     };
   }
+
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [strokeWidth, setStrokeWidth] = useState(0);
 
   // -----------------------Content ----------------------------------
 

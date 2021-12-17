@@ -60,8 +60,6 @@ export default function UserProfile({ profileUser }) {
     }
   }, [isPinnedOpened]);
 
-  console.log(isOnTop);
-
   return (
     <div className="flex justify-between container w-full tabletXL:flex-col tabletXL:items-center">
       <div

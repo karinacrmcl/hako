@@ -19,7 +19,7 @@ export default function Suggestions({
       setProfiles(response);
     }
 
-    if (userId && profiles.length == 0) {
+    if (userId) {
       suggestedProfiles();
     }
   }, [userId]);
@@ -43,6 +43,8 @@ export default function Suggestions({
             avatarUrl={profile.avatarUrl}
             userId={userId}
             loggedInUserDocId={loggedInUserDocId}
+            profiles={profiles}
+            setProfiles={setProfiles}
           />
         ))}
       </div>

@@ -61,7 +61,7 @@ export default function Settings({ user }) {
   const history = useHistory();
 
   const {
-    user: { fullName, username, avatarUrl, emailAdress },
+    user: { fullName, avatarUrl, emailAdress },
   } = useUser();
 
   const MobileSettinsgInfo = () => {
@@ -113,7 +113,6 @@ export default function Settings({ user }) {
           <div className="flex flex-col items-start settingsBP:w-full settingsBP:items-center ">
             {isMobile ? <MobileSettinsgInfo /> : null}
             {settingsTabs.map((tab) => {
-              console.log(tab.modalTag);
               return (
                 <div
                   className={`flex items-center w-60 h-12 cursor-pointer settings-tab relative lptpXL:w-48 lptpXS:w-36 lptpXS:h-9 settingsBP:w-full settingsBP:mt-1 ${

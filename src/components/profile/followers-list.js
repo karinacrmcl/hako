@@ -51,7 +51,6 @@ export default function FollowerList({ list }) {
       {users.length > 0 ? (
         users.sort().map((item) => {
           if (item) {
-            // console.log(item);
             return <SingleUserInfo user={item} key={item.userId} />;
           } else {
             let id =

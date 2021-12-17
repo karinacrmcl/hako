@@ -48,23 +48,6 @@ export default function Sorting({ isOnTop }) {
 
   const [offset, setOffset] = useState(null);
 
-  // window.onwheel = (e) => {
-  //   if (onTimeline) {
-  //     if (e.deltaY < 0) {
-  //       setOffset("up");
-  //       console.log(offset);
-  //     } else if (e.deltaY > 0) {
-  //       setOffset("down");
-  //       console.log(offset);
-  //     }
-  //   } else {
-  //     return;
-  //   }
-  // };
-
-  // console.log(onTimeline);
-  // console.log(offset);
-
   return (
     <div
       className={`flex flex-col items-center font-fontbasic z-60 relative ${

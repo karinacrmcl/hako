@@ -595,50 +595,6 @@ export default function Content({ user }) {
                   })}
                 </div>
               ) : null}
-              {/* <Swiper
-                spaceBetween={50}
-                slidesPerView={3}
-                onSlideChange={() => console.log("slide change")}
-                onSwiper={(swiper) => console.log(swiper)}
-              >
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
-                <SwiperSlide>Slide 4</SwiperSlide>
-                ...
-              </Swiper> */}
-              {/* asdas
-              <button>jknkjbk</button>
-              {selectedGenres.map((genre) => {
-                return (
-                  <div
-                    className="bg-gray-genresBg text-sm text-gray-addtext items-center h-6 px-3 mr-2 flex rounded-full select-none whitespace-nowrap mb-1 "
-                    key={genre.id}
-                  >
-                    <p className="mr-3"> {genre.genreTitle} </p>
-                    <button
-                      onClick={() => {
-                        removeItem(genre.id);
-                      }}
-                    >
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 8 8"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 1L4 4M7 7L4 4M4 4L7 1M4 4L1 7"
-                          stroke="#777777"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                );
-              })} */}
             </span>
           ) : (
             <span className="flex border justify-between border-gray-genres rounded-lg p-1 h-auto flex items-center mt-2 lptpXL:h-9 lptpXL:py-1 lptpXL:px-1">

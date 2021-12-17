@@ -13,6 +13,8 @@ export default function SuggestedProfile({
   userId,
   loggedInUserDocId,
   avatarUrl,
+  profiles,
+  setProfiles,
 }) {
   const [followed, setFollowed] = useState(false);
 
@@ -21,6 +23,12 @@ export default function SuggestedProfile({
     await updateLoggedInUserFollowing(loggedInUserDocId, profileId, false);
 
     await updateFollowedUserFollowers(profileDocId, userId, false);
+
+    const updatedProfiles = profiles.filter((obj) => {
+      return obj.userId !== profileId;
+    });
+
+    setProfiles(updatedProfiles);
   }
 
   return !followed ? (

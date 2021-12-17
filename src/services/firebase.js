@@ -126,84 +126,6 @@ export async function addPublication(post) {
   return firebase.firestore().collection("publications").add(post);
 }
 
-export async function getUserPublicationsByUsername(username, userId) {
-  const [user] = await getUserByUsername(username);
-  const result = await firebase
-    .firestore()
-    .collection("publications")
-    .where("userId", "==", user?.userId)
-    .get();
-
-  const userProfilePublications = result.docs.map((publication) => ({
-    ...publication.data(),
-    docId: publication.id,
-  }));
-
-  const publicationsWithUserDetails = await Promise.all(
-    userProfilePublications.map(async (publication) => {
-      let currentUser = await getUserByUserId(userId);
-      let userLikedPublication = false;
-      if (currentUser[0].likedPublications.includes(publication.docId)) {
-        userLikedPublication = true;
-      }
-      let userPinnedPublication = false;
-      if (currentUser[0].pinnedPublications.includes(publication.id)) {
-        userPinnedPublication = true;
-      }
-      const user = await getUserByUserId(publication.userId);
-      const { username } = user[0];
-      return {
-        username,
-        ...publication,
-        userLikedPublication,
-        userPinnedPublication,
-      };
-    })
-  );
-
-  return publicationsWithUserDetails;
-}
-
-// //get all the publications with the user details (profile, id, full name)
-export async function getPublications(userId, following) {
-  const visibleFor = [...following, userId];
-
-  const result = await firebase
-    .firestore()
-    .collection("publications")
-    .where("userId", "in", visibleFor)
-    .get();
-
-  const userFollowedPublications = result.docs.map((publication) => ({
-    ...publication.data(),
-    docId: publication.id,
-  }));
-
-  const publicationsWithUserDetails = await Promise.all(
-    userFollowedPublications.map(async (publication) => {
-      let currentUser = await getUserByUserId(userId);
-      let userLikedPublication = false;
-      if (currentUser[0].likedPublications.includes(publication.docId)) {
-        userLikedPublication = true;
-      }
-      let userPinnedPublication = false;
-      if (currentUser[0].pinnedPublications.includes(publication.id)) {
-        userPinnedPublication = true;
-      }
-      const user = await getUserByUserId(publication.userId);
-      const { username } = user[0];
-      return {
-        username,
-        ...publication,
-        userLikedPublication,
-        userPinnedPublication,
-      };
-    })
-  );
-
-  return publicationsWithUserDetails;
-}
-
 export async function updateProfiledata(profileDocId, userData) {
   await firebase.firestore().collection("users").doc(profileDocId).update({
     username: userData.username,
@@ -242,6 +164,82 @@ export async function addAnswerToDiscussion(docId, answerObj) {
         id,
       }),
     });
+}
+export async function getPublications(userId, following) {
+  const publicationsFrom = [...following, userId];
+
+  const result = await firebase
+    .firestore()
+    .collection("publications")
+    .where("userId", "in", publicationsFrom)
+    .get();
+
+  const userFollowedPublications = result.docs.map((publication) => ({
+    ...publication.data(),
+    docId: publication.id,
+  }));
+
+  const publicationsWithUserDetails = await Promise.all(
+    userFollowedPublications.map(async (publication) => {
+      let currentUser = await getUserByUserId(userId);
+      let userLikedPublication = false;
+      if (currentUser[0].likedPublications.includes(publication.docId)) {
+        userLikedPublication = true;
+      }
+      let userPinnedPublication = false;
+      if (currentUser[0].pinnedPublications.includes(publication.id)) {
+        userPinnedPublication = true;
+      }
+      const user = await getUserByUserId(publication.userId);
+      const { username } = user[0];
+      return {
+        username,
+        ...publication,
+        userLikedPublication,
+        userPinnedPublication,
+      };
+    })
+  );
+
+  return publicationsWithUserDetails;
+}
+
+export async function getUserPublicationsByUsername(username, userId) {
+  const [user] = await getUserByUsername(username);
+  const result = await firebase
+    .firestore()
+    .collection("publications")
+    .where("userId", "==", user?.userId)
+    .get();
+
+  const userProfilePublications = result.docs.map((publication) => ({
+    ...publication.data(),
+    docId: publication.id,
+  }));
+
+  const publicationsWithUserDetails = await Promise.all(
+    userProfilePublications.map(async (publication) => {
+      let currentUser = await getUserByUserId(userId);
+      let userLikedPublication = false;
+      if (currentUser[0].likedPublications.includes(publication.docId)) {
+        userLikedPublication = true;
+      }
+      let userPinnedPublication = false;
+      if (currentUser[0].pinnedPublications.includes(publication.id)) {
+        userPinnedPublication = true;
+      }
+      const user = await getUserByUserId(publication.userId);
+      const { username } = user[0];
+      return {
+        username,
+        ...publication,
+        userLikedPublication,
+        userPinnedPublication,
+      };
+    })
+  );
+
+  return publicationsWithUserDetails;
 }
 
 export async function getPinnedPublications(publicationDocId, userId) {
@@ -287,29 +285,6 @@ export async function getPinnedPublications(publicationDocId, userId) {
   return publicationsWithUserDetails;
 }
 
-// const handleSubmitComment = (event) => {
-//   event.preventDefault();
-
-//   setComments([
-//     { displayName, avatarUrl, comment, dateCreated },
-//     ...comments,
-//   ]);
-//   setComment("");
-
-//   return firebase
-//     .firestore()
-//     .collection("publications")
-//     .doc(docId)
-//     .update({
-//       comments: FieldValue.arrayUnion({
-//         displayName,
-//         avatarUrl,
-//         comment,
-//         dateCreated,
-//       }),
-//     });
-// };
-
 export async function toggleVote(
   object,
   item,
@@ -317,87 +292,14 @@ export async function toggleVote(
   voteValue,
   currentUserId
 ) {
-  // const result = await firebase
-  //   .firestore()
-  //   .collection("publications")
-  //   .doc(object.docId)
-  //   .update({
-  //     answers: FieldValue.arrayRemove(item),
-  //   });
-
   const result = await firebase
     .firestore()
     .collection("publications")
     .doc(object.docId)
-    // .collection("answers")
-    // .get();
+
     .update({
       answers: FieldValue.arrayRemove(item),
     })
     .get();
-
-  // .collection("answers")
-  // .get();
-
-  // const userObj = {
-  //   id: currentUserId,
-  // };
-
-  // if (voteValue == "up") {
-  //   console.log("completed");
-  //   result.update({
-  //     answers: FieldValue.arrayRemove(item),
-  //   });
-  //   item.upVotes.push(userObj);
-  //   // item.upVotes.push(currentUserId);
-  //   result.update({
-  //     answers: FieldValue.arrayUnion(item),
-  //   });
-  // }
-
-  // answers: FieldValue.arrayUnion("bro"),
-  //   // FieldValue.arrayUnion(item.upVotes.push(userObj))
-  //   //           : voteValue == "down"
-  //   //           ? FieldValue.arrayRemove(item)
-  //   //           .arrayUnion(
-  //   // item.downVotes.push(userObj)
-  //   //             )
-  //   //           : FieldValue.arrayRemove(item).arrayUnion(
-  //   //               item.downVotes.push(userObj)
-  //   //             ),
-  console.log(result);
-
-  // filter((item) => {
-  //         return item.id == answerId;
-  //       }).arrayUnion("bro"),
-  //   return item.id == answerId;
-  // });
-
-  // const answers = result.docs.map((publication) => ({
-  //   ...publication.data(),
-  //   docId: publication.id,
-  // }));
-  // console.log(result.docs);
-  // const answer = publication[0].answers.filter((item) => {
-  //   return item.id == answerId;
-  // });
-
-  // answer[0].update({
-  //   upVotes: FieldValue.arrayUnion(currentUserId),
-  // });
-
-  // console.log(answer[0].upVotes);
   return result;
 }
-
-// const addedDifference = ta.filter(x => !tb.includes(x));
-//  const removedDifference = tb.filter(x => !ta.includes(x));
-//   console.log(Added -> + addedDifference);
-//   console.log(after - ta)
-//   console.log(Removed -> + removedDifference)
-//   console.log(before - tb)
-//    addedDifference.forEach(async tag => { const tagRef = db.collection('tags').doc();
-//    const tData = { recipeId:uid, url:url, tag:tag, createdAt:timestamp, lastActivity:null }
-//    await db.runTransaction(async (t) => { t.set(tagRef, tData) console.log(tag added where recipe.uid is ${uid} and tag is ${tag}) }) })
-//    removedDifference.forEach(async tag => {
-//       const querySnapshot = await db.collection('tags').where('recipeId', '==', uid).where('tag','==', tag).get(); await db.runTransaction(async (t) => { querySnapshot.docs.forEach(async doc => { console.log(doc.id, "-> ", ${doc.recipeId} - ${doc.tag}) if(doc.exists){ t.delete(doc.ref) console.log(tag deleted where recipe.uid is ${uid} and tag is ${tag}) }else{ console.log(not the tag we're looking for) } }) }) })
