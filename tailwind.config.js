@@ -43,7 +43,6 @@ module.exports = {
       50: 50,
       75: 75,
       100: 100,
-      auto: "auto",
     },
     colors: {
       primary: "#262626",
@@ -201,5 +200,8 @@ module.exports = {
     display: ["group-hover"],
     width: ["responsive", "hover", "focus"],
     borderStyle: ["hover", "focus"],
+  },
+  corePlugins: {
+    divideWidth: false,
   },
 };
