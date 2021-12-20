@@ -203,5 +203,6 @@ module.exports = {
   },
   corePlugins: {
     divideWidth: false,
+    purge: false,
   },
 };
