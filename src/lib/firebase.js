@@ -1,6 +1,10 @@
-import Firebase from "firebase";
+// import Firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { FieldValue, arrayUnion, arrayRemove } from "firebase/firestore/lite";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, where } from "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyDGdTMS57Y-3zW2-4ciQy8RFwsR-7zjVXo",
@@ -12,7 +16,24 @@ const config = {
   measurementId: "G-WZWBYJQ5JL",
 };
 
-const firebase = Firebase.initializeApp(config);
-const { FieldValue, arrayUnion, arrayRemove } = Firebase.firestore;
+const firebase = initializeApp(config);
+firebase.auth = getAuth;
+
+function getCollection(getFirestore) {
+  return (path) => {
+    const result = (collection(getFirestore(), path).where = where);
+    return result;
+  };
+}
+
+// function getCurrentFirestore() {
+//   getFirestore.collection = getCollection(getFirestore);
+
+//   return () => getFirestore;
+// }
+
+getFirestore.collection = getCollection(getFirestore);
+firebase.firestore = getFirestore;
+console.log(firebase.firestore.collection);
 
 export { firebase, FieldValue, arrayUnion, arrayRemove };

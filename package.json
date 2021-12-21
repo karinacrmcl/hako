@@ -25,14 +25,15 @@
     "react-modal": "^3.14.3",
     "react-responsive": "^9.0.0-beta.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.0",
     "react-share": "^4.4.0",
     "react-transition-group": "^4.4.2",
     "svgo": "^2.7.0",
     "swiper": "^6.8.4",
+    "util": "^0.12.4",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.2",
-    "webpack": "^4.44.2"
+    "webpack": "^5.65.0"
   },
   "scripts": {
     "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
@@ -43,7 +44,8 @@
     "build": "run-s build:css react-scripts:build",
     "react-scripts:build": "sleep 5 && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:node": "webpack -c webpack.config.js"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +68,7 @@
   "devDependencies": {
     "autoprefixer": "^10.3.1",
     "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.17"
+    "tailwindcss": "^2.2.17",
+    "webpack-cli": "^4.9.1"
   }
 }

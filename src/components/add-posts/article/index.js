@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ButtonSecond from "../../../shared/button-2";
+import React from "react";
 import Base from "../base-modal";
 import Content from "./content";
 

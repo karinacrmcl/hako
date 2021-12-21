@@ -1,8 +1,7 @@
 import { firebase, FieldValue, arrayUnion, arrayRemove } from "../lib/firebase";
 
 export async function doesUsernameExist(username) {
-  const result = await firebase
-    .firestore()
+  const result = await firebase.firestore
     .collection("users")
     .where("username", "==", username)
     .get();
@@ -11,8 +10,7 @@ export async function doesUsernameExist(username) {
 }
 
 export async function getUserByUsername(username) {
-  const result = await firebase
-    .firestore()
+  const result = await firebase.firestore
     .collection("users")
     .where("username", "==", username)
     .get();
@@ -24,8 +22,8 @@ export async function getUserByUsername(username) {
 }
 
 export async function getUserByUserId(userId) {
-  const result = await firebase
-    .firestore()
+  console.log("where", firebase.firestore.collection("users").where);
+  const result = await firebase.firestore
     .collection("users")
     .where("userId", "==", userId)
     .get();
@@ -39,7 +37,7 @@ export async function getUserByUserId(userId) {
 }
 
 export async function getSuggestedProfiles(userId, following) {
-  const result = await firebase.firestore().collection("users").limit(10).get();
+  const result = await firebase.firestore.collection("users").limit(10).get();
   return result.docs
     .map((user) => ({
       ...user.data(),
@@ -56,8 +54,7 @@ export async function updateLoggedInUserFollowing(
   profileId,
   isFollowingProfile
 ) {
-  return firebase
-    .firestore()
+  return firebase.firestore
     .collection("users")
     .doc(loggedInUserDocId)
     .update({
@@ -72,8 +69,7 @@ export async function updateFollowedUserFollowers(
   loggedInUserDocId,
   isFollowingProfile
 ) {
-  return firebase
-    .firestore()
+  return firebase.firestore
     .collection("users")
     .doc(profileDocId)
     .update({
@@ -87,8 +83,7 @@ export async function isUserFollowingProfile(
   loggedInUserUsername,
   profileUserId
 ) {
-  const result = await firebase
-    .firestore()
+  const result = await firebase.firestore
     .collection("users")
     .where("username", "==", loggedInUserUsername) // karl (active logged in user)
     .where("following", "array-contains", profileUserId)
@@ -123,11 +118,11 @@ export async function toggleFollow(
 
 //add an object which contains post data to the general array
 export async function addPublication(post) {
-  return firebase.firestore().collection("publications").add(post);
+  return firebase.firestore.collection("publications").add(post);
 }
 
 export async function updateProfiledata(profileDocId, userData) {
-  await firebase.firestore().collection("users").doc(profileDocId).update({
+  await firebase.firestore.collection("users").doc(profileDocId).update({
     username: userData.username,
     fullName: userData.fullName,
     emailAdress: userData.emailAdress,
@@ -136,7 +131,9 @@ export async function updateProfiledata(profileDocId, userData) {
 }
 
 export async function getAllUsers() {
-  const array = await firebase.firestore().collection("users").get();
+  console.log(firebase.firestore.collection);
+
+  const array = await firebase.firestore.collection("users").get();
 
   const result = array.docs.map((user) => ({
     ...user.data(),
@@ -151,8 +148,7 @@ export async function addAnswerToDiscussion(docId, answerObj) {
   let upVotes = answerObj.upVotes;
   let userAuthor = answerObj.userAuthor;
   let id = answerObj.id;
-  return firebase
-    .firestore()
+  return firebase.firestore
     .collection("publications")
     .doc(docId)
     .update({
@@ -168,8 +164,7 @@ export async function addAnswerToDiscussion(docId, answerObj) {
 export async function getPublications(userId, following) {
   const publicationsFrom = [...following, userId];
 
-  const result = await firebase
-    .firestore()
+  const result = await firebase.firestore
     .collection("publications")
     .where("userId", "in", publicationsFrom)
     .get();
@@ -206,8 +201,7 @@ export async function getPublications(userId, following) {
 
 export async function getUserPublicationsByUsername(username, userId) {
   const [user] = await getUserByUsername(username);
-  const result = await firebase
-    .firestore()
+  const result = await firebase.firestore
     .collection("publications")
     .where("userId", "==", user?.userId)
     .get();
@@ -245,8 +239,7 @@ export async function getUserPublicationsByUsername(username, userId) {
 export async function getPinnedPublications(publicationDocId, userId) {
   const result = await Promise.all(
     publicationDocId.map(async (id) => {
-      const result = await firebase
-        .firestore()
+      const result = await firebase.firestore
         .collection("publications")
         .where("id", "==", id)
         .get();
@@ -292,8 +285,7 @@ export async function toggleVote(
   voteValue,
   currentUserId
 ) {
-  const result = await firebase
-    .firestore()
+  const result = await firebase.firestore
     .collection("publications")
     .doc(object.docId)
 

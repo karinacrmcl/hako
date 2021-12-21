@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { addPublication, getUserByUsername } from "../../../services/firebase";
 import PublicationSuccess from "../publication-success/";
-import { setTimeout } from "timers";
 import ButtonSecond from "../../../shared/button-2";
 
 export default function Content({ user }) {
