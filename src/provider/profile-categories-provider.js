@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProfileUserCategoriesContext } from "../context/user-profile-categories";
+import { ProfileUserCategoriesContext } from "../context/profile-categories";
 
 export default function ProfileCategoriesProvider({ children, ...props }) {
   const [profileActiveCategories, setProfileActiveCategories] = useState({
