@@ -1,7 +1,7 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
-export default function ButtonUnfilled({ func }) {
+export default function ButtonUnfilled({ children, func }) {
   const isMobile = useMediaQuery({ maxWidth: "971px" });
 
   return (
@@ -12,7 +12,7 @@ export default function ButtonUnfilled({ func }) {
       {isMobile ? (
         <img src="/images/icons/categories-mobile/cancel.png" />
       ) : (
-        "Cancel"
+        children
       )}
     </button>
   );
