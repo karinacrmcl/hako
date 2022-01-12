@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
+import ButtonFilled from "../shared/components/button-filled";
+import ButtonUnfilled from "../shared/components/button-unfilled";
 
 export default function NotFound() {
   useEffect(() => {
@@ -19,18 +21,12 @@ export default function NotFound() {
       <p className="text-lg font-regular text-gray-light mt-0">
         This page does not exist, but you can go to the following:
       </p>
-      <div className="flex mt-5 items-center justify-between max-w-xxs w-full">
-        <Link
-          className="text-xl font-semibold text-gradient-from border-btn p-1.5 px-4 rounded-lg hover:border-btn transition-all hover:bg-default-first hover:text-white duration-500transition-all hover:bg-default-first hover:text-white duration-500"
-          to={ROUTES.DASHBOARD}
-        >
-          Home
+      <div className="flex mt-5 h-10 items-center justify-between w-48">
+        <Link to={ROUTES.DASHBOARD} className="h-8">
+          <ButtonUnfilled>Home</ButtonUnfilled>
         </Link>
-        <Link
-          className="bg-gradient-to-r p-2 px-4 text-xl font-semibold text-white rounded-xl demoGradient"
-          to={ROUTES.LOGIN}
-        >
-          Log In
+        <Link to={ROUTES.LOGIN} className="h-8">
+          <ButtonFilled>Log In</ButtonFilled>
         </Link>
       </div>
     </div>
