@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const apiUrl =
-  "https://api.imgbb.com/1/upload?key=a2c358478796c2c0d9f4743d092a6788";
+const apiUrl = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMAGES_API_KEY}`;
 
 export const fileUpload = async (data) => {
   try {
