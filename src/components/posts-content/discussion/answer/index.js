@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SvgSelector from "../../svg-selector";
 import { getUserByUserId } from "../../../../services/firebase";
+import { Firebase } from "../../../../lib/firebase";
+import { object } from "prop-types";
 
-export function UserAnswer({ item }) {
+export function UserAnswer({ item, docId }) {
   const { downVotes, upVotes } = item;
   const [user, setUser] = useState(null);
   const [voteValue, setVoteValue] = useState(null);
@@ -17,10 +19,27 @@ export function UserAnswer({ item }) {
     }
   }, []);
 
-  function handleVote(value, id) {
+  console.log(item);
+
+  const handleVote = async (value) => {
     voteValue !== value ? setVoteValue(value) : setVoteValue(null);
-    //TODO: firebase funciton
-  }
+
+    const result = await Firebase.firestore()
+      .collection("publications")
+      .where("id", "==", item.id)
+      .get();
+
+    const r = result.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
+    console.log(r);
+    // .update({
+    //   likedPublications: toggleLiked
+    //     ? FieldValue.arrayRemove(object.docId)
+    //     : FieldValue.arrayUnion(object.docId),
+    // });
+  };
 
   return (
     <div className="flex justify-between items-start mt-4 px-4">

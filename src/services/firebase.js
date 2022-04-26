@@ -291,5 +291,3 @@ export async function getPinnedPublications(publicationDocId, userId) {
 
   return publicationsWithUserDetails;
 }
-
-export async function handleUserVote(value, userId, authorId) {}

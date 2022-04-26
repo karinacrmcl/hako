@@ -3,7 +3,7 @@ import SvgSelector from "../../svg-selector";
 import AddAnswer from "../add-answer";
 import { UserAnswer } from "../answer";
 
-export default function Answers({ object, currentUserId }) {
+export default function Answers({ object }) {
   const [showDefault, setShowDefault] = useState(2);
   const [arrayDisplayed, setArrayDisplayed] = useState(false);
   const [answers, setAnswers] = useState(object.answers);
@@ -11,6 +11,8 @@ export default function Answers({ object, currentUserId }) {
   function displayAnswers(array) {
     return array.slice(0, showDefault);
   }
+
+  console.log("..", object);
 
   function isArrayDisplayed() {
     if (displayAnswers().length == answers.length) {
@@ -28,7 +30,7 @@ export default function Answers({ object, currentUserId }) {
         </p>
       ) : (
         displayAnswers(answers).map((item) => {
-          return <UserAnswer key={item.id} item={item} />;
+          return <UserAnswer key={item.id} item={item} docId={object.docId} />;
         })
       )}
 
