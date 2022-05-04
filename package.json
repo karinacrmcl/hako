@@ -47,7 +47,7 @@
     "react-scripts:build": "sleep 5 && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:node": "webpack -c webpack.config.js",
+    "build:node": "webpack -c webpack.config.js"
   },
   "eslintConfig": {
     "extends": [
