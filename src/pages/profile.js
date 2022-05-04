@@ -12,6 +12,10 @@ export default function Profile() {
   const history = useHistory();
 
   useEffect(() => {
+    document.title = `HAKO | ${username}`;
+  });
+
+  useEffect(() => {
     async function checkUserExists() {
       const [user] = await getUserByUsername(username);
       if (user?.userId) {
