@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar";
 import Timeline from "../components/timeline";
 import Sorting from "../components/category-sorting";
