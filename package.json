@@ -43,11 +43,12 @@
     "react-scripts:start": "sleep 5 && react-scripts start",
     "dev": "run-p watch:css react-scripts:start",
     "start": "node server.js",
-    "build": "run-s build:css react-scripts:build",
+    "build": "npm run build run-s build:css react-scripts:build",
     "react-scripts:build": "sleep 5 && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:node": "webpack -c webpack.config.js"
+    "build:node": "webpack -c webpack.config.js",
+    "install": "cd client && npm install"
   },
   "eslintConfig": {
     "extends": [
