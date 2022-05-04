@@ -7,9 +7,9 @@ import { useMediaQuery } from "react-responsive";
 import Header from "../components/header";
 
 export default function Dashboard() {
-  useEffect(() => {
-    document.title = "HAKO | Dashboard";
-  });
+  // useEffect(() => {
+  //   document.title = "HAKO | Dashboard";
+  // });
 
   const [isOnTop, setIsOnTop] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: "650px" });
