@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
+import { useForm } from "react-hook-form";
 import * as ROUTES from "../constants/routes";
 
 export default function Login() {
@@ -11,13 +12,20 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
-  const isInvalid = password === "" || emailAddress === "";
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
+  const onSubmit = async (data) => {
     try {
-      await Firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+      await Firebase.auth().signInWithEmailAndPassword(
+        data.email,
+        data.password
+      );
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
       setEmailAddress("");
@@ -41,38 +49,54 @@ export default function Login() {
             <img
               src="/images/logo.svg"
               alt="hako-logo"
-              className="mobileXL:mt-20"
+              className="w-18 mobileXL:mt-20"
             />
           </h1>
           {error && (
             <p className="mt-1 mb-1 text-xs text-red-primary">{error}</p>
           )}
           <form
-            onSubmit={handleLogin}
+            onSubmit={handleSubmit(onSubmit)}
             method="POST"
             className="flex flex-col items-center mt-8 mb-6 w-full mobileXL:mt-20"
           >
             <input
-              aria-label="Enter your email address"
-              type="text"
-              placeholder="Email address"
-              className="text-sm placeholder-gray-extralight text-gray-light w-80 lptpXL:w-full h-2  py-5 px-4 lptpXL:py-4.5  border border-gray-inputborder rounded-lg mb-4 lptpXL:mb-3 mobileXL:mb-6"
-              onChange={({ target }) => setEmailAddress(target.value)}
-              value={emailAddress}
+              className="text-sm placeholder-gray-extralight text-gray-light w-80 lptpXL:w-full h-2  py-5 px-4 lptpXL:py-4.5  border border-gray-inputborder rounded-lg  mb-2 lptpXL:mb-2 mobileXL:mb-2"
+              placeholder="Email Adress"
+              type="email"
+              id="email"
+              name="email"
+              aria-label="Enter your email adress"
+              {...register("email", {
+                required: true,
+                pattern: /^\S+@\S+$/i,
+              })}
             />
+            {errors.email && (
+              <p className="mb-1 text-xs font-medium text-red-primary">
+                Please enter your email adress
+              </p>
+            )}
             <input
-              aria-label="Enter your password"
-              type="password"
+              className="text-sm placeholder-gray-extralight text-gray-light w-80 lptpXL:w-full h-2  py-5 px-4 lptpXL:py-4.5  border border-gray-inputborder rounded-lg mb-2 lptpXL:mb-2 mobileXL:mb-2"
               placeholder="Password"
-              className="text-sm text-gray-extralight w-80 lptpXL:w-full h-2  py-5 px-4 lptpXL:py-4.5 border border-gray-inputborder rounded-lg mb-6 lptpXL:mb-3 mobileXL:mb-6"
-              onChange={({ target }) => setPassword(target.value)}
-              value={password}
+              type="password"
+              id="password"
+              name="password"
+              aria-label="Enter your password"
+              {...register("password", {
+                required: true,
+              })}
             />
+            {errors.password && (
+              <p className="mb-1 text-xs font-medium text-red-primary">
+                Please enter your password
+              </p>
+            )}
+
             <button
-              disabled={isInvalid}
               type="submit"
-              className={`bg-default-first text-white w-28 rounded h-8 font-bold mobileXL:w-full
-            ${isInvalid && "opacity-50"}`}
+              className="bg-default-first text-white w-28 mt-1 rounded h-8 font-bold mobileXL:w-full"
             >
               Login
             </button>

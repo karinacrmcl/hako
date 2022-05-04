@@ -1,13 +1,13 @@
 import Skeleton from "react-loading-skeleton";
-import usePhotos from "../hooks/use-photos";
+import usePhotos from "../../hooks/use-photos";
 
-import { useCategories } from "../context/categories-selected";
-import ArticleContent from "./posts-content/article";
-import PostLayout from "./post";
-import BookContent from "./posts-content/book";
-import PhotographyContent from "./posts-content/photography";
-import NewsContent from "./posts-content/news";
-import DiscussionContent from "./posts-content/discussion";
+import { useCategories } from "../../context/categories-selected";
+import ArticleContent from "../posts-content/article";
+import PostLayout from "../post";
+import BookContent from "../posts-content/book";
+import PhotographyContent from "../posts-content/photography";
+import NewsContent from "../posts-content/news";
+import DiscussionContent from "../posts-content/discussion";
 
 export default function Timeline() {
   const { publications } = usePhotos();
@@ -55,7 +55,7 @@ export default function Timeline() {
 
   return (
     <div
-      className="overflow-y-scroll max-h-screen py-20 px-2 -mt-20 mobileXL:-mt-18 mobileXL:w-full mobileXL:px-2 mobileXL:overflow-x-hidden"
+      className="overflow-y-scroll relative max-h-screen z-10 py-20 px-2 -mt-20 mobileXL:-mt-18 mobileXL:w-full mobileXL:px-2 mobileXL:overflow-x-hidden"
       id="publications"
     >
       {!publications ? (

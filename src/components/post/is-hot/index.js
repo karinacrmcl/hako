@@ -1,5 +1,5 @@
 import React from "react";
-import SvgSelector from "./svg-selector";
+import SvgSelector from "../svg-selector";
 
 export default function Hot() {
   return (

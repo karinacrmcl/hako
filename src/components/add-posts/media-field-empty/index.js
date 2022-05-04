@@ -1,4 +1,4 @@
-import SvgSelector from "./svg-selector";
+import SvgSelector from "../svg-selector";
 
 export const MediaFieldEmpty = ({ func, isMobile }) => {
   return (

@@ -11,7 +11,7 @@ export default function Sorting({ isOnTop }) {
 
   return (
     <div
-      className={`flex flex-col items-center font-fontbasic z-60 relative mobileXL:w-80 ${
+      className={`flex flex-col items-center font-fontbasic z-100 relative mobileXL:w-80 ${
         isOnTop ? "slide-in-top " : "slide-out-top  "
       } `}
     >

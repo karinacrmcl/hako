@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { getAllUsers } from "../../services/firebase";
-import SearchList from "./searchlist";
+import SearchList from "./list";
 import SvgSelector from "./svg-selector";
 
 export default function SearchBar() {

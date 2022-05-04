@@ -70,7 +70,7 @@ module.exports = {
         hints: "#7B7B7B",
       },
       gray: {
-        hint: "rgba(255, 255, 255, 0.71)",
+        hint: "rgba(255, 255, 255, 0.91)",
         inactive: "#EBEBEB",
         inputborder: "#E1E1E1",
         extralight: "#B6B6B6",

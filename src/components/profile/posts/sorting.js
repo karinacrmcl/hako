@@ -1,6 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import { categoriesList } from "../../../constants/profileCategories";
+import { categoriesList } from "../../../constants/profile-categories";
 import { useProfileCategories } from "../../../context/profile-categories";
 import SvgSelector from "../svg-selector";
 

@@ -19,21 +19,22 @@ export function UserAnswer({ item, docId }) {
     }
   }, []);
 
-  console.log(item);
-
   const handleVote = async (value) => {
     voteValue !== value ? setVoteValue(value) : setVoteValue(null);
 
     const result = await Firebase.firestore()
       .collection("publications")
-      .where("id", "==", item.id)
-      .get();
+      .doc(docId)
+      .child("answers")
+      .update({ upVotes: ["p"] });
 
-    const r = result.docs.map((item) => ({
-      ...item.data(),
-      docId: item.id,
-    }));
-    console.log(r);
+    // const r = result.docs.map((item) => ({
+    //   ...item.data(),
+    //   docId: item.id,
+    // }));
+
+    // console.log(r);
+
     // .update({
     //   likedPublications: toggleLiked
     //     ? FieldValue.arrayRemove(object.docId)
