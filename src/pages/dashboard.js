@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react/cjs/react.development";
 import Sidebar from "../components/sidebar";
 import Timeline from "../components/timeline";
 import Sorting from "../components/category-sorting";
@@ -7,9 +7,9 @@ import { useMediaQuery } from "react-responsive";
 import Header from "../components/header";
 
 export default function Dashboard() {
-  // useEffect(() => {
-  //   document.title = "HAKO | Dashboard";
-  // });
+  useEffect(() => {
+    document.title = "HAKO | Dashboard";
+  });
 
   const [isOnTop, setIsOnTop] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: "650px" });
