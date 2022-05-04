@@ -12,6 +12,8 @@ const config = {
   measurementId: "G-WZWBYJQ5JL",
 };
 
+console.log(process.env.REACT_APP_FIREBASE_API_KEY);
+
 const Firebase = firebase.initializeApp(config);
 const { FieldValue, arrayUnion, arrayRemove } = firebase.firestore;
 
