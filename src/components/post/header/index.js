@@ -6,7 +6,7 @@ import { getMobileDate } from "../../../utils/get-mobile-date";
 
 export default function Header({ object }) {
   const [user, setUser] = useState(null);
-  const dateMobile = getMobileDate(object.dateCreate);
+  const dateMobile = getMobileDate(object.displayDate);
   const isMobile = useMediaQuery({ maxWidth: "450px" });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Header({ object }) {
         </Link>
       </div>
       <p className="text-gray-date text-sm lptpXS:text-xs lptpXS:font-medium">
-        {isMobile ? dateMobile : object.dateCreate}
+        {isMobile ? dateMobile : object.displayDate}
       </p>
     </div>
   );

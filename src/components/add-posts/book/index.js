@@ -51,8 +51,9 @@ export default function AddBook({ user }) {
     if (fileData?.data) {
       const post = {
         category: "Books recomendations",
-        dateCreate: new Date().toLocaleDateString("en-US", dateOptions),
+        displayDate: new Date().toLocaleDateString("en-US", dateOptions),
         id: new Date().getTime().toString(),
+        dateCreated: new Date(),
         booksTitle: data.title,
         author: data.author,
         year: data.year,

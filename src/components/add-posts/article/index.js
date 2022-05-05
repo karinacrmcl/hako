@@ -18,8 +18,9 @@ export default function AddArticle({ user }) {
   const onSubmit = (data) => {
     const post = {
       category: "Posts & Articles",
-      dateCreate: new Date().toLocaleDateString("en-US", dateOptions),
+      displayDate: new Date().toLocaleDateString("en-US", dateOptions),
       id: new Date().getTime().toString(),
+      dateCreated: new Date(),
       title: data.title,
       text: data.text,
       type: "article",
@@ -52,12 +53,12 @@ export default function AddArticle({ user }) {
             id="title"
             name="title"
             {...register("title", {
-              validate: (value) => value.length > 20 && value.length < 120,
+              validate: (value) => value.length > 10 && value.length < 120,
             })}
           />
           {errors.title && (
             <p className="text-sm ml-2 mt-2 text-gray-light">
-              Your title is too short or too long
+              Title should be at least 10 characters long
             </p>
           )}
 

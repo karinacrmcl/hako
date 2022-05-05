@@ -55,8 +55,9 @@ export default function AddNews({ user }) {
     if (fileData) {
       const post = {
         category: "Latest News",
-        dateCreate: new Date().toLocaleDateString("en-US", dateOptions),
+        displayDate: new Date().toLocaleDateString("en-US", dateOptions),
         id: new Date().getTime().toString(),
+        dateCreated: new Date(),
         newsTitle: data.title,
         text: data.text,
         author: data.author,

@@ -34,7 +34,9 @@ export default function UserProfile({ profileUser }) {
       );
       dispatch({
         profile: profileUser,
-        publicationsCollection: publications,
+        publicationsCollection: publications.sort(
+          (a, b) => b.dateCreated - a.dateCreated
+        ),
         followerCount: profileUser.followers.length,
       });
     }

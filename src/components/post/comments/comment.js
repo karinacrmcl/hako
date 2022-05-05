@@ -36,7 +36,7 @@ export const UserComment = ({ item }) => {
           </span>
         </div>
         <p className="text-xs w-28 w-datecreate flex justify-end text-gray-light lptpXS:text-xxs">
-          {item.dateCreated}
+          {item.displayDate}
         </p>
       </div>
     </div>

@@ -37,8 +37,9 @@ export default function AddPhotoModal({ user }) {
     if (isFilePicked) {
       const post = {
         category: "Photography",
-        dateCreate: new Date().toLocaleDateString("en-US", dateOptions),
+        displayDate: new Date().toLocaleDateString("en-US", dateOptions),
         id: new Date().getTime().toString(),
+        dateCreated: new Date(),
         photo: fileData.data.url,
         type: "photography",
         userId: user.uid,

@@ -23,7 +23,7 @@ export default function AddComment({
   const handleSubmitComment = (event) => {
     event.preventDefault();
 
-    setComments([{ userId, comment, dateCreated, id }, ...comments]);
+    setComments([{ userId, comment, displayDate, id }, ...comments]);
     setComment("");
 
     return Firebase.firestore()
@@ -33,7 +33,7 @@ export default function AddComment({
         comments: FieldValue.arrayUnion({
           userId,
           comment,
-          dateCreated,
+          displayDate,
           id,
         }),
       });
@@ -43,7 +43,7 @@ export default function AddComment({
     weekday: "short",
     hour: "numeric",
   };
-  const dateCreated = new Date().toLocaleDateString("en-US", options);
+  const displayDate = new Date().toLocaleDateString("en-US", options);
   const id = getRandomId();
 
   return (

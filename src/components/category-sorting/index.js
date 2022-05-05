@@ -3,7 +3,6 @@ import { useMediaQuery } from "react-responsive";
 
 import { categoriesSorting } from "../../constants/categories";
 import Item from "./item";
-import Hint from "./hint";
 
 export default function Sorting({ isOnTop }) {
   const [categoriesHovered, setCategoriesHovered] = useState(false);
@@ -48,7 +47,6 @@ export default function Sorting({ isOnTop }) {
           ))}
         </div>
       </div>
-      {!isMobile && <Hint />}
     </div>
   );
 }

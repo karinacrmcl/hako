@@ -1,5 +1,5 @@
 import Skeleton from "react-loading-skeleton";
-import usePhotos from "../../hooks/use-photos";
+import usePhotos from "../../hooks/use-publications";
 
 import { useCategories } from "../../context/categories-selected";
 import ArticleContent from "../posts-content/article";
@@ -50,8 +50,6 @@ export default function Timeline() {
         break;
     }
   }
-
-  console.log(activeCategories);
 
   return (
     <div

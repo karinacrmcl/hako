@@ -18,8 +18,9 @@ export default function AddDiscussion({ user }) {
   const onSubmit = (data) => {
     const post = {
       category: "Discussions ",
-      dateCreate: new Date().toLocaleDateString("en-US", dateOptions),
+      displayDate: new Date().toLocaleDateString("en-US", dateOptions),
       id: new Date().getTime().toString(),
+      dateCreated: new Date(),
       question: data.question,
       opinion: data.opinion,
       type: "discussion",
