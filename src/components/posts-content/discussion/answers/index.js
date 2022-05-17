@@ -30,7 +30,7 @@ export default function Answers({ object }) {
         </p>
       ) : (
         displayAnswers(answers).map((item) => {
-          return <UserAnswer key={item.id} item={item} docId={object.docId} />;
+          return <UserAnswer key={item.id} item={item} object={object} />;
         })
       )}
 

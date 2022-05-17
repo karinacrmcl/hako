@@ -4,7 +4,7 @@ import { getUserByUserId } from "../../../../services/firebase";
 import { Firebase } from "../../../../lib/firebase";
 import { object } from "prop-types";
 
-export function UserAnswer({ item, docId }) {
+export function UserAnswer({ item, object }) {
   const { downVotes, upVotes } = item;
   const [user, setUser] = useState(null);
   const [voteValue, setVoteValue] = useState(null);
@@ -22,24 +22,19 @@ export function UserAnswer({ item, docId }) {
   const handleVote = async (value) => {
     voteValue !== value ? setVoteValue(value) : setVoteValue(null);
 
-    const result = await Firebase.firestore()
+    const doc = await Firebase.firestore()
       .collection("publications")
-      .doc(docId)
-      .child("answers")
-      .update({ upVotes: ["p"] });
+      .where("id", "==", object.id)
+      .get();
+    // .doc(object.docId)
+    // .update({ upVotes: ["p"] });
 
-    // const r = result.docs.map((item) => ({
-    //   ...item.data(),
-    //   docId: item.id,
-    // }));
+    const result = doc.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
 
-    // console.log(r);
-
-    // .update({
-    //   likedPublications: toggleLiked
-    //     ? FieldValue.arrayRemove(object.docId)
-    //     : FieldValue.arrayUnion(object.docId),
-    // });
+    const currentanswer = result[0].answers.filter((el) => el.id === item.id);
   };
 
   return (
